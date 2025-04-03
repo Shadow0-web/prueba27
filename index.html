@@ -20,28 +20,48 @@
         flex-direction: column;
     }
     @media (max-width: 768px) {
-    .sidebar {
-        left: 0; /* Elimina el desplazamiento lateral */
-        top: -250px; /* Ahora se mueve desde arriba */
-        width: 100%; /* Ocupa todo el ancho */
-        height: auto; /* Altura automática */
-        flex-direction: row; /* Elementos en fila */
-        justify-content: center; /* Centrado horizontal */
-        padding-top: 0; /* Sin padding superior */
-        border-right: none; /* Sin borde derecho */
-        border-bottom: 1px solid rgba(255, 0, 0, 0.3); /* Borde inferior */
-    }
+        .sidebar {
+    position: fixed;
+    top: -100px; /* Inicialmente oculta arriba */
+    left: 0;
+    width: 100%;
+    height: auto; /* Altura automática (se ajusta al contenido) */
+    background: rgba(0, 0, 0, 0.9);
+    transition: top 0.5s ease; /* Animación de despliegue desde arriba */
+    z-index: 3;
+    display: flex;
+    flex-direction: row; /* Elementos en fila (horizontal) */
+    justify-content: center; /* Centrado horizontal */
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 0, 0, 0.3); /* Borde inferior rojo */
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+}
 
-    .sidebar.open {
-        top: 0; /* Se despliega desde arriba */
-        left: 0; /* Mantiene posición izquierda */
-    }
+.sidebar.open {
+    top: 0; /* Se muestra en la parte superior */
+}
 
-    .sidebar a {
-        margin: 10px 5px; /* Menos margen entre botones */
-        padding: 8px 15px; /* Padding más compacto */
-        font-size: 1rem; /* Tamaño de fuente más pequeño */
-    }
+/* Ajustes para los enlaces del menú */
+.sidebar a {
+    color: #ff0000;
+    text-decoration: none;
+    font-size: 1.1rem;
+    margin: 0 15px; /* Espaciado horizontal entre botones */
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+    border-radius: 30px;
+    text-align: center;
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+    border: 1px solid transparent;
+}
+
+.sidebar a:hover {
+    color: #fff;
+    text-shadow: 0 0 5px #fff, 0 0 10px #ff0000;
+    border: 1px solid rgba(255, 0, 0, 0.5);
+    background: rgba(255, 0, 0, 0.1);
+}
 }
         .neo {
     position: fixed;
