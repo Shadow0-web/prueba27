@@ -221,7 +221,29 @@
             to { opacity: 1; transform: translate(-50%, -50%); }
         }
 
-        /* Media Queries for Larger Screens */
+        .sidebar-toggle {
+            display: none; /* Hidden by default, shown on mobile */
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 6;
+            background: rgba(255, 0, 0, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-toggle:hover {
+            background: rgba(255, 0, 0, 1);
+            transform: scale(1.1);
+        }
+
+        /* Media Queries */
         @media (min-width: 768px) {
             .neo img { width: 250px; }
             .sidebar { width: 250px; }
@@ -230,6 +252,11 @@
             .presentacion h2 { font-size: 2rem; }
             .presentacion p { font-size: 1.1rem; }
             .particle { width: 8px; height: 8px; }
+        }
+
+        @media (max-width: 767px) {
+            .sidebar-toggle { display: block; }
+            .sidebar { left: -100%; } /* Ensure sidebar is hidden by default on mobile */
         }
     </style>
 </head>
@@ -257,6 +284,8 @@
         <p class="neon-text">¡Gracias por elegirnos!</p>
     </div>
 
+    <button class="sidebar-toggle" id="sidebar-toggle"><i class="fas fa-bars"></i></button>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
         const particlesContainer = document.getElementById('oik');
@@ -265,6 +294,7 @@
         const sidebar = document.getElementById('sidebar');
         const presentacion = document.getElementById('presentacion');
         const cerrarPresentacion = document.getElementById('cerrar-presentacion');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
 
         function createParticle() {
             const particle = document.createElement('div');
@@ -301,7 +331,6 @@
         }
 
         function openMenus() {
-            sidebar.classList.add('open');
             logo.style.left = '10%';
             logo.style.top = window.innerWidth > 768 ? '320px' : '20%';
             logo.style.transform = window.innerWidth > 768 ? 'translate(0, 0) scale(0.6)' : 'translate(0, 0) scale(0.8)';
@@ -309,6 +338,7 @@
         }
 
         function mostrarPresentacion() {
+            sidebar.classList.remove('open'); // Close sidebar when presentation opens
             presentacion.classList.add('mostrar');
         }
 
@@ -332,6 +362,11 @@
             if (e.target === presentacion) {
                 presentacion.classList.remove('mostrar');
             }
+        });
+
+        // Sidebar toggle button functionality
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
         });
 
         /* Prevent context menu and certain shortcuts */
