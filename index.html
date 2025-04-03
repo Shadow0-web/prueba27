@@ -166,7 +166,7 @@
         }
 
         .sidebar-close {
-            display: none; /* Hidden by default, shown on mobile */
+            display: none;
             position: absolute;
             top: 1rem;
             right: 1rem;
@@ -280,7 +280,6 @@
         }
 
         @media (max-width: 767px) {
-            .sidebar-toggle { display: block; }
             .sidebar-close { display: block; }
             .sidebar { left: -100%; }
             .sidebar.open { z-index: 10; }
@@ -358,6 +357,9 @@
             logo.style.display = 'block';
             sidebar.classList.remove('open');
             presentacion.classList.remove('mostrar');
+            if (window.innerWidth < 768) {
+                sidebarToggle.style.display = 'none'; // Hide toggle button on reset
+            }
         }
 
         function openMenus() {
@@ -378,6 +380,7 @@
             if (window.innerWidth < 768) {
                 sidebar.classList.remove('open');
                 logo.style.display = 'none';
+                sidebarToggle.style.display = 'block'; // Show toggle button after logo click
             }
             presentacion.classList.add('mostrar');
         }
@@ -398,6 +401,7 @@
             presentacion.classList.remove('mostrar');
             if (window.innerWidth < 768) {
                 logo.style.display = 'block';
+                sidebarToggle.style.display = 'none'; // Hide toggle button when presentation closes
             }
         });
 
@@ -406,6 +410,7 @@
                 presentacion.classList.remove('mostrar');
                 if (window.innerWidth < 768) {
                     logo.style.display = 'block';
+                    sidebarToggle.style.display = 'none'; // Hide toggle button when clicking outside
                 }
             }
         });
