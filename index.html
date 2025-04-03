@@ -20,48 +20,30 @@
         flex-direction: column;
     }
     @media (max-width: 768px) {
-        .sidebar {
-    position: fixed;
-    top: -100px; /* Inicialmente oculta arriba */
-    left: 0;
-    width: 100%;
-    height: auto; /* Altura automática (se ajusta al contenido) */
-    background: rgba(0, 0, 0, 0.9);
-    transition: top 0.5s ease; /* Animación de despliegue desde arriba */
-    z-index: 3;
-    display: flex;
-    flex-direction: row; /* Elementos en fila (horizontal) */
-    justify-content: center; /* Centrado horizontal */
-    align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(255, 0, 0, 0.3); /* Borde inferior rojo */
-    box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
-}
+    .sidebar {
+        left: 0;           /* Elimina desplazamiento lateral */
+        top: -100%;         /* Oculta arriba */
+        width: 100%;        /* Ocupa ancho completo */
+        height: auto;       /* Altura automática */
+        flex-direction: row; /* Menú horizontal */
+        justify-content: center;
+        padding: 15px 0;    /* Espaciado vertical reducido */
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 0, 0, 0.3);
+        transition: top 0.5s ease; /* Nueva transición */
+    }
 
-.sidebar.open {
-    top: 0; /* Se muestra en la parte superior */
-}
+    .sidebar.open {
+        top: 0;  /* Muestra desde arriba */
+        left: 0; /* Mantén esta línea para evitar bugs */
+    }
 
-/* Ajustes para los enlaces del menú */
-.sidebar a {
-    color: #ff0000;
-    text-decoration: none;
-    font-size: 1.1rem;
-    margin: 0 15px; /* Espaciado horizontal entre botones */
-    padding: 8px 20px;
-    transition: all 0.3s ease;
-    border-radius: 30px;
-    text-align: center;
-    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
-    border: 1px solid transparent;
-}
-
-.sidebar a:hover {
-    color: #fff;
-    text-shadow: 0 0 5px #fff, 0 0 10px #ff0000;
-    border: 1px solid rgba(255, 0, 0, 0.5);
-    background: rgba(255, 0, 0, 0.1);
-}
+    /* Ajusta los botones para móvil */
+    .sidebar a {
+        margin: 0 10px; /* Espaciado horizontal */
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
 }
         .neo {
     position: fixed;
@@ -549,12 +531,28 @@ function resetLogo() {
 }
 
 function openMenus() {
-  
     sidebar.classList.add('open');
-    logo.style.left = '-6px'; 
-    logo.style.top = '320px';
-    logo.style.transform = 'translate(0, 0) scale(0.6)';
+    
+    // Solo en móvil: Reposiciona el logo
+    if (window.innerWidth <= 768) {
+        logo.style.top = "100px";
+        logo.style.left = "50%";
+        logo.style.transform = "translateX(-50%) scale(0.6)";
+    } else {
+        // Comportamiento original en PC
+        logo.style.left = "-6px";
+        logo.style.top = "320px";
+        logo.style.transform = "translate(0, 0) scale(0.6)";
+    }
+    
     mostrarPresentacion();
+}
+
+function resetLogo() {
+    logo.style.top = "50%";
+    logo.style.left = "50%";
+    logo.style.transform = "translate(-50%, -50%) scale(1)";
+    sidebar.classList.remove("open");
 }
 
 function mostrarPresentacion() {
