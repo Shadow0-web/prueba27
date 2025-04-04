@@ -227,104 +227,125 @@
         }
 
       
-/* Sidebar styles */
-.sidebar {
+        .sidebar {
     position: fixed;
-    left: -250px; /* Hidden by default */
+    left: -100%;
     top: 0;
-    width: 250px;
+    width: 70vw;
+    max-width: 250px;
     height: 100%;
     background: rgba(0, 0, 0, 0.9);
-    transition: left 0.3s ease;
-    z-index: 5;
+    transition: left 0.5s ease;
+    z-index: 100;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 60px;
+    padding-top: 4rem;
     border-right: 1px solid rgba(255, 0, 0, 0.3);
 }
 
-.sidebar.active {
-    left: 0; /* Visible when active */
+.sidebar.open {
+    left: 0;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
 }
 
-.sidebar a {
-    color: #ff0000;
-    text-decoration: none;
-    font-size: 1.2rem;
-    margin: 15px 0;
-    padding: 12px 30px;
+.sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 101;
+    background: rgba(255, 0, 0, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.sidebar a:hover {
-    color: #fff;
-    text-shadow: 0 0 5px #ff0000;
+.sidebar-toggle:hover {
+    background: rgba(255, 0, 0, 1);
+    transform: scale(1.1);
 }
 
-/* Close button for mobile */
-.close-btn {
+.sidebar-close {
+    display: none;
     position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-    color: #ff0000;
-    background: none;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 0, 0, 0.8);
     border: none;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    color: #fff;
+    font-size: 1.2rem;
     cursor: pointer;
-    display: none; /* Hidden by default, shown on mobile */
+    transition: all 0.3s ease;
 }
 
-/* Toggle button for mobile */
-.toggle-btn {
-    position: fixed;
-    left: 20px;
-    top: 20px;
-    font-size: 24px;
-    color: #ff0000;
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: none; /* Hidden by default, shown on mobile */
-    z-index: 6;
+.sidebar-close:hover {
+    background: rgba(255, 0, 0, 1);
+    transform: scale(1.1);
 }
 
-/* Media query for mobile */
-@media (max-width: 768px) {
-    body {
-        padding: 20px; /* Reset padding on mobile */
-    }
+@media (min-width: 768px) {
     .sidebar {
-        left: -250px; /* Ensure hidden by default */
+        left: 0;
+        width: 250px;
     }
-    .toggle-btn {
-        display: block; /* Show toggle button on mobile */
-    }
-    .close-btn {
-        display: block; /* Show close button on mobile */
-    }
-    .neo {
-        left: 60px; /* Adjust logo position on mobile */
+    body {
+        padding-left: 250px;
     }
 }
 
-/* Media query for desktop */
-@media (min-width: 769px) {
-    .sidebar.active + .neo {
-        left: 370px; /* Shift logo when sidebar is open */
+@media (max-width: 767px) {
+    .sidebar-close {
+        display: block;
+    }
+    .sidebar-toggle {
+        display: block;
     }
 }
-  
-        .neo {
-            position: fixed;
-            z-index: 4;
+
+        .sidebar a {
+            color: #ff0000;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin: 15px 0;
+            padding: 12px 30px;
+            position: relative;
+            transition: all 0.3s ease;
+            border-radius: 30px;
+            background: transparent;
+            width: 150px;
             text-align: center;
-            transition: all 0.5s ease;
-            left: 120px;
-            top: 70%;
-            transform: translate(-50%, -50%);
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+            border: 1px solid transparent;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
         }
 
+ 
+
+  
+        .neo {
+    position: fixed;
+    left: 125px; /* Ajusta según necesites */
+    top: 20px;
+    z-index: 99;
+}
+
+/* Para móviles */
+@media (max-width: 767px) {
+    .neo {
+        left: 50%;
+        transform: translateX(-50%);
+        top: 20px;
+    }
+}
         .neo img {
             width: 250px;
             filter:
@@ -388,53 +409,47 @@
     </style>
 </head>
 <body>
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebarClose = document.getElementById('sidebar-close');
+    
+        // Toggle sidebar on mobile
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+    
+        // Close sidebar on mobile
+        sidebarClose.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+        });
+    
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 767 && 
+                !sidebar.contains(e.target) && 
+                e.target !== sidebarToggle) {
+                sidebar.classList.remove('open');
+            }
+        });
+    
+        // Prevent sidebar links from closing sidebar on desktop
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth <= 767) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        });
+    </script>
+
     <div class="sidebar" id="sidebar">
         <a href="executores.html">Executores</a>
         <a href="Status-Executores.html">Status</a>
         <a href="scripts.html">Scripts</a>
         <a href="contactos.html">Contactos</a>
     </div>
-    <button class="toggle-btn" id="toggle-btn">&#9776;</button>
-    <script>
-        const sidebar = document.getElementById('sidebar');
-const toggleBtn = document.getElementById('toggle-btn');
-const closeBtn = document.getElementById('close-btn');
-const logo = document.getElementById('logo');
 
-let logoClicked = false;
-
-// Toggle sidebar on PC with logo click
-logo.addEventListener('click', function() {
-    if (window.innerWidth >= 769) {
-        sidebar.classList.toggle('active');
-    } else {
-        logoClicked = true;
-        toggleBtn.style.display = 'block'; // Show toggle button on mobile after logo click
-    }
-});
-
-// Toggle sidebar on mobile with button
-toggleBtn.addEventListener('click', function() {
-    if (logoClicked) {
-        sidebar.classList.add('active');
-    }
-});
-
-// Close sidebar on mobile
-closeBtn.addEventListener('click', function() {
-    sidebar.classList.remove('active');
-});
-
-// Reset toggle button visibility on resize
-window.addEventListener('resize', function() {
-    if (window.innerWidth >= 769) {
-        toggleBtn.style.display = 'none';
-        logoClicked = false;
-    } else if (!logoClicked) {
-        toggleBtn.style.display = 'none';
-    }
-});
-    </script>
     <div class="neo" id="logo">
         <img src="img/vxspoty.png" alt="VxSpot Logo" id="logo-img">
         <div class="neon-text">Vxspot</div>
