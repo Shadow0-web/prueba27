@@ -372,12 +372,13 @@
     /* Ajustar el logo cuando la sidebar está abierta */
     .neo {
         width: 10px;
-        left: 50%;
+        display: none;
         transition: all 0.3s ease;
     }
     
     .sidebar.active + .neo {
-        left: calc(50% + 125px);
+        display: none;
+        left: calc(20% + 20px);
     }
 }
         @keyframes neon-glow {
