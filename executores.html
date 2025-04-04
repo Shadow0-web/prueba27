@@ -350,19 +350,38 @@
     z-index: 1001; /* Mayor que la sidebar */
     font-size: 20px;
 }
+
 @media (max-width: 768px) {
+    /* ... (tus estilos existentes) ... */
+
+    /* Nuevos estilos para el logo */
     .neo {
         position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        transform: none;
-        padding: 20px 0;
-        background: rgba(0, 0, 0, 0.7);
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        text-align: center;
+        z-index: 3;
+        transition: all 0.3s ease;
     }
-    
+
     .sidebar {
-        padding-bottom: 180px; /* Ajusta según el tamaño de tu logo */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 120px; /* Espacio para el logo */
+    }
+
+    .sidebar.active ~ .neo {
+        display: none; /* Oculta el logo fuera de la sidebar cuando está activa */
+    }
+
+    .sidebar .neo {
+        display: block; /* Muestra el logo dentro de la sidebar */
+        margin-top: auto; /* Lo empuja hacia abajo */
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 0, 0, 0.3);
     }
 }
 @media (max-width: 768px) {
@@ -488,17 +507,19 @@ document.addEventListener('DOMContentLoaded', function() {
         <button class="menu-toggle" id="menuToggle">
             <i class="fas fa-bars"></i>
         </button>
-    <div class="sidebar" id="sidebar">
-        <a href="executores.html">Executores</a>
-        <a href="Status-Executores.html">Status</a>
-        <a href="scripts.html">Scripts</a>
-        <a href="contactos.html">Contactos</a>
-    </div>
-
-    <div class="neo" id="logo">
-        <img src="img/vxspoty.png" alt="VxSpot Logo" id="logo-img">
-        <div class="neon-text">Vxspot</div>
-    </div>
+        <div class="sidebar" id="sidebar">
+            <a href="executores.html">Executores</a>
+            <a href="Status-Executores.html">Status</a>
+            <a href="scripts.html">Scripts</a>
+            <a href="contactos.html">Contactos</a>
+            
+            <!-- Logo dentro de la sidebar -->
+            <div class="neo" id="logo">
+                <img src="img/vxspoty.png" alt="VxSpot Logo" id="logo-img">
+                <div class="neon-text">Vxspot</div>
+            </div>
+        </div>
+        
     <button id="boton-retroceso">←</button>
 
     </div>
