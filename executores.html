@@ -6,7 +6,6 @@
     <title>Vxspot</title>
     <link rel="icon" href="imagenes/vxspot.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,6 +17,104 @@
             max-height: 570vh;
             background: radial-gradient(ellipse at bottom, #000000 0%, #000000 100%);
             position: relative;
+            transition: padding-left 0.3s ease;
+        }
+
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            transition: left 0.3s ease;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 60px;
+            border-right: 1px solid rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+        }
+
+        .sidebar a {
+            color: #ff0000;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin: 15px 0;
+            padding: 12px 30px;
+            position: relative;
+            transition: all 0.3s ease;
+            border-radius: 30px;
+            background: transparent;
+            width: 150px;
+            text-align: center;
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+            border: 1px solid transparent;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+        }
+
+        .sidebar a:hover {
+            color: #fff;
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #ff0000,
+                0 0 20px #ff0000;
+            box-shadow: 
+                0 0 10px rgba(255, 0, 0, 0.7),
+                0 0 20px rgba(255, 0, 0, 0.5);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            background: rgba(255, 0, 0, 0.1);
+            transform: scale(1.05);
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 998;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px !important;
+            }
+            
+            .sidebar {
+                left: -250px;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .sidebar-toggle {
+                display: block;
+            }
+            
+            .sidebar.active ~ .overlay {
+                display: block;
+            }
         }
 
         #boton-retroceso {
@@ -36,20 +133,19 @@
             opacity: 0;
         }
 
-        #boton-retroceso:hover {
-            background-color: #000000;
-        }
-
         section {
             background-color: #a80000;
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
-
             position: relative;
             overflow: hidden;
             transition: background-color 0.3s ease;
             opacity: 0.8;
+        }
+
+        #boton-retroceso:hover {
+            background-color: #000000;
         }
 
         section:hover {
@@ -226,75 +322,6 @@
             color: #ffffff;
         }
 
-      
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 250px;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            transition: left 0.5s ease;
-            z-index: 3;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 60px;
-            border-right: 1px solid rgba(255, 0, 0, 0.3);
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
-        }
-
-        .sidebar a {
-            color: #ff0000;
-            text-decoration: none;
-            font-size: 1.2rem;
-            margin: 15px 0;
-            padding: 12px 30px;
-            position: relative;
-            transition: all 0.3s ease;
-            border-radius: 30px;
-            background: transparent;
-            width: 150px;
-            text-align: center;
-            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
-            border: 1px solid transparent;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
-        }
-
-        .sidebar a:hover {
-            color: #fff;
-            text-shadow:
-                0 0 5px #fff,
-                0 0 10px #ff0000,
-                0 0 20px #ff0000;
-            box-shadow:
-                0 0 10px rgba(255, 0, 0, 0.7),
-                0 0 20px rgba(255, 0, 0, 0.5);
-            border: 1px solid rgba(255, 0, 0, 0.5);
-            background: rgba(255, 0, 0, 0.1);
-            transform: scale(1.05);
-        }
-
-        .sidebar a::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 30px;
-            background: linear-gradient(45deg, #ff0000, #ff5e5e, #ff0000);
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .sidebar a:hover::before {
-            opacity: 0.7;
-            animation: neon-border 1.5s infinite alternate;
-        }
-
-  
         .neo {
             position: fixed;
             z-index: 4;
@@ -336,176 +363,296 @@
             font-size: 1.9rem;
             margin-top: 20px;
         }
-        .menu-toggle {
-    display: none;
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background: rgba(0, 0, 0, 0.7);
-    border: 1px solid rgba(255, 0, 0, 0.5);
-    color: #ff0000;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    z-index: 1001; 
-    font-size: 20px;
-}
 
-@media (max-width: 768px) {
-    body {
-        padding: 20px !important;
-        transition: none;
-    }
-    
-    .sidebar {
-        left: -250px;
-        transition: left 0.3s ease;
-        box-shadow: 5px 0 15px rgba(255, 0, 0, 0.5);
-        padding: 20px 0;
-        display: flex;
-        flex-direction: column;
-        height: auto;
-        min-height: 100vh;
-        background: rgba(0, 0, 0, 0.9);
-        width: 250px;
-        position: fixed;
-        top: 0;
-        z-index: 999;
-    }
-    
-    .sidebar.active {
-        left: 0;
-    }
-    
-    .menu-toggle {
-        display: block;
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        background-color: #ff0000;
-        color: white;
-        border: none;
-        padding: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-        z-index: 1000;
-        font-size: 20px;
-    }
-    
-    .overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        z-index: 998;
-    }
-    
-    .sidebar.active ~ .overlay {
-        display: block;
-    }
-    
-    .sidebar-buttons {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        margin-bottom: 15px;
-        padding: 0 20px;
-    }
-    
-    .sidebar a {
-        color: #ff0000;
-        text-decoration: none;
-        font-size: 1.1rem;
-        padding: 12px 20px;
-        border-radius: 30px;
-        text-align: center;
-        transition: all 0.3s ease;
-        border: 1px solid transparent;
-    }
-    
-    .sidebar a:last-child {
-        margin-bottom: 5px;
-    }
-    
-    .neo {
-        position: relative;
-        width: 100%;
-        padding: 20px 0 10px;
-        top: 140px;
-        left: 130px;
-        margin-top: 0;
-        border-top: 1px solid rgba(255, 0, 0, 0.2);
-        text-align: center;
-        background: transparent;
-    }
-    
-    .neo img {
-        width: 120px;
-        height: auto;
-        margin: 0 auto;
-        filter: 
-            drop-shadow(0 0 5px rgba(255, 0, 0, 0.7))
-            drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
-    }
-    
-    .neon-text {
-        font-size: 1.2rem;
-        margin-top: 5px;
-        color: #fff;
-        text-shadow: 
-            0 0 5px #fff,
-            0 0 10px #ff0000,
-            0 0 20px #ff0000;
-    }
-    
-    .sidebar.active ~ .neo {
-        display: none;
-    }
-}
-@media (max-width: 768px) {
-    body {
-        padding: 20px !important; /* Eliminamos el padding izquierdo */
-        transition: none; /* Eliminamos la transición del body */
-    }
-    
-    .sidebar {
-        left: -250px;
-        transition: left 0.3s ease;
-        box-shadow: 5px 0 15px rgba(255, 0, 0, 0.5); /* Sombra para mejor visualización */
-    }
-    
-    .sidebar.active {
-        left: 0;
-    }
-    
-    .menu-toggle {
-        display: block;
-    }
-    
+        .descargar2 {
+            display: inline-block;
+            background-color: #ff0000;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
 
-    
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
 
-    .overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        z-index: 998;
-    }
-    
-    .sidebar.active ~ .overlay {
-        display: block;
-    }
-}
+        .modal-content {
+            background-color: #1d1d1d;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .modal-content button {
+            background-color: #000000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-content button:hover {
+            background-color: #3d4780;
+        }
+
+        .contenedor-contraseña {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .verificar-contraseña {
+            background-color: #000000;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .verificar-contraseña:hover {
+            background-color: #3d4780;
+        }
+
+        .menu-edicion {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .menu-edicion input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .guardar-btn {
+            background-color: #000000;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .guardar-btn:hover {
+            background-color: #3d4780;
+        }
+
+        .icono-pico {
+            width: 30px;
+            height: 30px;
+            vertical-align: super;
+            margin-right: 1px;
+            vertical-align:sub;
+            transition: transform 0.3s ease;
+        }
+
+        .boton-instalar33 {
+            position: relative; 
+            display: inline-block;
+            background-color: #000000;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 7px;
+            text-decoration: none; 
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.5s;
+        }
+
+        .container {
+            height: 570vh; 
+            overflow-y: auto; 
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 570vh; 
+            background-image: 
+                radial-gradient(1px 1px at 25% 10%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1px 1px at 50% 25%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1px 1px at 75% 30%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1.5px 1.5px at 15% 40%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1.5px 1.5px at 60% 70%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1px 1px at 30% 65%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1px 1px at 90% 85%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1.5px 1.5px at 80% 15%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1.5px 1.5px at 10% 90%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1px 1px at 35% 80%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1px 1px at 65% 40%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1.5px 1.5px at 40% 50%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(2px 2px at 55% 90%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(2px 2px at 85% 55%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(2px 2px at 20% 20%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(2px 2px at 45% 5%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(2px 2px at 95% 35%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(2px 2px at 5% 50%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(2px 2px at 70% 95%, rgba(255, 255, 255, 0.9) 100%, transparent);
+            background-repeat: repeat;
+            background-size: 400px 400px;
+            animation: twinkling 40s linear infinite;
+            opacity: 0.8;
+        }
+
+        .shooting-stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform: rotate(-45deg);
+        }
+
+        .shooting-star {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(-45deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+            border-radius: 999px;
+            filter: drop-shadow(0 0 6px rgba(105, 155, 255, 1));
+            animation: tail 3s ease-in-out infinite, shooting 3s ease-in-out infinite;
+        }
+
+        .shooting-star:nth-child(1) {
+            top: calc(50% - 200px);
+            left: calc(50% - 300px);
+            animation-delay: 1s;
+        }
+
+        .shooting-star:nth-child(2) {
+            top: calc(50% - 100px);
+            left: calc(50% - 190px);
+            animation-delay: 1.6s;
+        }
+
+        .shooting-star:nth-child(3) {
+            top: calc(50% - 50px);
+            left: calc(50% + 100px);
+            animation-delay: 2.1s;
+        }
+
+        .shooting-star:nth-child(4) {
+            top: calc(50% + 70px);
+            left: calc(50% - 250px);
+            animation-delay: 2.5s;
+        }
+
+        @keyframes twinkling {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-500px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 0.2;
+            }
+        }
+
+        @keyframes tail {
+            0% {
+                width: 0;
+            }
+            30% {
+                width: 100px;
+            }
+            100% {
+                width: 0;
+            }
+        }
+
+        @keyframes shooting {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(300px);
+            }
+        }
+
+        .nebula {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(30px);
+            opacity: 0.15;
+            background: radial-gradient(circle, rgba(63, 94, 251, 0.6) 0%, rgba(252, 70, 107, 0) 70%);
+        }
+
+        .nebula:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 20%;
+            left: 15%;
+            animation: float 30s infinite alternate ease-in-out;
+        }
+
+        .nebula:nth-child(2) {
+            width: 250px;
+            height: 250px;
+            top: 60%;
+            left: 75%;
+            background: radial-gradient(circle, rgba(72, 219, 251, 0.6) 0%, rgba(29, 209, 161, 0) 70%);
+            animation: float 25s infinite alternate-reverse ease-in-out;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(-10px, 10px);
+            }
+            100% {
+                transform: translate(10px, -10px);
+            }
+        }
+
         @keyframes neon-glow {
             from {
                 filter:
@@ -534,108 +681,35 @@
                 text-shadow: none;
             }
         }
-        .sidebar-toggle {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 5000000;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255, 0, 0, 0.5);
-            color: #ff0000;
-            font-size: 24px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-        }
     </style>
 </head>
 <body>
-    <script>
-        // Control de la sidebar en móvil
-document.addEventListener('DOMContentLoaded', function() {
-    const menuToggle = document.getElementById('menuToggle');
-    const sidebar = document.getElementById('sidebar');
-    const body = document.body;
+    <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+    </button>
     
-    menuToggle.addEventListener('click', function() {
-        sidebar.classList.toggle('active');
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="sidebar" id="sidebar">
+        <a href="executores.html">Executores</a>
+        <a href="Status-Executores.html">Status</a>
+        <a href="scripts.html">Scripts</a>
+        <a href="contactos.html">Contactos</a>
         
-        // Cambiar el ícono del botón
-        const icon = this.querySelector('i');
-        if (sidebar.classList.contains('active')) {
-            icon.classList.remove('fa-bars');
-            icon.classList.add('fa-times');
-        } else {
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-bars');
-        }
-    });
-    
-    // Cerrar sidebar al hacer clic en un enlace (solo en móvil)
-    if (window.innerWidth <= 768) {
-        const sidebarLinks = sidebar.querySelectorAll('a');
-        sidebarLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                sidebar.classList.remove('active');
-                menuToggle.querySelector('i').classList.remove('fa-times');
-                menuToggle.querySelector('i').classList.add('fa-bars');
-            });
-        });
-    }
-    
-    // Ajustar el padding del body cuando la sidebar se abre/cierra
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.attributeName === 'class') {
-                if (sidebar.classList.contains('active')) {
-                    document.body.style.paddingLeft = '270px';
-                } else {
-                    document.body.style.paddingLeft = '20px';
-                }
-            }
-        });
-    });
-    
-    observer.observe(sidebar, {
-        attributes: true
-    });
-});
-    </script>
-        <button class="menu-toggle" id="menuToggle">
-            <i class="sidebar-toggle">☰</i>
-        </button>
-        <div class="sidebar" id="sidebar">
-            <a href="executores.html">Executores</a>
-            <a href="Status-Executores.html">Status</a>
-            <a href="scripts.html">Scripts</a>
-            <a href="contactos.html">Contactos</a>
-            
-            <!-- Logo dentro de la sidebar -->
-            <div class="neo" id="logo">
-                <img src="img/vxspoty.png" alt="VxSpot Logo" id="logo-img">
-                <div class="neon-text">Vxspot</div>
-            </div>
+        <div class="neo" id="logo">
+            <img src="img/vxspoty.png" alt="VxSpot Logo" id="logo-img">
+            <div class="neon-text">Vxspot</div>
         </div>
-        
-    <button id="boton-retroceso">←</button>
-
     </div>
+
+    <button id="boton-retroceso">←</button>
     <header>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <h1 class="title2">Executores</h1>
     </header>
-    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"></script>
-   
+    
     <section>
         <h2><img src="imagenes/androidicon.png" alt="icon" class="android"> Executores Android</h2>
         <div class="botones-container">
-<!-- primera seccion android executores -->
             <div class="boton-instalar">
                 <i class="fas fa-cog editar-icono"></i>
                 <img src="imagenes/fluxus.png" alt="Delta">
@@ -955,16 +1029,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <a href="" class="descargar">Descargar</a>
             </div>
-
         </div>
     </section>
 
-
     <section>
-        <!-- segunda seccion Ios executores -->
         <h2><img src="imagenes/iosicon.png" alt="" class="IOS"> Executores iOS</h2>
         <div class="botones-container">
-
             <div class="boton-instalar">
                 <i class="fas fa-cog editar-icono"></i>
                 <img src="imagenes/delta.png" alt="Delta">
@@ -1064,16 +1134,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <a href="" class="descargar">Descargar</a>
             </div>
-       
         </div>
     </section>
 
     <section>
-        <!-- tercera section executores vn ojala borren roblox -->
         <h2><img src="imagenes/vng.png" alt="" class="IOS"> Executores VNG</h2>
         <div class="botones-container">
-
-
             <div class="boton-instalar">
                 <i class="fas fa-cog editar-icono"></i>
                 <img src="imagenes/arceus.png" alt="Delta">
@@ -1093,7 +1159,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <a href="" class="descargar">Descargar</a>
             </div>
-
 
             <div class="boton-instalar">
                 <i class="fas fa-cog editar-icono"></i>
@@ -1135,7 +1200,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <a href="" class="descargar">Descargar</a>
             </div>
 
-
             <div class="boton-instalar">
                 <i class="fas fa-cog editar-icono"></i>
                 <img src="imagenes/codex.png" alt="Delta">
@@ -1155,25 +1219,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <a href="" class="descargar">Descargar</a>
             </div>
+        </div>
     </section>       
-<style>
-   .descargar2 {
-    display: inline-block;
-    background-color: #ff0000;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
-} 
-</style>
+
     <section>
-        <!-- Cuarta section executores pc ojala borren free fire -->
         <h2><img src="imagenes/windows.png" alt="" class="IOS"> Windows Executores</h2>
         <div class="botones-container">
-
-
             <div class="boton-instalar">
                 <i class="fas fa-cog editar-icono"></i>
                 <img src="imagenes/xeno.png" alt="Delta">
@@ -1194,7 +1245,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <a href="" class="descargar">Descargar</a>
             </div>
 
-
             <div class="boton-instalar">
                 <i class="fas fa-cog editar-icono"></i>
                 <img src="imagenes/crypti.png" alt="Delta">
@@ -1214,7 +1264,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <a href="" class="descargar">Descargar</a>
             </div>
-
 
             <div class="boton-instalar">
                 <i class="fas fa-cog editar-icono"></i>
@@ -1275,14 +1324,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <a href="" class="descargar">Descargar</a>
             </div>
-
+        </div>
     </section> 
     
     <section>
-<!-- quinta section emuladores pc y el que lea esto es gay -->
         <h2><img src="imagenes/emulador.png" alt="" class="IOS2">Emuladores</h2>
         <div class="botones-container">
-
             <div class="boton-instalar">
                 <i class="fas fa-cog editar-icono"></i>
                 <img src="imagenes/nox.png" alt="Delta">
@@ -1323,7 +1370,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <a href="" class="descargar">Descargar</a>
             </div>
 
-
             <div class="boton-instalar">
                 <i class="fas fa-cog editar-icono"></i>
                 <img src="imagenes/ldplayer.png" alt="Delta">
@@ -1363,882 +1409,459 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <a href="" class="descargar">Descargar</a>
             </div>
-
+        </div>
     </section> 
-<section>
-    <!-- sexta section executores craft ns puto nombre que me invente-->
-    <h2><img src="imagenes/androidicon.png" alt="" class="IOS"> + <img src="imagenes/cubomc.gif" alt="" class="IOS"> Executores Minecraft</h2>
-    <div class="botones-container">
 
-        <div class="boton-instalar">
-            <i class="fas fa-cog editar-icono"></i>
-            <img src="imagenes/fluxus.png" alt="Delta">
-            <h3>Fluxus Craft</h3>
-            <p>Versión: Cargando</p>
-            <p>Estado: Cargando</p>
-            <a href="https://vxspotstatus.vercel.app/" class="descargar2">ver status</a>
-            <div class="contenedor-contraseña" style="display: none;">
-                <input type="password" class="password-input" placeholder="Contraseña">
-                <button class="verificar-contraseña">Verificar</button>
+    <section>
+        <h2><img src="imagenes/androidicon.png" alt="" class="IOS"> + <img src="imagenes/cubomc.gif" alt="" class="IOS"> Executores Minecraft</h2>
+        <div class="botones-container">
+            <div class="boton-instalar">
+                <i class="fas fa-cog editar-icono"></i>
+                <img src="imagenes/fluxus.png" alt="Delta">
+                <h3>Fluxus Craft</h3>
+                <p>Versión: Cargando</p>
+                <p>Estado: Cargando</p>
+                <a href="https://vxspotstatus.vercel.app/" class="descargar2">ver status</a>
+                <div class="contenedor-contraseña" style="display: none;">
+                    <input type="password" class="password-input" placeholder="Contraseña">
+                    <button class="verificar-contraseña">Verificar</button>
+                </div>
+                <div class="menu-edicion" style="display: none;">
+                    <input type="text" class="nueva-version" placeholder="Nueva versión">
+                    <input type="text" class="nuevo-estado" placeholder="Nuevo estado">
+                    <input type="text" class="nuevo-enlace" placeholder="Nuevo enlace de descarga">
+                    <button class="guardar-btn">Guardar</button>
+                </div>
+                <a href="" class="descargar">Descargar</a>
             </div>
-            <div class="menu-edicion" style="display: none;">
-                <input type="text" class="nueva-version" placeholder="Nueva versión">
-                <input type="text" class="nuevo-estado" placeholder="Nuevo estado">
-                <input type="text" class="nuevo-enlace" placeholder="Nuevo enlace de descarga">
-                <button class="guardar-btn">Guardar</button>
+
+            <div class="boton-instalar">
+                <i class="fas fa-cog editar-icono"></i>
+                <img src="imagenes/delta.png" alt="Delta">
+                <h3>Delta Craft</h3>
+                <p>Versión: Cargando</p>
+                <p>Estado: Cargando</p>
+                <a href="https://vxspotstatus.vercel.app/" class="descargar2">ver status</a>
+                <div class="contenedor-contraseña" style="display: none;">
+                    <input type="password" class="password-input" placeholder="Contraseña">
+                    <button class="verificar-contraseña">Verificar</button>
+                </div>
+                <div class="menu-edicion" style="display: none;">
+                    <input type="text" class="nueva-version" placeholder="Nueva versión">
+                    <input type="text" class="nuevo-estado" placeholder="Nuevo estado">
+                    <input type="text" class="nuevo-enlace" placeholder="Nuevo enlace de descarga">
+                    <button class="guardar-btn">Guardar</button>
+                </div>
+                <a href="" class="descargar">Descargar</a>
             </div>
-            <a href="" class="descargar">Descargar</a>
+
+            <div class="boton-instalar">
+                <i class="fas fa-cog editar-icono"></i>
+                <img src="imagenes/arceus.png" alt="Delta">
+                <h3>Arceus Craft</h3>
+                <p>Versión: Cargando</p>
+                <p>Estado: Cargando</p>
+                <a href="https://vxspotstatus.vercel.app/" class="descargar2">ver status</a>
+                <div class="contenedor-contraseña" style="display: none;">
+                    <input type="password" class="password-input" placeholder="Contraseña">
+                    <button class="verificar-contraseña">Verificar</button>
+                </div>
+                <div class="menu-edicion" style="display: none;">
+                    <input type="text" class="nueva-version" placeholder="Nueva versión">
+                    <input type="text" class="nuevo-estado" placeholder="Nuevo estado">
+                    <input type="text" class="nuevo-enlace" placeholder="Nuevo enlace de descarga">
+                    <button class="guardar-btn">Guardar</button>
+                </div>
+                <a href="" class="descargar">Descargar</a>
+            </div>
+
+            <div class="boton-instalar">
+                <i class="fas fa-cog editar-icono"></i>
+                <img src="imagenes/crypti.png" alt="Delta">
+                <h3>Cryptic Craft</h3>
+                <p>Versión: Cargando</p>
+                <p>Estado: Cargando</p>
+                <a href="https://vxspotstatus.vercel.app/" class="descargar2">ver status</a>
+                <div class="contenedor-contraseña" style="display: none;">
+                    <input type="password" class="password-input" placeholder="Contraseña">
+                    <button class="verificar-contraseña">Verificar</button>
+                </div>
+                <div class="menu-edicion" style="display: none;">
+                    <input type="text" class="nueva-version" placeholder="Nueva versión">
+                    <input type="text" class="nuevo-estado" placeholder="Nuevo estado">
+                    <input type="text" class="nuevo-enlace" placeholder="Nuevo enlace de descarga">
+                    <button class="guardar-btn">Guardar</button>
+                </div>
+                <a href="" class="descargar">Descargar</a>
+            </div>
+
+            <div class="boton-instalar">
+                <i class="fas fa-cog editar-icono"></i>
+                <img src="imagenes/codex.png" alt="Delta">
+                <h3>Codex Craft</h3>
+                <p>Versión: Cargando</p>
+                <p>Estado: Cargando</p>
+                <a href="https://vxspotstatus.vercel.app/" class="descargar2">ver status</a>
+                <div class="contenedor-contraseña" style="display: none;">
+                    <input type="password" class="password-input" placeholder="Contraseña">
+                    <button class="verificar-contraseña">Verificar</button>
+                </div>
+                <div class="menu-edicion" style="display: none;">
+                    <input type="text" class="nueva-version" placeholder="Nueva versión">
+                    <input type="text" class="nuevo-estado" placeholder="Nuevo estado">
+                    <input type="text" class="nuevo-enlace" placeholder="Nuevo enlace de descarga">
+                    <button class="guardar-btn">Guardar</button>
+                </div>
+                <a href="" class="descargar">Descargar</a>
+            </div>
+
+            <div class="boton-instalar">
+                <i class="fas fa-cog editar-icono"></i>
+                <img src="imagenes/vegaX.png" alt="Delta">
+                <h3>VegaX Craft</h3>
+                <p>Versión: Cargando</p>
+                <p>Estado: Cargando</p>
+                <a href="https://vxspotstatus.vercel.app/" class="descargar2">ver status</a>
+                <div class="contenedor-contraseña" style="display: none;">
+                    <input type="password" class="password-input" placeholder="Contraseña">
+                    <button class="verificar-contraseña">Verificar</button>
+                </div>
+                <div class="menu-edicion" style="display: none;">
+                    <input type="text" class="nueva-version" placeholder="Nueva versión">
+                    <input type="text" class="nuevo-estado" placeholder="Nuevo estado">
+                    <input type="text" class="nuevo-enlace" placeholder="Nuevo enlace de descarga">
+                    <button class="guardar-btn">Guardar</button>
+                </div>
+                <a href="" class="descargar">Descargar</a>
+            </div>
         </div>
+    </section> 
 
-        <div class="boton-instalar">
-            <i class="fas fa-cog editar-icono"></i>
-            <img src="imagenes/delta.png" alt="Delta">
-            <h3>Delta Craft</h3>
-            <p>Versión: Cargando</p>
-            <p>Estado: Cargando</p>
-            <a href="https://vxspotstatus.vercel.app/" class="descargar2">ver status</a>
-            <div class="contenedor-contraseña" style="display: none;">
-                <input type="password" class="password-input" placeholder="Contraseña">
-                <button class="verificar-contraseña">Verificar</button>
-            </div>
-            <div class="menu-edicion" style="display: none;">
-                <input type="text" class="nueva-version" placeholder="Nueva versión">
-                <input type="text" class="nuevo-estado" placeholder="Nuevo estado">
-                <input type="text" class="nuevo-enlace" placeholder="Nuevo enlace de descarga">
-                <button class="guardar-btn">Guardar</button>
-            </div>
-            <a href="" class="descargar">Descargar</a>
+    <button class="boton-instalar33" id="boton-admin"></button>
+    <div id="modal-contraseña" class="modal">
+        <div class="modal-content">
+            <h3>Contraseña</h3>
+            <input class="boton-instalar" type="password" id="contraseña-admin" placeholder="Contraseña">
+            <button id="verificar-contraseña">Verificar</button>
         </div>
-
-        <div class="boton-instalar">
-            <i class="fas fa-cog editar-icono"></i>
-            <img src="imagenes/arceus.png" alt="Delta">
-            <h3>Arceus Craft</h3>
-            <p>Versión: Cargando</p>
-            <p>Estado: Cargando</p>
-            <a href="https://vxspotstatus.vercel.app/" class="descargar2">ver status</a>
-            <div class="contenedor-contraseña" style="display: none;">
-                <input type="password" class="password-input" placeholder="Contraseña">
-                <button class="verificar-contraseña">Verificar</button>
-            </div>
-            <div class="menu-edicion" style="display: none;">
-                <input type="text" class="nueva-version" placeholder="Nueva versión">
-                <input type="text" class="nuevo-estado" placeholder="Nuevo estado">
-                <input type="text" class="nuevo-enlace" placeholder="Nuevo enlace de descarga">
-                <button class="guardar-btn">Guardar</button>
-            </div>
-            <a href="" class="descargar">Descargar</a>
-        </div>
-
-        <div class="boton-instalar">
-            <i class="fas fa-cog editar-icono"></i>
-            <img src="imagenes/crypti.png" alt="Delta">
-            <h3>Cryptic Craft</h3>
-            <p>Versión: Cargando</p>
-            <p>Estado: Cargando</p>
-            <a href="https://vxspotstatus.vercel.app/" class="descargar2">ver status</a>
-            <div class="contenedor-contraseña" style="display: none;">
-                <input type="password" class="password-input" placeholder="Contraseña">
-                <button class="verificar-contraseña">Verificar</button>
-            </div>
-            <div class="menu-edicion" style="display: none;">
-                <input type="text" class="nueva-version" placeholder="Nueva versión">
-                <input type="text" class="nuevo-estado" placeholder="Nuevo estado">
-                <input type="text" class="nuevo-enlace" placeholder="Nuevo enlace de descarga">
-                <button class="guardar-btn">Guardar</button>
-            </div>
-            <a href="" class="descargar">Descargar</a>
-        </div>
-
-        <div class="boton-instalar">
-            <i class="fas fa-cog editar-icono"></i>
-            <img src="imagenes/codex.png" alt="Delta">
-            <h3>Codex Craft</h3>
-            <p>Versión: Cargando</p>
-            <p>Estado: Cargando</p>
-            <a href="https://vxspotstatus.vercel.app/" class="descargar2">ver status</a>
-            <div class="contenedor-contraseña" style="display: none;">
-                <input type="password" class="password-input" placeholder="Contraseña">
-                <button class="verificar-contraseña">Verificar</button>
-            </div>
-            <div class="menu-edicion" style="display: none;">
-                <input type="text" class="nueva-version" placeholder="Nueva versión">
-                <input type="text" class="nuevo-estado" placeholder="Nuevo estado">
-                <input type="text" class="nuevo-enlace" placeholder="Nuevo enlace de descarga">
-                <button class="guardar-btn">Guardar</button>
-            </div>
-            <a href="" class="descargar">Descargar</a>
-        </div>
-
-        <div class="boton-instalar">
-            <i class="fas fa-cog editar-icono"></i>
-            <img src="imagenes/vegaX.png" alt="Delta">
-            <h3>VegaX Craft</h3>
-            <p>Versión: Cargando</p>
-            <p>Estado: Cargando</p>
-            <a href="https://vxspotstatus.vercel.app/" class="descargar2">ver status</a>
-            <div class="contenedor-contraseña" style="display: none;">
-                <input type="password" class="password-input" placeholder="Contraseña">
-                <button class="verificar-contraseña">Verificar</button>
-            </div>
-            <div class="menu-edicion" style="display: none;">
-                <input type="text" class="nueva-version" placeholder="Nueva versión">
-                <input type="text" class="nuevo-estado" placeholder="Nuevo estado">
-                <input type="text" class="nuevo-enlace" placeholder="Nuevo enlace de descarga">
-                <button class="guardar-btn">Guardar</button>
-            </div>
-            <a href="" class="descargar">Descargar</a>
-        </div>
-
-
-
-
-
-</section> 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-<button class="boton-instalar33" id="boton-admin"></button>
-<div id="modal-contraseña" class="modal">
-    <div class="modal-content">
-        <h3>Contraseña</h3>
-        <input class="boton-instalar" type="password" id="contraseña-admin" placeholder="Contraseña">
-        <button id="verificar-contraseña">Verificar</button>
     </div>
-</div>
-        <style>
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
 
-        .modal-content {
-            background-color: #1d1d1d;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .modal-content input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        .modal-content button {
-            background-color: #000000;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .modal-content button:hover {
-            background-color: #3d4780;
-        }
-</style>
-
-    <style>
-
-        .boton-instalar {
-            position: relative;
-            background-color: #000000e1;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .editar-icono {
-    display: none; 
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    color: #9e9e9e;
-    font-size: 20px;
-    transition: color 0.3s ease;
-}
-
-        .editar-icono:hover {
-            color: #ffffff;
-        }
-
-        .contenedor-contraseña {
-            margin-top: 10px;
-            display: none;
-        }
-
-        .password-input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        .verificar-contraseña {
-            background-color: #000000;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .verificar-contraseña:hover {
-            background-color: #3d4780;
-        }
-
-        .menu-edicion {
-            display: none;
-            margin-top: 10px;
-        }
-
-        .menu-edicion input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        .guardar-btn {
-            background-color: #000000;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .guardar-btn:hover {
-            background-color: #3d4780;
-        }
-
-        .descargar {
-            display: inline-block;
-            background-color: #000000;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        .descargar:hover {
-            background-color: #3d4780;
-        }
-    </style>
     <footer>
-
+        <a href="https://discord.gg/Qp2R3h77Dh" class="boton-instalar33"> <img src="imagenes/discord.gif" class="icono-pico">  Support</a>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parse/3.4.1/parse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
-        document.getElementById('boton-retroceso').addEventListener('click', function() {
-            window.history.back();
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            
+            function toggleSidebar() {
+                sidebar.classList.toggle('active');
+                
+                const icon = sidebarToggle.querySelector('i');
+                if (sidebar.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            }
+            
+            sidebarToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleSidebar();
+            });
+            
+            overlay.addEventListener('click', function() {
+                toggleSidebar();
+            });
+            
+            if (window.innerWidth <= 768) {
+                const sidebarLinks = sidebar.querySelectorAll('a');
+                sidebarLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        toggleSidebar();
+                    });
+                });
+            }
+            
+            document.getElementById('boton-retroceso')?.addEventListener('click', function() {
+                window.history.back();
+            });
         });
 
-        import { Analytics } from "@vercel/analytics/react"
-    </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/parse/3.4.1/parse.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-<script>
-
-    function toggleEditIcons(show) {
-        const editIcons = document.querySelectorAll('.editar-icono');
-        editIcons.forEach(icon => {
-            icon.style.display = show ? 'block' : 'none';
+        function toggleEditIcons(show) {
+            const editIcons = document.querySelectorAll('.editar-icono');
+            editIcons.forEach(icon => {
+                icon.style.display = show ? 'block' : 'none';
+            });
+        }
+        
+        document.getElementById('boton-admin').addEventListener('click', function() {
+            document.getElementById('modal-contraseña').style.display = 'flex';
         });
-    }
-    document.getElementById('boton-admin').addEventListener('click', function() {
-        document.getElementById('modal-contraseña').style.display = 'flex';
-    });
 
-  
-    document.getElementById('verificar-contraseña').addEventListener('click', function() {
-        const contraseñaIngresada = document.getElementById('contraseña-admin').value;
-        const CONTRASEÑA_HASH = '5aa7be94a0965f1dc7df42d77ebc64b4a478d37306a88f795ed550b549b84623'; 
+        document.getElementById('verificar-contraseña').addEventListener('click', function() {
+            const contraseñaIngresada = document.getElementById('contraseña-admin').value;
+            const CONTRASEÑA_HASH = '5aa7be94a0965f1dc7df42d77ebc64b4a478d37306a88f795ed550b549b84623'; 
 
-   
-        const hashSHA256 = (text) => {
-            return CryptoJS.SHA256(text).toString(CryptoJS.enc.Hex);
-        };
+            const hashSHA256 = (text) => {
+                return CryptoJS.SHA256(text).toString(CryptoJS.enc.Hex);
+            };
 
-        if (hashSHA256(contraseñaIngresada) === CONTRASEÑA_HASH) {
-    
-            toggleEditIcons(true);
-            document.getElementById('modal-contraseña').style.display = 'none'; 
-        } else {
-            alert('Contraseña incorrecta');
-        }
-    });
+            if (hashSHA256(contraseñaIngresada) === CONTRASEÑA_HASH) {
+                toggleEditIcons(true);
+                document.getElementById('modal-contraseña').style.display = 'none'; 
+            } else {
+                alert('Contraseña incorrecta');
+            }
+        });
 
+        document.getElementById('modal-contraseña').addEventListener('click', function(event) {
+            if (event.target === this) {
+                this.style.display = 'none';
+            }
+        });
 
-    document.getElementById('modal-contraseña').addEventListener('click', function(event) {
-        if (event.target === this) {
-            this.style.display = 'none';
-        }
-    });
-</script>
-    <script>
         document.addEventListener('keydown', function(e) {
-    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
-        e.preventDefault();
-    }
-});
+            if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
+                e.preventDefault();
+            }
+        });
 
-document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-});
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
 
-ocument.addEventListener('keydown', function(e) {
-    if (e.key === "s" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
-        e.preventDefault();
-    }
-});
+        document.addEventListener('keydown', function(event) {
+            if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+                event.preventDefault();
+                alert('Guardar esta página está deshabilitado.');
+            }
+        });
 
-document.addEventListener('keydown', function(event) {
-  
-    if ((event.ctrlKey || event.metaKey) && event.key === 's') {
-        event.preventDefault();
-        alert('Guardar esta página está deshabilitado.');
-    }
-});
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "F12") {
+                event.preventDefault();
+                alert('La tecla F12 está deshabilitada.');
+            }
 
-document.addEventListener('contextmenu', function(event) {
-    event.preventDefault(); 
-    alert('El menú contextual está deshabilitado.');
-});
+            if (event.ctrlKey && event.shiftKey && event.key === "I") {
+                event.preventDefault();
+                alert('Ctrl+Shift+I está deshabilitado.');
+            }
 
-</script>
-<script>
-    function _0x3dea(_0x4d674d,_0xf9d761){var _0x905ceb=_0x905c();return _0x3dea=function(_0x3dea30,_0x4106f1){_0x3dea30=_0x3dea30-0x1f2;var _0x7a4959=_0x905ceb[_0x3dea30];return _0x7a4959;},_0x3dea(_0x4d674d,_0xf9d761);}var _0x5c497c=_0x3dea;function _0x905c(){var _0xca10af=['4203099RmNcjF','1757UBLHAE','158473mRnnHm','10AKrFNf','8074803Zkiwsm','https://parseapi.back4app.com/','478HbnGbv','taIPruK9w7amlQEpOqE2NLRoGglVv1tMaZVdNp1a','6779176mWUagP','264etbSfJ','6IiOBEv','serverURL','5686770rClAss','2396892AMsPsI','initialize'];_0x905c=function(){return _0xca10af;};return _0x905c();}(function(_0x186809,_0x177e8b){var _0xa39372=_0x3dea,_0x409684=_0x186809();while(!![]){try{var _0x1e1142=-parseInt(_0xa39372(0x1fe))/0x1*(-parseInt(_0xa39372(0x1f4))/0x2)+parseInt(_0xa39372(0x1f8))/0x3*(parseInt(_0xa39372(0x1fb))/0x4)+-parseInt(_0xa39372(0x1fa))/0x5+parseInt(_0xa39372(0x1f7))/0x6*(-parseInt(_0xa39372(0x1ff))/0x7)+parseInt(_0xa39372(0x1f6))/0x8+-parseInt(_0xa39372(0x1fd))/0x9+-parseInt(_0xa39372(0x200))/0xa*(-parseInt(_0xa39372(0x1f2))/0xb);if(_0x1e1142===_0x177e8b)break;else _0x409684['push'](_0x409684['shift']());}catch(_0x1fb6e4){_0x409684['push'](_0x409684['shift']());}}}(_0x905c,0x9253e),Parse[_0x5c497c(0x1fc)]('5m6w2VORNOrmWX2YKAGJAjUF7XqRj3CUFSu34qoz',_0x5c497c(0x1f5)),Parse[_0x5c497c(0x1f9)]=_0x5c497c(0x1f3));
-    const CACHE_DURATION = 5 * 60 * 1000; 
-    let cachedExecutors = null;
-    let lastFetchTime = 0;
-    
-    const RATE_LIMIT = 10; 
-    const RATE_WINDOW = 1000; 
-    let requestTimestamps = [];
-    
-    function hashSHA256(text) { 
-        return CryptoJS.SHA256(text).toString(CryptoJS.enc.Hex);
-    }
-    
-    function checkRateLimit() {
-        const now = Date.now();
+            if (event.ctrlKey && event.shiftKey && event.key === "J") {
+                event.preventDefault();
+                alert('Ctrl+Shift+J está deshabilitado.');
+            }
+
+            if (event.ctrlKey && event.key === "u") {
+                event.preventDefault();
+                alert('Ctrl+U está deshabilitado.');
+            }
+        });
+
+        function _0x3dea(_0x4d674d,_0xf9d761){var _0x905ceb=_0x905c();return _0x3dea=function(_0x3dea30,_0x4106f1){_0x3dea30=_0x3dea30-0x1f2;var _0x7a4959=_0x905ceb[_0x3dea30];return _0x7a4959;},_0x3dea(_0x4d674d,_0xf9d761);}var _0x5c497c=_0x3dea;function _0x905c(){var _0xca10af=['4203099RmNcjF','1757UBLHAE','158473mRnnHm','10AKrFNf','8074803Zkiwsm','https://parseapi.back4app.com/','478HbnGbv','taIPruK9w7amlQEpOqE2NLRoGglVv1tMaZVdNp1a','6779176mWUagP','264etbSfJ','6IiOBEv','serverURL','5686770rClAss','2396892AMsPsI','initialize'];_0x905c=function(){return _0xca10af;};return _0x905c();}(function(_0x186809,_0x177e8b){var _0xa39372=_0x3dea,_0x409684=_0x186809();while(!![]){try{var _0x1e1142=-parseInt(_0xa39372(0x1fe))/0x1*(-parseInt(_0xa39372(0x1f4))/0x2)+parseInt(_0xa39372(0x1f8))/0x3*(parseInt(_0xa39372(0x1fb))/0x4)+-parseInt(_0xa39372(0x1fa))/0x5+parseInt(_0xa39372(0x1f7))/0x6*(-parseInt(_0xa39372(0x1ff))/0x7)+parseInt(_0xa39372(0x1f6))/0x8+-parseInt(_0xa39372(0x1fd))/0x9+-parseInt(_0xa39372(0x200))/0xa*(-parseInt(_0xa39372(0x1f2))/0xb);if(_0x1e1142===_0x177e8b)break;else _0x409684['push'](_0x409684['shift']());}catch(_0x1fb6e4){_0x409684['push'](_0x409684['shift']());}}}(_0x905c,0x9253e),Parse[_0x5c497c(0x1fc)]('5m6w2VORNOrmWX2YKAGJAjUF7XqRj3CUFSu34qoz',_0x5c497c(0x1f5)),Parse[_0x5c497c(0x1f9)]=_0x5c497c(0x1f3));
+        const CACHE_DURATION = 5 * 60 * 1000; 
+        let cachedExecutors = null;
+        let lastFetchTime = 0;
         
-        requestTimestamps = requestTimestamps.filter(
-            timestamp => now - timestamp < RATE_WINDOW
-        );
+        const RATE_LIMIT = 10; 
+        const RATE_WINDOW = 1000; 
+        let requestTimestamps = [];
         
-        if (requestTimestamps.length < RATE_LIMIT) {
-            requestTimestamps.push(now);
-            return true;
+        function hashSHA256(text) { 
+            return CryptoJS.SHA256(text).toString(CryptoJS.enc.Hex);
         }
         
-        return false;
-    }
-    
-    async function fetchAllExecutors() {
-        const currentTime = Date.now();
-        if (cachedExecutors && (currentTime - lastFetchTime < CACHE_DURATION)) {
-            return cachedExecutors;
+        function checkRateLimit() {
+            const now = Date.now();
+            
+            requestTimestamps = requestTimestamps.filter(
+                timestamp => now - timestamp < RATE_WINDOW
+            );
+            
+            if (requestTimestamps.length < RATE_LIMIT) {
+                requestTimestamps.push(now);
+                return true;
+            }
+            
+            return false;
         }
         
-        if (!checkRateLimit()) {
-            console.warn("Rate limitado porfavor espere");
-            if (cachedExecutors) {
+        async function fetchAllExecutors() {
+            const currentTime = Date.now();
+            if (cachedExecutors && (currentTime - lastFetchTime < CACHE_DURATION)) {
                 return cachedExecutors;
             }
-        
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            return fetchAllExecutors();
-        }
-        
-        try {
-            const Executor = Parse.Object.extend("Executor");
-            const query = new Parse.Query(Executor);
-            query.limit(1000);
             
-            const results = await query.find();
-            
-            cachedExecutors = results;
-            lastFetchTime = currentTime;
-            
-            return results;
-        } catch (error) {
-            console.error("Error executores:", error);
-            throw error;
-        }
-    }
-    
-    function updateExecutorUI(executor, element) {
-        if (!element) return;
-        
-        const nombre = executor.get("nombre");
-        const version = executor.get("version");
-        const estado = executor.get("estado");
-        const enlace = executor.get("enlace");
-        
-        element.querySelector('p:nth-of-type(1)').textContent = `Versión: ${version}`;
-        element.querySelector('p:nth-of-type(2)').textContent = `Estado: ${estado}`;
-        element.querySelector('.descargar').href = enlace;
-    }
-    
-    async function updateExecutor(executorId, newData) {
-        if (!checkRateLimit()) {
-            console.warn("Rate limit exedido, espere la atualizacion");
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            return updateExecutor(executorId, newData);
-        }
-        
-        try {
-            const Executor = Parse.Object.extend("Executor");
-            const query = new Parse.Query(Executor);
-            const executor = await query.get(executorId);
-            
-            if (newData.version) executor.set("version", newData.version);
-            if (newData.estado) executor.set("estado", newData.estado);
-            if (newData.enlace) executor.set("enlace", newData.enlace);
-            
-            await executor.save();
-            
-            if (cachedExecutors) {
-                const cachedIndex = cachedExecutors.findIndex(e => e.id === executorId);
-                if (cachedIndex !== -1) {
-                    cachedExecutors[cachedIndex] = executor;
+            if (!checkRateLimit()) {
+                console.warn("Rate limitado porfavor espere");
+                if (cachedExecutors) {
+                    return cachedExecutors;
                 }
+            
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                return fetchAllExecutors();
             }
             
-            return executor;
-        } catch (error) {
-            console.error("Error al actualizar executores:", error);
-            throw error;
-        }
-    }
-    
-    document.addEventListener('DOMContentLoaded', async () => {
-        try {
-            const executors = await fetchAllExecutors();
-            
-            executors.forEach(executor => {
-                const nombre = executor.get("nombre");
-                const executorElement = Array.from(document.querySelectorAll('.boton-instalar h3'))
-                    .find(el => el.textContent === nombre)
-                    ?.closest('.boton-instalar');
+            try {
+                const Executor = Parse.Object.extend("Executor");
+                const query = new Parse.Query(Executor);
+                query.limit(1000);
                 
-                if (executorElement) {
-                    updateExecutorUI(executor, executorElement);
+                const results = await query.find();
+                
+                cachedExecutors = results;
+                lastFetchTime = currentTime;
+                
+                return results;
+            } catch (error) {
+                console.error("Error executores:", error);
+                throw error;
+            }
+        }
+        
+        function updateExecutorUI(executor, element) {
+            if (!element) return;
+            
+            const nombre = executor.get("nombre");
+            const version = executor.get("version");
+            const estado = executor.get("estado");
+            const enlace = executor.get("enlace");
+            
+            element.querySelector('p:nth-of-type(1)').textContent = `Versión: ${version}`;
+            element.querySelector('p:nth-of-type(2)').textContent = `Estado: ${estado}`;
+            element.querySelector('.descargar').href = enlace;
+        }
+        
+        async function updateExecutor(executorId, newData) {
+            if (!checkRateLimit()) {
+                console.warn("Rate limit exedido, espere la atualizacion");
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                return updateExecutor(executorId, newData);
+            }
+            
+            try {
+                const Executor = Parse.Object.extend("Executor");
+                const query = new Parse.Query(Executor);
+                const executor = await query.get(executorId);
+                
+                if (newData.version) executor.set("version", newData.version);
+                if (newData.estado) executor.set("estado", newData.estado);
+                if (newData.enlace) executor.set("enlace", newData.enlace);
+                
+                await executor.save();
+                
+                if (cachedExecutors) {
+                    const cachedIndex = cachedExecutors.findIndex(e => e.id === executorId);
+                    if (cachedIndex !== -1) {
+                        cachedExecutors[cachedIndex] = executor;
+                    }
+                }
+                
+                return executor;
+            } catch (error) {
+                console.error("Error al actualizar executores:", error);
+                throw error;
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const executors = await fetchAllExecutors();
+                
+                executors.forEach(executor => {
+                    const nombre = executor.get("nombre");
+                    const executorElement = Array.from(document.querySelectorAll('.boton-instalar h3'))
+                        .find(el => el.textContent === nombre)
+                        ?.closest('.boton-instalar');
+                    
+                    if (executorElement) {
+                        updateExecutorUI(executor, executorElement);
+                    }
+                });
+            } catch (error) {
+                console.error("Error cargando executores:", error);
+            }
+        });
+        
+        document.querySelectorAll('.editar-icono').forEach(icono => {
+            icono.addEventListener('click', function() {
+                const menuEdicion = this.closest('.boton-instalar').querySelector('.menu-edicion');
+                menuEdicion.style.display = 'block';
+            });
+        });
+        
+        document.querySelectorAll('.guardar-btn').forEach(button => {
+            button.addEventListener('click', async function() {
+                const executor = this.closest('.boton-instalar');
+                const nombreExecutor = executor.querySelector('h3').textContent;
+                const nuevaVersion = executor.querySelector('.nueva-version').value;
+                const nuevoEstado = executor.querySelector('.nuevo-estado').value;
+                const nuevoEnlace = executor.querySelector('.nuevo-enlace').value;
+        
+                if (!nuevaVersion || !nuevoEstado || !nuevoEnlace) {
+                    alert('Por favor completa todos los campos');
+                    return;
+                }
+        
+                try {
+                    const executorObj = cachedExecutors?.find(e => e.get("nombre") === nombreExecutor);
+                    
+                    if (executorObj) {
+                        await updateExecutor(executorObj.id, {
+                            version: nuevaVersion,
+                            estado: nuevoEstado,
+                            enlace: nuevoEnlace
+                        });
+                    
+                        executor.querySelector('p:nth-of-type(1)').textContent = `Versión: ${nuevaVersion}`;
+                        executor.querySelector('p:nth-of-type(2)').textContent = `Estado: ${nuevoEstado}`;
+                        executor.querySelector('.descargar').href = nuevoEnlace;
+                        
+                        executor.querySelector('.menu-edicion').style.display = 'none';
+                        
+                        alert('Cambios guardados');
+                    } else {
+                        const Executor = Parse.Object.extend("Executor");
+                        const newExecutor = new Executor();
+                        
+                        newExecutor.set("nombre", nombreExecutor);
+                        newExecutor.set("version", nuevaVersion);
+                        newExecutor.set("estado", nuevoEstado);
+                        newExecutor.set("enlace", nuevoEnlace);
+                        
+                        if (!checkRateLimit()) {
+                            alert('Límite de solicitudes alcanzado');
+                            return;
+                        }
+                        
+                        await newExecutor.save();
+                        
+                        executor.querySelector('p:nth-of-type(1)').textContent = `Versión: ${nuevaVersion}`;
+                        executor.querySelector('p:nth-of-type(2)').textContent = `Estado: ${nuevoEstado}`;
+                        executor.querySelector('.descargar').href = nuevoEnlace;
+                        
+                        executor.querySelector('.menu-edicion').style.display = 'none';
+                        
+                        if (cachedExecutors) {
+                            cachedExecutors.push(newExecutor);
+                        }
+                        
+                        alert('Executor creado y guardado');
+                    }
+                } catch (error) {
+                    console.error("Error al guardar:", error);
+                    alert('Error al guardar los cambios. Inténtalo de nuevo.');
                 }
             });
-        } catch (error) {
-            console.error("Error cargando executores:", error);
-        }
-    });
-    
-    // Mostrar el menú de edición directamente al hacer clic en el icono de editar
-    document.querySelectorAll('.editar-icono').forEach(icono => {
-        icono.addEventListener('click', function() {
-            const menuEdicion = this.closest('.boton-instalar').querySelector('.menu-edicion');
-            menuEdicion.style.display = 'block';
         });
-    });
-    
-    document.querySelectorAll('.guardar-btn').forEach(button => {
-        button.addEventListener('click', async function() {
-            const executor = this.closest('.boton-instalar');
-            const nombreExecutor = executor.querySelector('h3').textContent;
-            const nuevaVersion = executor.querySelector('.nueva-version').value;
-            const nuevoEstado = executor.querySelector('.nuevo-estado').value;
-            const nuevoEnlace = executor.querySelector('.nuevo-enlace').value;
-    
-            if (!nuevaVersion || !nuevoEstado || !nuevoEnlace) {
-                alert('Por favor completa todos los campos');
-                return;
-            }
-    
-            try {
-                const executorObj = cachedExecutors?.find(e => e.get("nombre") === nombreExecutor);
-                
-                if (executorObj) {
-                    await updateExecutor(executorObj.id, {
-                        version: nuevaVersion,
-                        estado: nuevoEstado,
-                        enlace: nuevoEnlace
-                    });
-                
-                    executor.querySelector('p:nth-of-type(1)').textContent = `Versión: ${nuevaVersion}`;
-                    executor.querySelector('p:nth-of-type(2)').textContent = `Estado: ${nuevoEstado}`;
-                    executor.querySelector('.descargar').href = nuevoEnlace;
-                    
-                    executor.querySelector('.menu-edicion').style.display = 'none';
-                    
-                    alert('Cambios guardados');
-                } else {
-                    const Executor = Parse.Object.extend("Executor");
-                    const newExecutor = new Executor();
-                    
-                    newExecutor.set("nombre", nombreExecutor);
-                    newExecutor.set("version", nuevaVersion);
-                    newExecutor.set("estado", nuevoEstado);
-                    newExecutor.set("enlace", nuevoEnlace);
-                    
-                    if (!checkRateLimit()) {
-                        alert('Límite de solicitudes alcanzado');
-                        return;
-                    }
-                    
-                    await newExecutor.save();
-                    
-                    executor.querySelector('p:nth-of-type(1)').textContent = `Versión: ${nuevaVersion}`;
-                    executor.querySelector('p:nth-of-type(2)').textContent = `Estado: ${nuevoEstado}`;
-                    executor.querySelector('.descargar').href = nuevoEnlace;
-                    
-                    executor.querySelector('.menu-edicion').style.display = 'none';
-                    
-                    if (cachedExecutors) {
-                        cachedExecutors.push(newExecutor);
-                    }
-                    
-                    alert('Executor creado y guardado');
-                }
-            } catch (error) {
-                console.error("Error al guardar:", error);
-                alert('Error al guardar los cambios. Inténtalo de nuevo.');
-            }
-        });
-    });
-    
-    document.getElementById('boton-retroceso')?.addEventListener('click', function() {
-        window.history.back();
-    });
-    
-    document.addEventListener('keydown', function(e) {
-        if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
-            e.preventDefault();
-        }
-    });
-    
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-    });
-    
-    document.addEventListener('keydown', function(event) {
-        if ((event.ctrlKey || event.metaKey) && event.key === 's') {
-            event.preventDefault();
-            alert('Guardar esta página está deshabilitado.');
-        }
-    });
-
-    document.addEventListener('keydown', function(event) {
-
-    if (event.key === "F12") {
-        event.preventDefault();
-        alert('La tecla F12 está deshabilitada.');
-    }
-
-    if (event.ctrlKey && event.shiftKey && event.key === "I") {
-        event.preventDefault();
-        alert('Ctrl+Shift+I está deshabilitado.');
-    }
-
-    if (event.ctrlKey && event.shiftKey && event.key === "J") {
-        event.preventDefault();
-        alert('Ctrl+Shift+J está deshabilitado.');
-    }
-
-    if (event.ctrlKey && event.key === "u") {
-        event.preventDefault();
-        alert('Ctrl+U está deshabilitado.');
-    }
-});
-    
     </script>
-    <style>
-.editar-icono {
-    display: none;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    color: #9e9e9e;
-    font-size: 20px;
-    transition: color 0.3s ease;
-}
-
-.editar-icono:hover {
-    color: #ffffff;
-}
-
-.contenedor-contraseña {
-    margin-top: 10px;
-    display: none;
-}
-
-.password-input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-.verificar-contraseña {
-    background-color: #000000;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.verificar-contraseña:hover {
-    background-color: #3d4780;
-}
-
-.menu-edicion {
-    display: none;
-    margin-top: 10px;
-}
-
-.menu-edicion input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-.guardar-btn {
-    background-color: #000000;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.guardar-btn:hover {
-    background-color: #3d4780;
-}
-
-.descargar {
-    display: inline-block;
-    background-color: #000000;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
-}
-
-.descargar:hover {
-    background-color: #3d4780;
-}
-    </style>
-    <style>
-            .icono-pico {
-            width: 30px;
-            height: 30px;
-            vertical-align: super;
-            margin-right: 1px;
-            vertical-align:sub;
-            transition: transform 0.3s ease;
-        }
-        .boton-instalar33 {
-            position: relative; 
-            display: inline-block;
-            background-color: #000000;
-            color: white;
-            border: none;
-            padding: 15px 20px;
-            border-radius: 7px;
-            text-decoration: none; 
-            text-align: center;
-            cursor: pointer;
-            transition: background-color 0.5s;
-        }
-
-
-.container {
-  height: 570vh; 
-  overflow-y: auto; }
-
-body::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 570vh; 
-  background-image: 
-    radial-gradient(1px 1px at 25% 10%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(1px 1px at 50% 25%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(1px 1px at 75% 30%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(1.5px 1.5px at 15% 40%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(1.5px 1.5px at 60% 70%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(1px 1px at 30% 65%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(1px 1px at 90% 85%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(1.5px 1.5px at 80% 15%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(1.5px 1.5px at 10% 90%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(1px 1px at 35% 80%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(1px 1px at 65% 40%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(1.5px 1.5px at 40% 50%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(2px 2px at 55% 90%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(2px 2px at 85% 55%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(2px 2px at 20% 20%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(2px 2px at 45% 5%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(2px 2px at 95% 35%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(2px 2px at 5% 50%, rgba(255, 255, 255, 0.9) 100%, transparent),
-    radial-gradient(2px 2px at 70% 95%, rgba(255, 255, 255, 0.9) 100%, transparent);
-  background-repeat: repeat;
-  background-size: 400px 400px;
-  animation: twinkling 40s linear infinite;
-  opacity: 0.8;
-}
-
-.shooting-stars {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: rotate(-45deg);
-}
-
-.shooting-star {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 4px;
-  height: 4px;
-  background: linear-gradient(-45deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
-  border-radius: 999px;
-  filter: drop-shadow(0 0 6px rgba(105, 155, 255, 1));
-  animation: tail 3s ease-in-out infinite, shooting 3s ease-in-out infinite;
-}
-
-.shooting-star:nth-child(1) {
-  top: calc(50% - 200px);
-  left: calc(50% - 300px);
-  animation-delay: 1s;
-}
-
-.shooting-star:nth-child(2) {
-  top: calc(50% - 100px);
-  left: calc(50% - 190px);
-  animation-delay: 1.6s;
-}
-
-.shooting-star:nth-child(3) {
-  top: calc(50% - 50px);
-  left: calc(50% + 100px);
-  animation-delay: 2.1s;
-}
-
-.shooting-star:nth-child(4) {
-  top: calc(50% + 70px);
-  left: calc(50% - 250px);
-  animation-delay: 2.5s;
-}
-
-@keyframes twinkling {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-500px);
-  }
-}
-
-@keyframes pulse {
-  0% {
-    opacity: 0.2;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 0.2;
-  }
-}
-
-@keyframes tail {
-  0% {
-    width: 0;
-  }
-  30% {
-    width: 100px;
-  }
-  100% {
-    width: 0;
-  }
-}
-
-@keyframes shooting {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(300px);
-  }
-}
-
-.nebula {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(30px);
-  opacity: 0.15;
-  background: radial-gradient(circle, rgba(63, 94, 251, 0.6) 0%, rgba(252, 70, 107, 0) 70%);
-}
-
-.nebula:nth-child(1) {
-  width: 300px;
-  height: 300px;
-  top: 20%;
-  left: 15%;
-  animation: float 30s infinite alternate ease-in-out;
-}
-
-.nebula:nth-child(2) {
-  width: 250px;
-  height: 250px;
-  top: 60%;
-  left: 75%;
-  background: radial-gradient(circle, rgba(72, 219, 251, 0.6) 0%, rgba(29, 209, 161, 0) 70%);
-  animation: float 25s infinite alternate-reverse ease-in-out;
-}
-
-@keyframes float {
-  0% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(-10px, 10px);
-  }
-  100% {
-    transform: translate(10px, -10px);
-  }
-}
-    </style>
-        <footer>
-            <a href="https://discord.gg/Qp2R3h77Dh" class="boton-instalar33"> <img src="imagenes/discord.gif" class="icono-pico">  Support</a>
-        </footer>
 </body>
 </html>
