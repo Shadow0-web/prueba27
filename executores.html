@@ -372,6 +372,9 @@
         display: flex;
         flex-direction: column;
         gap: 15px; /* Espacio entre botones */
+
+        margin-bottom: 15px; /* Espacio adicional después del último botón */
+
     }
 
     /* Logo perfectamente posicionado */
@@ -379,10 +382,16 @@
         position: relative; /* Cambiado de sticky a relative */
         width: 100%;
         padding: 15px 0 10px;
-        margin-top: 30px; /* Espacio mínimo sobre el logo */
+        padding-top: 20px; /* Aumenté un poco este valor */
+        margin-top: 0; /* Eliminé el margin-top anterior */
+        border-top: 1px solid rgba(255, 0, 0, 0.2); /* Borde más sutil */
+
         text-align: center;
-        border-top: 1px solid rgba(255, 0, 0, 0.3);
+
         background: transparent;
+    }
+    .sidebar a:last-child {
+        margin-bottom: 5px; /* Espacio extra después del último botón */
     }
 
     .neo img {
