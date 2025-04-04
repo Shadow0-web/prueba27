@@ -354,34 +354,37 @@
 @media (max-width: 768px) {
     /* ... (tus estilos existentes) ... */
 
-    /* Nuevos estilos para el logo */
-    .neo {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80%;
-        text-align: center;
-        z-index: 3;
-        transition: all 0.3s ease;
-    }
-
+    /* Estilos optimizados para el logo dentro de la sidebar */
     .sidebar {
+        left: -250px;
+        transition: left 0.3s ease;
+        box-shadow: 5px 0 15px rgba(255, 0, 0, 0.5);
+        padding-bottom: 20px; /* Reducido el espacio inferior */
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        padding-bottom: 120px; /* Espacio para el logo */
+        height: 100vh;
+        overflow-y: auto; /* Permite scroll si el contenido es muy largo */
+    }
+
+    .neo {
+        position: sticky;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 10px 0;
+        margin-top: auto; /* Empuja el logo al final */
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        z-index: 2;
+        border-top: 1px solid rgba(255, 0, 0, 0.2);
+    }
+
+    .neo img {
+        width: 150px; /* Reducción del tamaño para móvil */
+        height: auto;
     }
 
     .sidebar.active ~ .neo {
-        display: none; /* Oculta el logo fuera de la sidebar cuando está activa */
-    }
-
-    .sidebar .neo {
-        display: block; /* Muestra el logo dentro de la sidebar */
-        margin-top: auto; /* Lo empuja hacia abajo */
-        padding-top: 20px;
-        border-top: 1px solid rgba(255, 0, 0, 0.3);
+        display: none; /* Oculta el logo duplicado fuera */
     }
 }
 @media (max-width: 768px) {
