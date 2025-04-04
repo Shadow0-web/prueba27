@@ -49,7 +49,7 @@
             width: 250px;
             height: 100%;
             background: rgba(0, 0, 0, 0.9);
-            transition: left 0.5s ease;
+            transition: left 0.3s ease;
             z-index: 3;
             display: flex;
             flex-direction: column;
@@ -106,7 +106,6 @@
 
         .sidebar a:hover::before {
             opacity: 0.7;
-            animation: neon-border 1.5s infinite alternate;
         }
 
         .neo {
@@ -190,7 +189,7 @@
             justify-content: center;
             align-items: center;
             margin-left: 250px; 
-            transition: margin-left 0.5s ease;
+            transition: margin-left 0.3s ease;
         }
 
         .pQrStUvWxY {
@@ -396,7 +395,6 @@
                 display: flex;
             }
         }
-
     </style>
 </head>
 <body>
@@ -498,36 +496,42 @@
         });
     });
 
-    // Toggle de la sidebar para móviles
+    // Toggle de la sidebar - VERSIÓN FUNCIONAL
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.querySelector('.xYzAbCdEfG');
     const logo = document.getElementById('logo');
 
-    // Función para verificar si es móvil
     function isMobile() {
         return window.innerWidth <= 768;
     }
 
-    // Función para alternar la sidebar
-    function toggleSidebar() {
+    function toggleMenu() {
         sidebar.classList.toggle('active');
-        
-        // Si es móvil, ajustar el margen del contenido principal
         if (isMobile()) {
-            if (sidebar.classList.contains('active')) {
-                mainContent.style.marginLeft = '250px';
-            } else {
-                mainContent.style.marginLeft = '0';
-            }
+            mainContent.style.marginLeft = sidebar.classList.contains('active') ? '250px' : '0';
         }
     }
 
-    // Evento para el botón de toggle
-    sidebarToggle.addEventListener('click', toggleSidebar);
+    sidebarToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleMenu();
+    });
 
-    // Ajustar al cargar la página
-    function adjustLayout() {
+    // Cerrar al hacer click fuera en móviles
+    document.addEventListener('click', function() {
+        if (isMobile() && sidebar.classList.contains('active')) {
+            toggleMenu();
+        }
+    });
+
+    // Evitar que se cierre al hacer click en la sidebar
+    sidebar.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+
+    // Inicialización
+    function initLayout() {
         if (isMobile()) {
             sidebar.classList.remove('active');
             mainContent.style.marginLeft = '0';
@@ -543,11 +547,8 @@
         }
     }
 
-    // Ajustar al cambiar el tamaño de la ventana
-    window.addEventListener('resize', adjustLayout);
-
-    // Inicializar el layout
-    adjustLayout();
+    window.addEventListener('resize', initLayout);
+    initLayout();
 
     // Arrastrar el logo (solo en desktop)
     let isDragging = false;
