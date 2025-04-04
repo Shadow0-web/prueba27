@@ -350,8 +350,21 @@
     z-index: 1001; /* Mayor que la sidebar */
     font-size: 20px;
 }
-
-/* Estilos para móviles */
+@media (max-width: 768px) {
+    .neo {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        transform: none;
+        padding: 20px 0;
+        background: rgba(0, 0, 0, 0.7);
+    }
+    
+    .sidebar {
+        padding-bottom: 180px; /* Ajusta según el tamaño de tu logo */
+    }
+}
 @media (max-width: 768px) {
     body {
         padding: 20px !important; /* Eliminamos el padding izquierdo */
@@ -372,14 +385,7 @@
         display: block;
     }
     
-    /* Ajustamos el logo para que no se superponga */
-    .neo {
-        left: 50%;
-        display: none;
-        transform: translateX(-50%);
-        transition: none;
-        z-index: 999; 
-    }
+
     
 
     .overlay {
