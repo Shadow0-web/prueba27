@@ -352,60 +352,114 @@
 }
 
 @media (max-width: 768px) {
-    /* ... (tus otros estilos existentes) ... */
-
-    /* Sidebar optimizada */
+    body {
+        padding: 20px !important;
+        transition: none;
+    }
+    
     .sidebar {
         left: -250px;
         transition: left 0.3s ease;
         box-shadow: 5px 0 15px rgba(255, 0, 0, 0.5);
-        padding: 20px 0; /* Espacio interno reducido */
+        padding: 20px 0;
         display: flex;
         flex-direction: column;
         height: auto;
         min-height: 100vh;
+        background: rgba(0, 0, 0, 0.9);
+        width: 250px;
+        position: fixed;
+        top: 0;
+        z-index: 999;
     }
-
-    /* Contenedor de botones */
+    
+    .sidebar.active {
+        left: 0;
+    }
+    
+    .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background-color: #ff0000;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        z-index: 1000;
+        font-size: 20px;
+    }
+    
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 998;
+    }
+    
+    .sidebar.active ~ .overlay {
+        display: block;
+    }
+    
     .sidebar-buttons {
-        flex: 1; /* Ocupa todo el espacio disponible */
+        flex: 1;
         display: flex;
         flex-direction: column;
-        gap: 15px; /* Espacio entre botones */
-
-        margin-bottom: 15px; /* Espacio adicional después del último botón */
-
+        gap: 15px;
+        margin-bottom: 15px;
+        padding: 0 20px;
     }
-
-    /* Logo perfectamente posicionado */
-    .neo {
-        position: relative; /* Cambiado de sticky a relative */
-        width: 100%;
-        padding: 15px 0 10px;
-        padding-top: 20px; /* Aumenté un poco este valor */
-        margin-top: 0; /* Eliminé el margin-top anterior */
-        border-top: 1px solid rgba(255, 0, 0, 0.2); /* Borde más sutil */
-
+    
+    .sidebar a {
+        color: #ff0000;
+        text-decoration: none;
+        font-size: 1.1rem;
+        padding: 12px 20px;
+        border-radius: 30px;
         text-align: center;
-
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+    
+    .sidebar a:last-child {
+        margin-bottom: 5px;
+    }
+    
+    .neo {
+        position: relative;
+        width: 100%;
+        padding: 20px 0 10px;
+        margin-top: 0;
+        border-top: 1px solid rgba(255, 0, 0, 0.2);
+        text-align: center;
         background: transparent;
     }
-    .sidebar a:last-child {
-        margin-bottom: 5px; /* Espacio extra después del último botón */
-    }
-
+    
     .neo img {
-        width: 120px; /* Tamaño más compacto */
+        width: 120px;
         height: auto;
-        margin: 0 auto; /* Centrado perfecto */
+        margin: 0 auto;
+        filter: 
+            drop-shadow(0 0 5px rgba(255, 0, 0, 0.7))
+            drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
     }
-
+    
     .neon-text {
-        font-size: 1.2rem; /* Tamaño ajustado */
+        font-size: 1.2rem;
         margin-top: 5px;
+        color: #fff;
+        text-shadow: 
+            0 0 5px #fff,
+            0 0 10px #ff0000,
+            0 0 20px #ff0000;
     }
-
-    /* Eliminar el logo duplicado exterior */
+    
     .sidebar.active ~ .neo {
         display: none;
     }
