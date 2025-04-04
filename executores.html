@@ -534,6 +534,24 @@
                 text-shadow: none;
             }
         }
+        .sidebar-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 5000000;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            color: #ff0000;
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -589,7 +607,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
     </script>
         <button class="menu-toggle" id="menuToggle">
-            <i class="fas fa-bars"></i>
+            <div class="sidebar-toggle">☰</div>
         </button>
         <div class="sidebar" id="sidebar">
             <a href="executores.html">Executores</a>
