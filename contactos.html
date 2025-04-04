@@ -57,6 +57,7 @@
             padding-top: 60px;
             border-right: 1px solid rgba(255, 0, 0, 0.3);
             box-shadow: 0 0 30px rgba(255, 0, 0, 0.3); 
+            overflow-y: auto;
         }
 
         .sidebar a {
@@ -109,17 +110,15 @@
         }
 
         .neo {
-            position: fixed;
-            z-index: 4;
+            position: relative;
             text-align: center;
-            transition: all 0.5s ease;
-            left: 120px;
-            top: 70%;
-            transform: translate(-50%, -50%);
+            margin-top: 30px;
+            margin-bottom: 30px;
+            display: none;
         }
 
         .neo img {
-            width: 250px;
+            width: 150px;
             filter:
                 drop-shadow(0 0 5px rgba(255, 0, 0, 0.7))
                 drop-shadow(0 0 10px rgba(255, 0, 0, 0.5))
@@ -127,14 +126,6 @@
             animation: neon-glow 1.5s ease-in-out infinite alternate;
             transition: all 0.3s ease;
             cursor: pointer;
-        }
-
-        .neo img:hover {
-            transform: scale(1.05);
-            filter:
-                drop-shadow(0 0 10px rgba(255, 0, 0, 0.9))
-                drop-shadow(0 0 20px rgba(255, 0, 0, 0.7))
-                drop-shadow(0 0 30px rgba(255, 0, 0, 0.5));
         }
 
         .neon-text {
@@ -146,8 +137,8 @@
                 0 0 30px #ff0000,
                 0 0 40px #ff0000;
             animation: text-flicker 3s linear infinite;
-            font-size: 1.9rem;
-            margin-top: 20px;
+            font-size: 1.5rem;
+            margin-top: 10px;
         }
 
         @keyframes neon-glow {
@@ -386,13 +377,16 @@
             }
             
             .neo {
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
+                display: block;
             }
             
             .sidebar-toggle {
                 display: flex;
+            }
+            
+            /* Ocultar el neo fuera de la sidebar en móviles */
+            .xYzAbCdEfG .neo {
+                display: none;
             }
         }
     </style>
@@ -408,10 +402,17 @@
     <a href="Status-Executores.html">Status</a>
     <a href="scripts.html">Scripts</a>
     <a href="contactos.html">Contactos</a>
+    
+    <!-- Neo dentro de la sidebar solo para móviles -->
+    <div class="neo" id="sidebarNeo">
+        <img src="img/vxspoty.png" alt="VxSpot Logo">
+        <div class="neon-text">Vxspot</div>
+    </div>
 </div>
 
-<div class="neo" id="logo">
-    <img src="img/vxspoty.png" alt="VxSpot Logo" id="logo-img">
+<!-- Neo para desktop (fuera de la sidebar) -->
+<div class="neo" id="desktopNeo">
+    <img src="img/vxspoty.png" alt="VxSpot Logo">
     <div class="neon-text">Vxspot</div>
 </div>
 
@@ -496,11 +497,11 @@
         });
     });
 
-    // Toggle de la sidebar - VERSIÓN FUNCIONAL
+    // Toggle de la sidebar
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.querySelector('.xYzAbCdEfG');
-    const logo = document.getElementById('logo');
+    const desktopNeo = document.getElementById('desktopNeo');
 
     function isMobile() {
         return window.innerWidth <= 768;
@@ -535,15 +536,11 @@
         if (isMobile()) {
             sidebar.classList.remove('active');
             mainContent.style.marginLeft = '0';
-            logo.style.left = '50%';
-            logo.style.top = '50%';
-            logo.style.transform = 'translate(-50%, -50%)';
+            desktopNeo.style.display = 'none';
         } else {
             sidebar.classList.add('active');
             mainContent.style.marginLeft = '250px';
-            logo.style.left = '120px';
-            logo.style.top = '70%';
-            logo.style.transform = 'translate(-50%, -50%)';
+            desktopNeo.style.display = 'block';
         }
     }
 
@@ -554,26 +551,29 @@
     let isDragging = false;
     let offsetX, offsetY;
 
-    logo.addEventListener('mousedown', (e) => {
+    desktopNeo.addEventListener('mousedown', (e) => {
         if (!isMobile()) {
             isDragging = true;
-            offsetX = e.clientX - logo.getBoundingClientRect().left;
-            offsetY = e.clientY - logo.getBoundingClientRect().top;
-            logo.style.cursor = 'grabbing';
+            offsetX = e.clientX - desktopNeo.getBoundingClientRect().left;
+            offsetY = e.clientY - desktopNeo.getBoundingClientRect().top;
+            desktopNeo.style.cursor = 'grabbing';
         }
     });
 
     document.addEventListener('mousemove', (e) => {
         if (isDragging && !isMobile()) {
-            logo.style.left = `${e.clientX - offsetX}px`;
-            logo.style.top = `${e.clientY - offsetY}px`;
-            logo.style.transform = 'translate(0, 0)';
+            desktopNeo.style.left = `${e.clientX - offsetX}px`;
+            desktopNeo.style.top = `${e.clientY - offsetY}px`;
+            desktopNeo.style.transform = 'translate(0, 0)';
+            desktopNeo.style.position = 'fixed';
         }
     });
 
     document.addEventListener('mouseup', () => {
         isDragging = false;
-        logo.style.cursor = 'grab';
+        if (!isMobile()) {
+            desktopNeo.style.cursor = 'grab';
+        }
     });
 </script>
 </body>
