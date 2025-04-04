@@ -228,38 +228,30 @@
 
       
         .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 250px;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            transition: left 0.5s ease;
-            z-index: 3;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 60px;
-            border-right: 1px solid rgba(255, 0, 0, 0.3);
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
-        }
-
-        .sidebar a {
-            color: #ff0000;
-            text-decoration: none;
-            font-size: 1.2rem;
-            margin: 15px 0;
-            padding: 12px 30px;
-            position: relative;
-            transition: all 0.3s ease;
-            border-radius: 30px;
-            background: transparent;
-            width: 150px;
-            text-align: center;
-            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
-            border: 1px solid transparent;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
-        }
+    position: fixed;
+    left: -250px; 
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    transition: left 0.3s ease;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 60px;
+    border-right: 1px solid rgba(255, 0, 0, 0.3);
+}
+.sidebar.active {
+    left: 0;}
+    .sidebar a {
+    color: #ff0000;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin: 15px 0;
+    padding: 12px 30px;
+    transition: all 0.3s ease;
+}
 
         .sidebar a:hover {
             color: #fff;
@@ -293,7 +285,53 @@
             opacity: 0.7;
             animation: neon-border 1.5s infinite alternate;
         }
+        .toggle-btn {
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    font-size: 24px;
+    color: #ff0000;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: none; /* Hidden by default, shown on mobile */
+    z-index: 6;
+}
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #ff0000;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: none; /* Hidden by default, shown on mobile */
+}
+@media (max-width: 768px) {
+    body {
+        padding: 20px; /* Reset padding on mobile */
+    }
+    .sidebar {
+        left: -250px; /* Ensure hidden by default */
+    }
+    .toggle-btn {
+        display: block; /* Show toggle button on mobile */
+    }
+    .close-btn {
+        display: block; /* Show close button on mobile */
+    }
+    .neo {
+        left: 60px; /* Adjust logo position on mobile */
+    }
+}
 
+/* Media query for desktop */
+@media (min-width: 769px) {
+    .sidebar.active + .neo {
+        left: 370px; /* Shift logo when sidebar is open */
+    }
+}
   
         .neo {
             position: fixed;
@@ -374,7 +412,47 @@
         <a href="scripts.html">Scripts</a>
         <a href="contactos.html">Contactos</a>
     </div>
+    <button class="toggle-btn" id="toggle-btn">&#9776;</button>
+    <script>
+        const sidebar = document.getElementById('sidebar');
+const toggleBtn = document.getElementById('toggle-btn');
+const closeBtn = document.getElementById('close-btn');
+const logo = document.getElementById('logo');
 
+let logoClicked = false;
+
+// Toggle sidebar on PC with logo click
+logo.addEventListener('click', function() {
+    if (window.innerWidth >= 769) {
+        sidebar.classList.toggle('active');
+    } else {
+        logoClicked = true;
+        toggleBtn.style.display = 'block'; // Show toggle button on mobile after logo click
+    }
+});
+
+// Toggle sidebar on mobile with button
+toggleBtn.addEventListener('click', function() {
+    if (logoClicked) {
+        sidebar.classList.add('active');
+    }
+});
+
+// Close sidebar on mobile
+closeBtn.addEventListener('click', function() {
+    sidebar.classList.remove('active');
+});
+
+// Reset toggle button visibility on resize
+window.addEventListener('resize', function() {
+    if (window.innerWidth >= 769) {
+        toggleBtn.style.display = 'none';
+        logoClicked = false;
+    } else if (!logoClicked) {
+        toggleBtn.style.display = 'none';
+    }
+});
+    </script>
     <div class="neo" id="logo">
         <img src="img/vxspoty.png" alt="VxSpot Logo" id="logo-img">
         <div class="neon-text">Vxspot</div>
