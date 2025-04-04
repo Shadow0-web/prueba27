@@ -227,200 +227,243 @@
         }
 
       
- /* Sidebar styles - Fijo en desktop */
-.sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 250px;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 60px;
-    border-right: 1px solid rgba(255, 0, 0, 0.3);
-    box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
-    transition: transform 0.3s ease;
-}
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            transition: left 0.5s ease;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 60px;
+            border-right: 1px solid rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+        }
 
-.sidebar a {
-    color: #ff0000;
-    text-decoration: none;
-    font-size: 1.1rem;
-    margin: 15px 0;
-    padding: 10px 20px;
-    border-radius: 30px;
-    width: 80%;
-    text-align: center;
-    transition: all 0.3s ease;
-}
+        .sidebar a {
+            color: #ff0000;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin: 15px 0;
+            padding: 12px 30px;
+            position: relative;
+            transition: all 0.3s ease;
+            border-radius: 30px;
+            background: transparent;
+            width: 150px;
+            text-align: center;
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+            border: 1px solid transparent;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+        }
 
-.sidebar a:hover {
-    background: rgba(255, 0, 0, 0.1);
-    color: #fff;
-}
+        .sidebar a:hover {
+            color: #fff;
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #ff0000,
+                0 0 20px #ff0000;
+            box-shadow:
+                0 0 10px rgba(255, 0, 0, 0.7),
+                0 0 20px rgba(255, 0, 0, 0.5);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            background: rgba(255, 0, 0, 0.1);
+            transform: scale(1.05);
+        }
 
-/* Logo styles - Posición fija en desktop */
-.neo {
-    position: fixed;
-    left: 125px; /* Ajustado para centrar en el espacio de la sidebar */
-    top: 20px;
-    z-index: 999;
-    text-align: center;
-}
+        .sidebar a::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 30px;
+            background: linear-gradient(45deg, #ff0000, #ff5e5e, #ff0000);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-.neo img {
-    width: 200px; /* Tamaño reducido para mejor ajuste */
-    filter:
-        drop-shadow(0 0 5px rgba(255, 0, 0, 0.7))
-        drop-shadow(0 0 10px rgba(255, 0, 0, 0.5))
-        drop-shadow(0 0 15px rgba(255, 0, 0, 0.3));
-    animation: neon-glow 1.5s ease-in-out infinite alternate;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
+        .sidebar a:hover::before {
+            opacity: 0.7;
+            animation: neon-border 1.5s infinite alternate;
+        }
 
-.neo img:hover {
-    transform: scale(1.05);
-    filter:
-        drop-shadow(0 0 10px rgba(255, 0, 0, 0.9))
-        drop-shadow(0 0 20px rgba(255, 0, 0, 0.7))
-        drop-shadow(0 0 30px rgba(255, 0, 0, 0.5));
-}
+  
+        .neo {
+            position: fixed;
+            z-index: 4;
+            text-align: center;
+            transition: all 0.5s ease;
+            left: 120px;
+            top: 70%;
+            transform: translate(-50%, -50%);
+        }
 
-.neon-text {
-    color: #fff;
-    text-shadow:
-        0 0 5px #fff,
-        0 0 10px #fff,
-        0 0 20px #ff0000,
-        0 0 30px #ff0000,
-        0 0 40px #ff0000;
-    animation: text-flicker 3s linear infinite;
-    font-size: 1.5rem; /* Tamaño ajustado */
-    margin-top: 10px;
-}
+        .neo img {
+            width: 250px;
+            filter:
+                drop-shadow(0 0 5px rgba(255, 0, 0, 0.7))
+                drop-shadow(0 0 10px rgba(255, 0, 0, 0.5))
+                drop-shadow(0 0 15px rgba(255, 0, 0, 0.3));
+            animation: neon-glow 1.5s ease-in-out infinite alternate;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
 
-/* Botón toggle - solo visible en móvil */
-.sidebar-toggle {
+        .neo img:hover {
+            transform: scale(1.05);
+            filter:
+                drop-shadow(0 0 10px rgba(255, 0, 0, 0.9))
+                drop-shadow(0 0 20px rgba(255, 0, 0, 0.7))
+                drop-shadow(0 0 30px rgba(255, 0, 0, 0.5));
+        }
+
+        .neon-text {
+            color: #fff;
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px #ff0000,
+                0 0 30px #ff0000,
+                0 0 40px #ff0000;
+            animation: text-flicker 3s linear infinite;
+            font-size: 1.9rem;
+            margin-top: 20px;
+        }
+        .menu-toggle {
     display: none;
     position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 1001;
-    background: rgba(255, 0, 0, 0.8);
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    top: 20px;
+    left: 20px;
+    background-color: #ff0000;
     color: white;
-    font-size: 1.2rem;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
     cursor: pointer;
+    z-index: 1000;
+    font-size: 20px;
 }
-
-/* Ajustes para móvil */
-@media (max-width: 768px) {
-    .neo {
-        display: none; /* Oculta el logo en móvil */
+        @media (max-width: 768px) {
+    body {
+        padding: 20px 20px 20px 20px;
+        transition: padding 0.3s ease;
     }
     
     .sidebar {
-        transform: translateX(-100%);
+        left: -250px;
+        transition: left 0.3s ease;
     }
     
-    .sidebar.open {
-        transform: translateX(0);
+    .sidebar.active {
+        left: 0;
     }
     
-    .sidebar-toggle {
-        display: block; /* Muestra el botón en móvil */
+    .menu-toggle {
+        display: block;
     }
     
-    body {
-        padding-left: 0 !important;
+    /* Ajustar el logo cuando la sidebar está abierta */
+    .neo {
+        left: 50%;
+        transition: all 0.3s ease;
+    }
+    
+    .sidebar.active + .neo {
+        left: calc(50% + 125px);
     }
 }
+        @keyframes neon-glow {
+            from {
+                filter:
+                    drop-shadow(0 0 5px rgba(255, 0, 0, 0.7))
+                    drop-shadow(0 0 10px rgba(255, 0, 0, 0.5))
+                    drop-shadow(0 0 15px rgba(255, 0, 0, 0.3));
+            }
+            to {
+                filter:
+                    drop-shadow(0 0 10px rgba(255, 0, 0, 0.9))
+                    drop-shadow(0 0 20px rgba(255, 0, 0, 0.7))
+                    drop-shadow(0 0 30px rgba(255, 0, 0, 0.5));
+            }
+        }
 
-/* Ajustes del cuerpo principal */
-body {
-    padding-left: 270px; /* Espacio para la sidebar + margen */
-    transition: padding-left 0.3s ease;
-}
-
-@media (max-width: 768px) {
-    body {
-        padding-left: 20px !important;
-        padding-right: 20px !important;
-    }
-}
-
-/* Animaciones */
-@keyframes neon-glow {
-    from {
-        filter:
-            drop-shadow(0 0 5px rgba(255, 0, 0, 0.7))
-            drop-shadow(0 0 10px rgba(255, 0, 0, 0.5))
-            drop-shadow(0 0 15px rgba(255, 0, 0, 0.3));
-    }
-    to {
-        filter:
-            drop-shadow(0 0 10px rgba(255, 0, 0, 0.9))
-            drop-shadow(0 0 20px rgba(255, 0, 0, 0.7))
-            drop-shadow(0 0 30px rgba(255, 0, 0, 0.5));
-    }
-}
-
-@keyframes text-flicker {
-    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        text-shadow:
-            0 0 5px #fff,
-            0 0 10px #fff,
-            0 0 20px #ff0000,
-            0 0 30px #ff0000,
-            0 0 40px #ff0000;
-    }
-    20%, 24%, 55% {
-        text-shadow: none;
-    }
-}
+        @keyframes text-flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow:
+                    0 0 5px #fff,
+                    0 0 10px #fff,
+                    0 0 20px #ff0000,
+                    0 0 30px #ff0000,
+                    0 0 40px #ff0000;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
+        }
     </style>
 </head>
 <body>
-    <button class="sidebar-toggle" id="sidebar-toggle"><i class="fas fa-bars"></i></button>
     <script>
-
-    // Sidebar functionality
+        // Control de la sidebar en móvil
+document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
-    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const body = document.body;
     
-    // Toggle sidebar on mobile
-    if(sidebarToggle) {
-        sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-        });
-    }
-    
-    // Close sidebar when clicking outside on mobile
-    document.addEventListener('click', (e) => {
-        if (window.innerWidth <= 768 && 
-            !sidebar.contains(e.target) && 
-            e.target !== sidebarToggle) {
-            sidebar.classList.remove('open');
+    menuToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('active');
+        
+        // Cambiar el ícono del botón
+        const icon = this.querySelector('i');
+        if (sidebar.classList.contains('active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+        } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
         }
     });
     
-    // Close sidebar after clicking a link on mobile
-    document.querySelectorAll('.sidebar a').forEach(link => {
-        link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-                sidebar.classList.remove('open');
+    // Cerrar sidebar al hacer clic en un enlace (solo en móvil)
+    if (window.innerWidth <= 768) {
+        const sidebarLinks = sidebar.querySelectorAll('a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                menuToggle.querySelector('i').classList.remove('fa-times');
+                menuToggle.querySelector('i').classList.add('fa-bars');
+            });
+        });
+    }
+    
+    // Ajustar el padding del body cuando la sidebar se abre/cierra
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.attributeName === 'class') {
+                if (sidebar.classList.contains('active')) {
+                    document.body.style.paddingLeft = '270px';
+                } else {
+                    document.body.style.paddingLeft = '20px';
+                }
             }
         });
     });
-
+    
+    observer.observe(sidebar, {
+        attributes: true
+    });
+});
     </script>
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
     <div class="sidebar" id="sidebar">
         <a href="executores.html">Executores</a>
         <a href="Status-Executores.html">Status</a>
