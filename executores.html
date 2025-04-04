@@ -352,39 +352,53 @@
 }
 
 @media (max-width: 768px) {
-    /* ... (tus estilos existentes) ... */
+    /* ... (tus otros estilos existentes) ... */
 
-    /* Estilos optimizados para el logo dentro de la sidebar */
+    /* Sidebar optimizada */
     .sidebar {
         left: -250px;
         transition: left 0.3s ease;
         box-shadow: 5px 0 15px rgba(255, 0, 0, 0.5);
-        padding-bottom: 20px; /* Reducido el espacio inferior */
+        padding: 20px 0; /* Espacio interno reducido */
         display: flex;
         flex-direction: column;
-        height: 100vh;
-        overflow-y: auto; /* Permite scroll si el contenido es muy largo */
+        height: auto;
+        min-height: 100vh;
     }
 
+    /* Contenedor de botones */
+    .sidebar-buttons {
+        flex: 1; /* Ocupa todo el espacio disponible */
+        display: flex;
+        flex-direction: column;
+        gap: 15px; /* Espacio entre botones */
+    }
+
+    /* Logo perfectamente posicionado */
     .neo {
-        position: sticky;
-        bottom: 0;
-        left: 20px;
-        width: 50%;
-        padding: 10px 0;
-        margin-top: 200px; 
-        background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-        z-index: 2;
-        border-top: 1px solid rgba(255, 0, 0, 0.2);
+        position: relative; /* Cambiado de sticky a relative */
+        width: 100%;
+        padding: 15px 0 10px;
+        margin-top: 10px; /* Espacio mínimo sobre el logo */
+        text-align: center;
+        border-top: 1px solid rgba(255, 0, 0, 0.3);
+        background: transparent;
     }
 
     .neo img {
-        width: 150px; /* Reducción del tamaño para móvil */
+        width: 120px; /* Tamaño más compacto */
         height: auto;
+        margin: 0 auto; /* Centrado perfecto */
     }
 
+    .neon-text {
+        font-size: 1.2rem; /* Tamaño ajustado */
+        margin-top: 5px;
+    }
+
+    /* Eliminar el logo duplicado exterior */
     .sidebar.active ~ .neo {
-        display: none; /* Oculta el logo duplicado fuera */
+        display: none;
     }
 }
 @media (max-width: 768px) {
@@ -2143,3 +2157,4 @@ body::before {
         </footer>
 </body>
 </html>
+
