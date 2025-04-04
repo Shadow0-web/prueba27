@@ -190,6 +190,7 @@
             justify-content: center;
             align-items: center;
             margin-left: 250px; 
+            transition: margin-left 0.5s ease;
         }
 
         .pQrStUvWxY {
@@ -387,7 +388,8 @@
             
             .neo {
                 left: 50%;
-                transform: translateX(-50%);
+                top: 50%;
+                transform: translate(-50%, -50%);
             }
             
             .sidebar-toggle {
@@ -496,44 +498,63 @@
         });
     });
 
-    // Función para detectar si es móvil
-    function isMobile() {
-        return window.innerWidth <= 768;
-    }
-
     // Toggle de la sidebar para móviles
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.querySelector('.xYzAbCdEfG');
+    const logo = document.getElementById('logo');
 
-    sidebarToggle.addEventListener('click', () => {
+    // Función para verificar si es móvil
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+
+    // Función para alternar la sidebar
+    function toggleSidebar() {
         sidebar.classList.toggle('active');
-    });
-
-    // Ajustar la posición del logo en móviles
-    function adjustLogoPosition() {
-        const logo = document.getElementById('logo');
+        
+        // Si es móvil, ajustar el margen del contenido principal
         if (isMobile()) {
+            if (sidebar.classList.contains('active')) {
+                mainContent.style.marginLeft = '250px';
+            } else {
+                mainContent.style.marginLeft = '0';
+            }
+        }
+    }
+
+    // Evento para el botón de toggle
+    sidebarToggle.addEventListener('click', toggleSidebar);
+
+    // Ajustar al cargar la página
+    function adjustLayout() {
+        if (isMobile()) {
+            sidebar.classList.remove('active');
+            mainContent.style.marginLeft = '0';
             logo.style.left = '50%';
-            logo.style.transform = 'translateX(-50%)';
+            logo.style.top = '50%';
+            logo.style.transform = 'translate(-50%, -50%)';
         } else {
+            sidebar.classList.add('active');
+            mainContent.style.marginLeft = '250px';
             logo.style.left = '120px';
+            logo.style.top = '70%';
             logo.style.transform = 'translate(-50%, -50%)';
         }
     }
 
-    // Inicializar y ajustar en resize
-    adjustLogoPosition();
-    window.addEventListener('resize', adjustLogoPosition);
+    // Ajustar al cambiar el tamaño de la ventana
+    window.addEventListener('resize', adjustLayout);
 
-    // Arrastrar el logo
+    // Inicializar el layout
+    adjustLayout();
+
+    // Arrastrar el logo (solo en desktop)
     let isDragging = false;
     let offsetX, offsetY;
 
-    const logo = document.getElementById('logo');
-
     logo.addEventListener('mousedown', (e) => {
-        if (!isMobile()) { // Solo permitir arrastrar en desktop
+        if (!isMobile()) {
             isDragging = true;
             offsetX = e.clientX - logo.getBoundingClientRect().left;
             offsetY = e.clientY - logo.getBoundingClientRect().top;
