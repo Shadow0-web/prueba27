@@ -18,8 +18,6 @@
             position: relative;
             font-family: 'Arial', sans-serif;
             flex-direction: column;
-            padding-left: 0;
-            transition: padding-left 0.3s ease;
         }
 
         .neo {
@@ -94,113 +92,130 @@
             20%, 21.999%, 63%, 63.999%, 65%, 69.999% { opacity: 0.4; text-shadow: none; }
         }
 
-        /* Sidebar optimizada */
-        .sidebar {
-            position: fixed;
-            left: -250px;
-            top: 0;
-            width: 250px;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            transition: left 0.3s ease;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            padding: 20px 0;
-            box-shadow: 5px 0 15px rgba(255, 0, 0, 0.5);
+        /* Sidebar solo para móviles */
+        @media (max-width: 767px) {
+            body {
+                padding: 20px;
+            }
+            
+            .sidebar {
+                position: fixed;
+                left: -250px;
+                top: 0;
+                width: 250px;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                transition: left 0.3s ease;
+                z-index: 1000;
+                display: flex;
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: 5px 0 15px rgba(255, 0, 0, 0.5);
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .sidebar-buttons {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                margin-bottom: 15px;
+                padding: 0 20px;
+            }
+            
+            .sidebar a {
+                color: #ff0000;
+                text-decoration: none;
+                font-size: 1.1rem;
+                padding: 12px 20px;
+                border-radius: 30px;
+                text-align: center;
+                transition: all 0.3s ease;
+                border: 1px solid transparent;
+                background: transparent;
+                width: 100%;
+            }
+            
+            .sidebar a:hover {
+                color: #fff;
+                text-shadow: 0 0 5px #fff, 0 0 10px #ff0000, 0 0 20px #ff0000;
+                box-shadow: 0 0 10px rgba(255, 0, 0, 0.7), 0 0 20px rgba(255, 0, 0, 0.5);
+                border: 1px solid rgba(255, 0, 0, 0.5);
+                background: rgba(255, 0, 0, 0.1);
+                transform: scale(1.05);
+            }
+            
+            .sidebar a:last-child {
+                margin-bottom: 5px;
+            }
+            
+            /* Logo dentro de la sidebar */
+            .sidebar .neo {
+                position: relative;
+                width: 100%;
+                padding: 20px 0 10px;
+                margin-top: 0;
+                border-top: 1px solid rgba(255, 0, 0, 0.2);
+                text-align: center;
+                background: transparent;
+            }
+            
+            .sidebar .neo img {
+                width: 120px;
+                height: auto;
+                margin: 0 auto;
+            }
+            
+            .sidebar .neon-text {
+                font-size: 1.2rem;
+                margin-top: 5px;
+            }
+            
+            /* Botón de menú móvil */
+            .menu-toggle {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                background-color: #ff0000;
+                color: white;
+                border: none;
+                padding: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                z-index: 1001;
+                font-size: 20px;
+            }
+            
+            /* Overlay para fondo oscuro */
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 999;
+            }
+            
+            .sidebar.active ~ .overlay {
+                display: block;
+            }
+            
+            .sidebar.active ~ .neo {
+                display: none;
+            }
         }
 
-        .sidebar.active {
-            left: 0;
-        }
-
-        .sidebar-buttons {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 15px;
-            padding: 0 20px;
-        }
-
-        .sidebar a {
-            color: #ff0000;
-            text-decoration: none;
-            font-size: 1.1rem;
-            padding: 12px 20px;
-            border-radius: 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-            background: transparent;
-            width: 100%;
-        }
-
-        .sidebar a:hover {
-            color: #fff;
-            text-shadow: 0 0 5px #fff, 0 0 10px #ff0000, 0 0 20px #ff0000;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7), 0 0 20px rgba(255, 0, 0, 0.5);
-            border: 1px solid rgba(255, 0, 0, 0.5);
-            background: rgba(255, 0, 0, 0.1);
-            transform: scale(1.05);
-        }
-
-        .sidebar a:last-child {
-            margin-bottom: 5px;
-        }
-
-        /* Logo dentro de la sidebar */
-        .sidebar .neo {
-            position: relative;
-            width: 100%;
-            padding: 20px 0 10px;
-            margin-top: 0;
-            border-top: 1px solid rgba(255, 0, 0, 0.2);
-            text-align: center;
-            background: transparent;
-        }
-
-        .sidebar .neo img {
-            width: 120px;
-            height: auto;
-            margin: 0 auto;
-        }
-
-        .sidebar .neon-text {
-            font-size: 1.2rem;
-            margin-top: 5px;
-        }
-
-        /* Botón de menú móvil */
-        .menu-toggle {
-            display: none;
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background-color: #ff0000;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 1001;
-            font-size: 20px;
-        }
-
-        /* Overlay para fondo oscuro */
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 999;
-        }
-
-        .sidebar.active ~ .overlay {
-            display: block;
+        /* Ocultar sidebar en desktop */
+        @media (min-width: 768px) {
+            .sidebar, .menu-toggle, .overlay {
+                display: none !important;
+            }
         }
 
         /* Presentación */
@@ -259,63 +274,15 @@
             from { opacity: 0; transform: translate(-50%, -40%); }
             to { opacity: 1; transform: translate(-50%, -50%); }
         }
-
-        /* Media Queries */
-        @media (max-width: 768px) {
-            body {
-                padding: 20px !important;
-            }
-            
-            .menu-toggle {
-                display: block;
-            }
-            
-            .neo {
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-            }
-            
-            .sidebar.active ~ .neo {
-                display: none;
-            }
-            
-            .presentacion {
-                width: 95%;
-                padding: 1.5rem;
-            }
-        }
-
-        @media (min-width: 769px) {
-            .neo img { 
-                width: 250px; 
-            }
-            
-            .presentacion { 
-                width: 80%; 
-                padding: 30px; 
-            }
-            
-            .particle { 
-                width: 8px; 
-                height: 8px; 
-                animation: particle-rise 2.5s ease-out forwards; 
-            }
-            
-            @keyframes particle-rise {
-                0% { transform: translateY(0) scale(1); opacity: 1; }
-                100% { transform: translateY(-200px) scale(0.5); opacity: 0; }
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- Botón de menú móvil -->
+    <!-- Botón de menú móvil (solo visible en móviles) -->
     <button class="menu-toggle" id="menuToggle">
         <i class="fas fa-bars"></i>
     </button>
 
-    <!-- Sidebar -->
+    <!-- Sidebar (solo visible en móviles) -->
     <div class="sidebar" id="sidebar">
         <!-- Botones de navegación -->
         <div class="sidebar-buttons">
@@ -332,7 +299,7 @@
         </div>
     </div>
 
-    <!-- Overlay para fondo oscuro -->
+    <!-- Overlay para fondo oscuro (solo móviles) -->
     <div class="overlay" id="overlay"></div>
 
     <!-- Logo principal -->
@@ -384,73 +351,4 @@
         setInterval(createParticle, 100);
 
         // Efectos de movimiento del logo
-        document.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth;
-            const intensity = 1 + (x * 0.2);
-            logoImg.style.filter = `
-                drop-shadow(0 0 ${5 * intensity}px rgba(255, 0, 0, 0.7))
-                drop-shadow(0 0 ${10 * intensity}px rgba(255, 0, 0, 0.5))
-                drop-shadow(0 0 ${15 * intensity}px rgba(255, 0, 0, 0.3))`;
-        });
-
-        // Control de la sidebar
-        menuToggle.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-            overlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
-            
-            // Cambiar el ícono del botón
-            const icon = this.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
-        });
-
-        // Cerrar sidebar al hacer clic en el overlay
-        overlay.addEventListener('click', function() {
-            sidebar.classList.remove('active');
-            this.style.display = 'none';
-            menuToggle.querySelector('i').classList.remove('fa-times');
-            menuToggle.querySelector('i').classList.add('fa-bars');
-        });
-
-        // Mostrar presentación al hacer clic en el logo
-        let isFirstClick = true;
-        logo.addEventListener('click', () => {
-            if (isFirstClick) {
-                presentacion.classList.add('mostrar');
-                isFirstClick = false;
-            } else {
-                presentacion.classList.remove('mostrar');
-                isFirstClick = true;
-            }
-        });
-
-        // Cerrar presentación
-        cerrarPresentacion.addEventListener('click', () => {
-            presentacion.classList.remove('mostrar');
-        });
-
-        // Cerrar presentación al hacer clic fuera
-        window.addEventListener('click', (e) => {
-            if (e.target === presentacion) {
-                presentacion.classList.remove('mostrar');
-            }
-        });
-
-        // Protecciones
-        document.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-            alert('El menú contextual está deshabilitado.');
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-                e.preventDefault();
-                alert('Guardar esta página está deshabilitado.');
-            }
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J'))) {
-                e.preventDefault();
-            }
-        });
-    </script>
-</body>
-</html>
+        document.addEventListener('mousemove
