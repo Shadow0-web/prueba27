@@ -434,17 +434,103 @@ body {
             margin-bottom: 20px;
             text-align: center;
         }
+        .sidebar-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 5000;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 0, 0, 0.5);
+    color: #ff0000;
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.sidebar-toggle:hover {
+    background: rgba(255, 0, 0, 0.2);
+    color: #fff;
+}
+@media (max-width: 768px) {
+    .sidebar {
+        left: -250px;
+    }
+    
+    .sidebar.active {
+        left: 0;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .sidebar-toggle {
+        display: flex;
+    }
+}
     </style>
 </head>
 <body>
-
+    <div class="sidebar-toggle" id="sidebarToggle">☰</div>
     <div class="sidebar" id="sidebar">
         <a href="executores.html">Executores</a>
         <a href="Status-Executores.html">Status</a>
         <a href="scripts.html">Scripts</a>
         <a href="contactos.html">Contactos</a>
     </div>
+<script>
+    const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebar = document.getElementById('sidebar');
+const mainContent = document.querySelector('.main-content');
 
+function isMobile() {
+    return window.innerWidth <= 768;
+}
+
+function toggleMenu() {
+    sidebar.classList.toggle('active');
+    if (isMobile()) {
+        mainContent.style.marginLeft = sidebar.classList.contains('active') ? '250px' : '0';
+    }
+}
+
+sidebarToggle.addEventListener('click', function(e) {
+    e.stopPropagation();
+    toggleMenu();
+});
+
+// Cerrar al hacer click fuera en móviles
+document.addEventListener('click', function() {
+    if (isMobile() && sidebar.classList.contains('active')) {
+        toggleMenu();
+    }
+});
+
+sidebar.addEventListener('click', function(e) {
+    e.stopPropagation();
+});
+
+function initLayout() {
+    if (isMobile()) {
+        sidebar.classList.remove('active');
+        mainContent.style.marginLeft = '0';
+    } else {
+        sidebar.classList.add('active');
+        mainContent.style.marginLeft = '250px';
+    }
+}
+
+window.addEventListener('resize', initLayout);
+initLayout();
+</script>
 
     <div class="neo" id="logo">
         <img src="img/vxspoty.png" alt="VxSpot Logo" id="logo-img">
