@@ -624,9 +624,8 @@
             transition: background-color 0.5s;
         }
         .admin-toggle {
-    position: fixed;
-    top: 10px;
-    right: 10px;
+    position:relative;
+
     z-index: 99999;
     padding: 8px 15px;
     background: rgba(0,0,0,0.7);
@@ -1646,7 +1645,7 @@ document.addEventListener('contextmenu', function(event) {
                 adminMenu.style.display = 'block';
             }
         });
-        
+
          document.getElementById('boton-retroceso')?.addEventListener('click', function() {
         window.history.back();
     });
