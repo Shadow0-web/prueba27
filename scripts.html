@@ -481,6 +481,30 @@
                 transform: translate(10px, -10px);
             }
         }
+        .mobile-only-image {
+    display: none; /* Oculta por defecto */
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1001;
+    width: 120px;
+    filter: 
+        drop-shadow(0 0 5px rgba(255, 0, 0, 0.7))
+        drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
+    border-radius: 50%;
+    border: 1px solid rgba(255, 0, 0, 0.3);
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.5);
+    animation: neon-glow 1.5s ease-in-out infinite alternate;
+}
+
+/* Mostrar solo en móvil */
+@media (max-width: 768px) {
+    .mobile-only-image {
+        display: block;
+    }
+}
     </style>
 </head>
 <body>
@@ -490,6 +514,8 @@
         <a href="Status-Executores.html">Status</a>
         <a href="scripts.html">Scripts</a>
         <a href="contactos.html">Contactos</a>
+
+        <img class="mobile-only-image" src="img/tu-imagen.png" alt="Mobile Logo">
     </div>
 <script>
     const sidebarToggle = document.getElementById('sidebarToggle');
