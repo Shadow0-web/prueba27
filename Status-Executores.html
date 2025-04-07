@@ -816,14 +816,16 @@ display: none;
 </head>
 <body>
     <script>
+
         document.getElementById('adminToggle').addEventListener('click', function() {
-    const adminMenu = document.querySelector('.admin-menu');
-    if (adminMenu.style.display === 'block') {
-        adminMenu.style.display = 'none';
-    } else {
-        adminMenu.style.display = 'block';
-    }
-});
+            const adminMenu = document.querySelector('.admin-menu');
+            if (adminMenu.style.display === 'block') {
+                adminMenu.style.display = 'none';
+            } else {
+                adminMenu.style.display = 'block';
+            }
+        });
+    
     </script>
     <button class="admin-toggle" id="adminToggle">Admin</button>
     <button class="menu-toggle" id="menuToggle">☰</button>
@@ -1636,6 +1638,15 @@ document.addEventListener('contextmenu', function(event) {
         </table>
     </section>
 <script>
+            document.getElementById('adminToggle').addEventListener('click', function() {
+            const adminMenu = document.querySelector('.admin-menu');
+            if (adminMenu.style.display === 'block') {
+                adminMenu.style.display = 'none';
+            } else {
+                adminMenu.style.display = 'block';
+            }
+        });
+        
          document.getElementById('boton-retroceso')?.addEventListener('click', function() {
         window.history.back();
     });
