@@ -500,7 +500,15 @@
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
             transition: all 0.3s ease;
 }
-
+.mobile-only-link {
+    display: none; 
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1001;
+    text-decoration: none;
+}
 
 @media (max-width: 768px) {
     .mobile-only-image {
