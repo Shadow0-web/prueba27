@@ -5,41 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vxspot</title>
     <link rel="icon" href="imagenes/vxspot.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #000;
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
         }
-
-        .kLmNopQrSt {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .aBcDeFgHiJ {
+        
+        body::before {
+            content: "";
             position: absolute;
-            background-color: #fff;
-            border-radius: 50%;
-            animation: twinkle linear infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% {
-                opacity: 0.2;
-                transform: scale(0.5);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1);
-            }
+            width: 100%;
+            height: 100%; 
+            background-image: 
+                radial-gradient(1px 1px at 25% 10%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1px 1px at 50% 25%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1px 1px at 75% 30%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1.5px 1.5px at 15% 40%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1.5px 1.5px at 60% 70%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1px 1px at 30% 65%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1px 1px at 90% 85%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1.5px 1.5px at 80% 15%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1.5px 1.5px at 10% 90%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1px 1px at 35% 80%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1px 1px at 65% 40%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1.5px 1.5px at 40% 50%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(2px 2px at 55% 90%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(2px 2px at 85% 55%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(2px 2px at 20% 20%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(2px 2px at 45% 5%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(2px 2px at 95% 35%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(2px 2px at 5% 50%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(2px 2px at 70% 95%, rgba(255, 255, 255, 0.9) 100%, transparent);
+            background-repeat: repeat;
+            background-size: 400px 400px;
+            animation: twinkling 40s linear infinite;
+            opacity: 0.8;
         }
 
         .sidebar {
@@ -108,17 +113,49 @@
         .sidebar a:hover::before {
             opacity: 0.7;
         }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        .sidebar-toggle {
+            position: fixed;
+            top: 25px;
+            left: 20px;
+            z-index: 1100;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            color: #ff0000;
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-toggle:hover {
+            background: rgba(255, 0, 0, 0.2);
+            color: #fff;
+        }
 
         .neo {
             position: fixed;
-            z-index: 9999;
+            z-index: 999999999999;
             text-align: center;
             transition: all 0.5s ease;
             left: 120px;
             top: 70%;
             transform: translate(-50%, -50%);
         }
-        
 
         .neo img {
             width: 250px;
@@ -129,6 +166,7 @@
             animation: neon-glow 1.5s ease-in-out infinite alternate;
             transition: all 0.3s ease;
             cursor: pointer;
+            z-index: 999999999999;
         }
 
         .neo img:hover {
@@ -137,9 +175,11 @@
                 drop-shadow(0 0 10px rgba(255, 0, 0, 0.9))
                 drop-shadow(0 0 20px rgba(255, 0, 0, 0.7))
                 drop-shadow(0 0 30px rgba(255, 0, 0, 0.5));
+
         }
 
         .neon-text {
+            z-index: 999999999999;
             color: #fff;
             text-shadow:
                 0 0 5px #fff,
@@ -151,6 +191,120 @@
             font-size: 1.9rem;
             margin-top: 20px;
         }
+
+
+        .a1b2, .vxspot-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 900px;
+            width: 90%;
+            box-shadow: 
+                0 0 10px rgba(255, 0, 0, 0.7),
+                0 0 20px rgba(255, 0, 0, 0.5);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            background: rgba(20, 0, 0, 0.479);
+            margin: 0 auto 30px;
+        }
+
+        .c3d4 {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 15px;
+            border-radius: 10px;
+            transition: transform 0.2s;
+            box-shadow: 
+                0 0 10px rgba(255, 0, 0, 0.7),
+                0 0 20px rgba(255, 0, 0, 0.5);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            background: rgba(255, 0, 0, 0.1);
+            z-index: 200;
+            margin-bottom: 15px;
+        }
+
+        .c3d4:hover {
+            transform: scale(1.02);
+        }
+
+        .e5f6 {
+            display: block;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 10px;
+            text-align: center;
+            text-shadow: 0 0 5px #ff0000;
+        }
+
+        .g7h8 {
+            display: flex;
+            align-items: stretch;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .i9j0 {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #834b4b;
+            border-radius: 5px;
+            font-size: 1em;
+            color: #ffffff;
+            background-color: rgba(68, 0, 0, 0.9);
+            box-sizing: border-box;
+        }
+
+        .i9j0[readonly] {
+            cursor: text;
+            user-select: text;
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            box-shadow: 
+                0 0 10px rgba(255, 0, 0, 0.7),
+                0 0 20px rgba(255, 0, 0, 0.5);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            background: rgba(231, 23, 23, 0.8);
+        }
+
+        .k1l2 {
+            display: block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: #ffffff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #ff0000,
+                0 0 20px #ff0000;
+            box-shadow: 
+                0 0 10px rgba(255, 0, 0, 0.7),
+                0 0 20px rgba(255, 0, 0, 0.5);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            background: rgba(255, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        .k1l2:hover {
+            background-color: #ff0000;
+        }
+
+        .k1l2:active {
+            background-color: #ff7b00;
+        }
+
+        h2 {
+            color: #ffffff;
+            text-shadow: 0 0 5px #ff0000;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
 
         @keyframes neon-glow {
             from {
@@ -180,206 +334,21 @@
                 text-shadow: none;
             }
         }
-        @media (max-width: 768px) {
-    .neo {
-        display: none; 
 
-        }
-
-    }
-
-        .xYzAbCdEfG {
-            position: relative;
-            text-align: center;
-            z-index: 10;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin-left: 250px; 
-            transition: margin-left 0.3s ease;
-        }
-
-        .pQrStUvWxY {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 40px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .pQrStUvWxY img {
-            max-width: 100%;
-            height: auto;
-            position: relative;
-            z-index: 2;
-            border-radius: 10px;
-            transition: transform 0.5s;
-        }
-
-        .pQrStUvWxY:hover img {
-            transform: scale(1.05);
-        }
-
-        .pQrStUvWxY::after {
-            content: '';
-            position: absolute;
-            display: block;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: transparent;
-            box-shadow: 
-                0 0 100px 50px rgba(255, 0, 0, 0.4),
-                0 0 200px 100px rgba(243, 8, 8, 0.596);
-            transform: translate(-50%, -50%);
-            z-index: 1;
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { 
-                box-shadow: 
-                    0 0 80px 40px rgba(255, 0, 0, 0.4),
-                    0 0 150px 80px rgba(255, 0, 0, 0.2); 
-            }
-            50% { 
-                box-shadow: 
-                    0 0 120px 60px rgba(255, 0, 0, 0.6),
-                    0 0 220px 120px rgba(255, 0, 0, 0.3); 
-            }
-            100% { 
-                box-shadow: 
-                    0 0 80px 40px rgba(255, 0, 0, 0.4),
-                    0 0 150px 80px rgba(255, 0, 0, 0.2); 
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
+        @keyframes twinkling {
+            0% {
                 transform: translateY(0);
             }
-            50% {
-                transform: translateY(-15px);
+            100% {
+                transform: translateY(-500px);
             }
         }
 
-        .mNoPqRsTuV {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
+        @media (max-width: 992px) {
+            .neo {
+                display: none;
+            }
         }
-
-        .mNoPqRsTuV a {
-            display: block;
-            width: 70px;
-            height: 70px;
-            text-decoration: none;
-            border-radius: 50%;
-            background-size: cover;
-            background-position: center;
-            box-shadow: 
-                0 0 15px #FF0000,
-                0 0 25px #FF0000,
-                0 0 35px rgba(255, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .mNoPqRsTuV a::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.1);
-            transform: rotate(45deg);
-            transition: all 0.6s ease;
-            opacity: 0;
-        }
-
-        .mNoPqRsTuV a:hover {
-            transform: scale(1.15);
-            box-shadow: 
-                0 0 20px #FF0000,
-                0 0 35px #FF0000,
-                0 0 50px rgba(255, 0, 0, 0.5);
-        }
-
-        .mNoPqRsTuV a:hover::before {
-            opacity: 1;
-            top: -30%;
-            left: -30%;
-        }
-
-        .wXyZaBcDeF { 
-            background-image: url('https://cdn-icons-png.flaticon.com/512/3670/3670051.png');
-            animation: pulse-green 2s infinite;
-        }
-        
-        .tIkToKkLlM { 
-            background-image: url('img2/tiktok.jpg');
-            animation: pulse-blue 2s infinite 0.5s;
-        }
-        
-        .dIsCoRdEfG { 
-            background-image: url('https://cdn-icons-png.flaticon.com/512/3670/3670157.png');
-            animation: pulse-purple 2s infinite 1s;
-        }
-
-        @keyframes pulse-green {
-            0%, 100% { box-shadow: 0 0 15px #25D366, 0 0 25px #25D366; }
-            50% { box-shadow: 0 0 25px #25D366, 0 0 45px #25D366; }
-        }
-
-        @keyframes pulse-blue {
-            0%, 100% { box-shadow: 0 0 15px #ffffff, 0 0 25px #ffffff; }
-            50% { box-shadow: 0 0 25px #ffffff, 0 0 45px #292929; }
-        }
-
-        @keyframes pulse-purple {
-            0%, 100% { box-shadow: 0 0 15px #7289DA, 0 0 25px #7289DA; }
-            50% { box-shadow: 0 0 25px #7289DA, 0 0 45px #7289DA; }
-        }
-
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.6);
-            pointer-events: none;
-            z-index: 5;
-        }
-
-   
-        .sidebar-toggle {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 5000000;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255, 0, 0, 0.5);
-            color: #ff0000;
-            font-size: 24px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-        }
-
-        .sidebar-toggle:hover {
-            background: rgba(255, 0, 0, 0.2);
-        }
-
 
         @media (max-width: 768px) {
             .sidebar {
@@ -390,199 +359,343 @@
                 left: 0;
             }
             
-            .xYzAbCdEfG {
+            .main-content {
                 margin-left: 0;
-            }
-            
-            .neo {
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
+                width: 100%;
+                padding: 20px 15px;
             }
             
             .sidebar-toggle {
                 display: flex;
             }
+            
+            .a1b2, .vxspot-container {
+                width: 100%;
+                padding: 20px 15px;
+            }
+            
+            .c3d4 {
+                padding: 12px;
+            }
         }
+
+        .shooting-stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform: rotate(-45deg);
+            pointer-events: none;
+        }
+
+        .shooting-star {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(-45deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+            border-radius: 999px;
+            filter: drop-shadow(0 0 6px rgb(0, 0, 0));
+            animation: tail 3s ease-in-out infinite, shooting 3s ease-in-out infinite;
+        }
+
+        .shooting-star:nth-child(1) {
+            top: calc(50% - 200px);
+            left: calc(50% - 300px);
+            animation-delay: 1s;
+        }
+
+        .shooting-star:nth-child(2) {
+            top: calc(50% - 100px);
+            left: calc(50% - 190px);
+            animation-delay: 1.6s;
+        }
+
+        .shooting-star:nth-child(3) {
+            top: calc(50% - 50px);
+            left: calc(50% + 100px);
+            animation-delay: 2.1s;
+        }
+
+        .shooting-star:nth-child(4) {
+            top: calc(50% + 70px);
+            left: calc(50% - 250px);
+            animation-delay: 2.5s;
+        }
+
+      
+        .nebula {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(30px);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .nebula:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 20%;
+            left: 15%;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.6) 0%, rgba(252, 70, 107, 0) 70%);
+            animation: float 30s infinite alternate ease-in-out;
+        }
+
+        .nebula:nth-child(2) {
+            width: 250px;
+            height: 250px;
+            top: 60%;
+            left: 75%;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.6) 0%, rgba(29, 209, 161, 0) 70%);
+            animation: float 25s infinite alternate-reverse ease-in-out;
+        }
+
+        @keyframes tail {
+            0% {
+                width: 0;
+            }
+            30% {
+                width: 100px;
+            }
+            100% {
+                width: 0;
+            }
+        }
+
+        @keyframes shooting {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(300px);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(-10px, 10px);
+            }
+            100% {
+                transform: translate(10px, -10px);
+            }
+        }
+.mobile-only-image {
+    position: fixed;
+    top: 25px;
+    left: 89%;
+    z-index: 1100;
+    background: rgba(255, 255, 255, 0.363);
+    border: 1px solid rgba(255, 0, 0, 0.5);
+    color: #ff0000;
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .mobile-only-image {
+        display: block;
+        width: 40px;
+        height: 40px;
+    }
+}
+.mobile-only-link {
+    position: fixed;
+    top: 25px;
+    right: 20px;
+    z-index: 1100;
+    display: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.mobile-only-link:hover .mobile-only-image {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+}
+@media (max-width: 768px) {
+    .mobile-only-link {
+        display: block;
+    }
+}
     </style>
 </head>
 <body>
-<div class="kLmNopQrSt" id="starsContainer"></div>
+    <div class="sidebar-toggle" id="sidebarToggle">☰</div>
+    <div class="sidebar" id="sidebar">
+        <a href="executores.html">Executores</a>
+        <a href="Status-Executores.html">Status</a>
+        <a href="scripts.html">Scripts</a>
+        <a href="contactos.html">Contactos</a>
 
-<div class="sidebar-toggle" id="sidebarToggle">☰</div>
-
-<div class="sidebar" id="sidebar">
-    <a href="executores.html">Executores</a>
-    <a href="Status-Executores.html">Status</a>
-    <a href="scripts.html">Scripts</a>
-    <a href="contactos.html">Contactos</a>
-</div>
-
-<div class="neo" id="logo">
-    <img src="img/vxspoty.png" alt="VxSpot Logo" id="logo-img">
-    <div class="neon-text">Vxspot</div>
-</div>
-
-<div class="xYzAbCdEfG">
-    <div class="pQrStUvWxY">
-        <img src="img/vxspoty.png" alt="Tu imagen">
+            <img class="mobile-only-image" src="img/vxspoty.png" alt="Mobile Logo">
+  
     </div>
-    <div class="mNoPqRsTuV">
-        <a href="https://whatsapp.com" target="_blank" class="wXyZaBcDeF"></a>
-        <a href="https://www.tiktok.com/@srfamilly3" target="_blank" class="tIkToKkLlM"></a>
-        <a href="https://discord.gg/vpfamily" target="_blank" class="dIsCoRdEfG"></a>
-    </div>
-</div>
-
 <script>
-    
-    const starsContainer = document.getElementById('starsContainer');
-    const starCount = 100;
-
-    for (let i = 0; i < starCount; i++) {
-        const star = document.createElement('div');
-        star.className = 'aBcDeFgHiJ';
-        
-        const size = Math.random() * 2 + 1;
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
- 
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * 100}%`;
-       
-        star.style.animationDuration = `${Math.random() * 3 + 2}s`;
-        star.style.animationDelay = `${Math.random() * 2}s`;
-        
-        starsContainer.appendChild(star);
-    }
-
-
-    document.addEventListener('mousemove', (e) => {
-        const particles = document.createElement('div');
-        particles.className = 'particle';
-        
-        const size = Math.random() * 10 + 5;
-        particles.style.width = `${size}px`;
-        particles.style.height = `${size}px`;
-        
-        particles.style.left = `${e.clientX - size/2}px`;
-        particles.style.top = `${e.clientY - size/2}px`;
- 
-        const colorVal = Math.floor(Math.random() * 100 + 155);
-        particles.style.backgroundColor = `rgb(255, ${colorVal}, ${colorVal})`;
-        
-        document.body.appendChild(particles);
-
-        setTimeout(() => {
-            particles.style.transform = 'scale(0)';
-            particles.style.opacity = '0';
-            particles.style.transition = 'all 0.5s ease-out';
-            
-            setTimeout(() => {
-                particles.remove();
-            }, 500);
-        }, 50);
-    });
-
-
-    const buttons = document.querySelectorAll('.mNoPqRsTuV a');
-    buttons.forEach(button => {
-        button.addEventListener('mousemove', (e) => {
-            const x = e.offsetX;
-            const y = e.offsetY;
-            const w = button.clientWidth;
-            const h = button.clientHeight;
-            
-            const moveX = (x - w/2) / 5;
-            const moveY = (y - h/2) / 5;
-            
-            button.style.transform = `scale(1.15) rotateX(${moveY}deg) rotateY(${moveX}deg)`;
-        });
-        
-        button.addEventListener('mouseleave', () => {
-            button.style.transform = 'scale(1.15) rotateX(0) rotateY(0)';
-        });
-    });
-
-   
     const sidebarToggle = document.getElementById('sidebarToggle');
-    const sidebar = document.getElementById('sidebar');
-    const mainContent = document.querySelector('.xYzAbCdEfG');
-    const logo = document.getElementById('logo');
+const sidebar = document.getElementById('sidebar');
+const mainContent = document.querySelector('.main-content');
 
-    function isMobile() {
-        return window.innerWidth <= 768;
+function isMobile() {
+    return window.innerWidth <= 768;
+}
+
+function toggleMenu() {
+    sidebar.classList.toggle('active');
+    if (isMobile()) {
+        mainContent.style.marginLeft = sidebar.classList.contains('active') ? '250px' : '0';
     }
+}
 
-    function toggleMenu() {
-        sidebar.classList.toggle('active');
-        if (isMobile()) {
-            mainContent.style.marginLeft = sidebar.classList.contains('active') ? '250px' : '0';
-        }
-    }
+sidebarToggle.addEventListener('click', function(e) {
+    e.stopPropagation();
+    toggleMenu();
+});
 
-    sidebarToggle.addEventListener('click', function(e) {
-        e.stopPropagation();
+document.addEventListener('click', function() {
+    if (isMobile() && sidebar.classList.contains('active')) {
         toggleMenu();
-    });
-
-  
-    document.addEventListener('click', function() {
-        if (isMobile() && sidebar.classList.contains('active')) {
-            toggleMenu();
-        }
-    });
-
-    
-    sidebar.addEventListener('click', function(e) {
-        e.stopPropagation();
-    });
-
-  
-    function initLayout() {
-        if (isMobile()) {
-            sidebar.classList.remove('active');
-            mainContent.style.marginLeft = '0';
-            logo.style.left = '50%';
-            logo.style.top = '50%';
-            logo.style.transform = 'translate(-50%, -50%)';
-        } else {
-            sidebar.classList.add('active');
-            mainContent.style.marginLeft = '250px';
-            logo.style.left = '120px';
-            logo.style.top = '70%';
-            logo.style.transform = 'translate(-50%, -50%)';
-        }
     }
+});
 
-    window.addEventListener('resize', initLayout);
-    initLayout();
+sidebar.addEventListener('click', function(e) {
+    e.stopPropagation();
+});
+
+function initLayout() {
+    if (isMobile()) {
+        sidebar.classList.remove('active');
+        mainContent.style.marginLeft = '0';
+    } else {
+        sidebar.classList.add('active');
+        mainContent.style.marginLeft = '250px';
+    }
+}
+
+window.addEventListener('resize', initLayout);
+initLayout();
+</script>
+
+    <div class="neo" id="logo">
+        <img src="img/vxspoty.png" alt="VxSpot Logo" id="logo-img">
+        <div class="neon-text">Vxspot</div>
+    </div>
+
+    <div class="main-content">
+        <div class="a1b2">
+            <h2>Scripts Comunes</h2>
+            <div class="c3d4">
+                <label class="e5f6" for="1">W azure</label>
+                <div class="g7h8">
+                    <input class="i9j0" type="text" id="1" value='loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/3b2169cf53bc6104dabe8e19562e5cc2.lua"))()' readonly>
+                    <button class="k1l2" onclick="copiarTexto('1')">Copiar</button>
+                </div>
+            </div>
+            
+            <div class="c3d4">
+                <label class="e5f6" for="2">Xero hub</label>
+                <div class="g7h8">
+                    <input class="i9j0" type="text" id="2" value='loadstring(game:HttpGet("https://raw.githubusercontent.com/Xero2409/XeroHub/refs/heads/main/main.lua"))()' readonly>
+                    <button class="k1l2" onclick="copiarTexto('2')">Copiar</button>
+                </div>
+            </div>
+            
+            <div class="c3d4">
+                <label class="e5f6" for="3">hoho hub</label>
+                <div class="g7h8">
+                    <input class="i9j0" type="text" id="3" value='loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI"))()' readonly>
+                    <button class="k1l2" onclick="copiarTexto('3')">Copiar</button>
+                </div>
+            </div>
+            
+            <div class="c3d4">
+                <label class="e5f6" for="4">Speed</label>
+                <div class="g7h8">
+                    <input class="i9j0" type="text" id="4" value='loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua",true))()' readonly>
+                    <button class="k1l2" onclick="copiarTexto('4')">Copiar</button>
+                </div>
+            </div>
+            
+            <div class="c3d4">
+                <label class="e5f6" for="6">Andepzai hub</label>
+                <div class="g7h8">
+                    <input class="i9j0" type="text" id="6" value='repeat wait() until game:IsLoaded() and game.Players.LocalPlayer 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnDepZaiHubBeta/refs/heads/main/AnDepZaiHubNewUpdated.lua"))()' readonly>
+                    <button class="k1l2" onclick="copiarTexto('6')">Copiar</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="vxspot-container">
+            <h2>Vxspot</h2>
+            <div class="c3d4">
+                <label class="e5f6" for="vx1">Vxspot</label>
+                <div class="g7h8">
+                    <input class="i9j0" type="text" id="vx1" value='En progreso' readonly>
+                    <button class="k1l2" onclick="copiarTexto('vx1')">Copiar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copiarTexto(id) {
+            const input = document.getElementById(id);
+            input.select();
+            document.execCommand('copy');
+            alert('Texto copiado: ' + input.value.substring(0, 30) + '...');
+        }
+
+        document.getElementById('logo-img').addEventListener('click', function() {
+            this.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 300);
+        });
+    </script>
+    <script>
+                document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('keydown', function(event) {
+            if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+                event.preventDefault();
+                alert('Guardar esta página está deshabilitado.');
+            }
+        });
+    
+        document.addEventListener('keydown', function(event) {
+    
 
     
-    let isDragging = false;
-    let offsetX, offsetY;
-
-    logo.addEventListener('mousedown', (e) => {
-        if (!isMobile()) {
-            isDragging = true;
-            offsetX = e.clientX - logo.getBoundingClientRect().left;
-            offsetY = e.clientY - logo.getBoundingClientRect().top;
-            logo.style.cursor = 'grabbing';
+        if (event.ctrlKey && event.shiftKey && event.key === "I") {
+            event.preventDefault();
+            alert('Ctrl+Shift+I está deshabilitado.');
+        }
+    
+        if (event.ctrlKey && event.shiftKey && event.key === "J") {
+            event.preventDefault();
+            alert('Ctrl+Shift+J está deshabilitado.');
+        }
+    
+        if (event.ctrlKey && event.key === "u") {
+            event.preventDefault();
+            alert('Ctrl+U está deshabilitado.');
         }
     });
-
-    document.addEventListener('mousemove', (e) => {
-        if (isDragging && !isMobile()) {
-            logo.style.left = `${e.clientX - offsetX}px`;
-            logo.style.top = `${e.clientY - offsetY}px`;
-            logo.style.transform = 'translate(0, 0)';
-        }
-    });
-
-    document.addEventListener('mouseup', () => {
-        isDragging = false;
-        logo.style.cursor = 'grab';
-    });
-</script>
+        
+ </script>
+    </script>
 </body>
 </html>
