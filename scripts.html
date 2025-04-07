@@ -45,6 +45,7 @@
             background-size: 400px 400px;
             animation: twinkling 40s linear infinite;
             opacity: 0.8;
+            z-index: -1;
         }
 
         .sidebar {
@@ -62,6 +63,11 @@
             padding-top: 60px;
             border-right: 1px solid rgba(255, 0, 0, 0.3);
             box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+            transform: translateX(-100%);
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
         }
 
         .sidebar a {
@@ -112,15 +118,17 @@
         .sidebar a:hover::before {
             opacity: 0.7;
         }
+        
         .main-content {
-            margin-left: 250px;
             padding: 20px;
-            width: calc(100% - 250px);
+            width: 100%;
             min-height: 100vh;
             transition: all 0.3s ease;
             position: relative;
             z-index: 1;
+            box-sizing: border-box;
         }
+        
         .sidebar-toggle {
             position: fixed;
             top: 25px;
@@ -133,7 +141,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            display: none;
+            display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
@@ -148,16 +156,17 @@
 
         .neo {
             position: fixed;
-            z-index: 999999999999;
+            z-index: 900;
             text-align: center;
             transition: all 0.5s ease;
-            left: 120px;
+            left: 50%;
             top: 70%;
             transform: translate(-50%, -50%);
+            display: none;
         }
 
         .neo img {
-            width: 250px;
+            width: 200px;
             filter:
                 drop-shadow(0 0 5px rgba(255, 0, 0, 0.7))
                 drop-shadow(0 0 10px rgba(255, 0, 0, 0.5))
@@ -165,7 +174,6 @@
             animation: neon-glow 1.5s ease-in-out infinite alternate;
             transition: all 0.3s ease;
             cursor: pointer;
-            z-index: 999999999999;
         }
 
         .neo img:hover {
@@ -174,11 +182,9 @@
                 drop-shadow(0 0 10px rgba(255, 0, 0, 0.9))
                 drop-shadow(0 0 20px rgba(255, 0, 0, 0.7))
                 drop-shadow(0 0 30px rgba(255, 0, 0, 0.5));
-
         }
 
         .neon-text {
-            z-index: 999999999999;
             color: #fff;
             text-shadow:
                 0 0 5px #fff,
@@ -191,6 +197,31 @@
             margin-top: 20px;
         }
 
+        .header-logo {
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+
+        .header-logo img {
+            width: 60px;
+            height: 60px;
+            filter:
+                drop-shadow(0 0 5px rgba(255, 0, 0, 0.7))
+                drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
+        }
+
+        .header-text {
+            color: #fff;
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #ff0000,
+                0 0 20px #ff0000;
+            font-size: 1.8rem;
+            margin-top: 10px;
+            text-align: center;
+        }
 
         .a1b2, .vxspot-container {
             display: flex;
@@ -198,14 +229,14 @@
             gap: 20px;
             padding: 30px;
             border-radius: 15px;
-            max-width: 900px;
-            width: 90%;
+            max-width: 100%;
             box-shadow: 
                 0 0 10px rgba(255, 0, 0, 0.7),
                 0 0 20px rgba(255, 0, 0, 0.5);
             border: 1px solid rgba(255, 0, 0, 0.5);
             background: rgba(20, 0, 0, 0.479);
             margin: 0 auto 30px;
+            box-sizing: border-box;
         }
 
         .c3d4 {
@@ -250,10 +281,14 @@
             padding: 10px;
             border: 2px solid #834b4b;
             border-radius: 5px;
-            font-size: 1em;
+            font-size: 0.9em;
             color: #ffffff;
             background-color: rgba(68, 0, 0, 0.9);
             box-sizing: border-box;
+            word-wrap: break-word;
+            overflow: auto;
+            max-height: 100px;
+            -webkit-appearance: none;
         }
 
         .i9j0[readonly] {
@@ -271,7 +306,7 @@
 
         .k1l2 {
             display: block;
-            padding: 10px 15px;
+            padding: 15px;
             border-radius: 5px;
             color: #ffffff;
             font-weight: bold;
@@ -287,6 +322,8 @@
             border: 1px solid rgba(255, 0, 0, 0.5);
             background: rgba(255, 0, 0, 0.1);
             width: 100%;
+            font-size: 1rem;
+            -webkit-appearance: none;
         }
 
         .k1l2:hover {
@@ -302,8 +339,8 @@
             text-shadow: 0 0 5px #ff0000;
             margin-bottom: 20px;
             text-align: center;
+            font-size: 1.6rem;
         }
-
 
         @keyframes neon-glow {
             from {
@@ -343,25 +380,44 @@
             }
         }
 
-        @media (max-width: 992px) {
+        @media (min-width: 992px) {
             .neo {
+                display: block;
+            }
+            
+            .sidebar {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 250px;
+                width: calc(100% - 250px);
+            }
+            
+            .header-logo {
+                display: none;
+            }
+            
+            .sidebar-toggle {
                 display: none;
             }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 991px) {
             .sidebar {
-                left: -250px;
+                transform: translateX(-100%);
+                width: 80%;
+                max-width: 250px;
             }
             
             .sidebar.active {
-                left: 0;
+                transform: translateX(0);
             }
             
             .main-content {
                 margin-left: 0;
                 width: 100%;
-                padding: 20px 15px;
+                padding: 15px;
             }
             
             .sidebar-toggle {
@@ -369,12 +425,79 @@
             }
             
             .a1b2, .vxspot-container {
-                width: 100%;
                 padding: 20px 15px;
             }
             
             .c3d4 {
                 padding: 12px;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .i9j0 {
+                font-size: 0.8em;
+            }
+            
+            .k1l2 {
+                font-size: 0.9rem;
+                padding: 12px;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+            }
+            
+            .e5f6 {
+                font-size: 0.9rem;
+            }
+            
+            .a1b2, .vxspot-container {
+                padding: 15px 10px;
+            }
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        .mobile-logo {
+            position: fixed;
+            top: 25px;
+            right: 20px;
+            z-index: 1100;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-logo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.7));
+        }
+
+        @media (min-width: 992px) {
+            .mobile-logo {
+                display: none;
             }
         }
 
@@ -384,6 +507,7 @@
             height: 100%;
             transform: rotate(-45deg);
             pointer-events: none;
+            z-index: -1;
         }
 
         .shooting-star {
@@ -422,13 +546,13 @@
             animation-delay: 2.5s;
         }
 
-      
         .nebula {
             position: absolute;
             border-radius: 50%;
             filter: blur(30px);
             opacity: 0.15;
             pointer-events: none;
+            z-index: -1;
         }
 
         .nebula:nth-child(1) {
@@ -447,6 +571,21 @@
             left: 75%;
             background: radial-gradient(circle, rgba(0, 0, 0, 0.6) 0%, rgba(29, 209, 161, 0) 70%);
             animation: float 25s infinite alternate-reverse ease-in-out;
+        }
+
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 990;
+            display: none;
+        }
+
+        .backdrop.active {
+            display: block;
         }
 
         @keyframes tail {
@@ -481,117 +620,71 @@
                 transform: translate(10px, -10px);
             }
         }
-.mobile-only-image {
-    position: fixed;
-    top: 25px;
-    left: 89%;
-    z-index: 1100;
-    background: rgba(255, 255, 255, 0.363);
-    border: 1px solid rgba(255, 0, 0, 0.5);
-    color: #ff0000;
-    font-size: 24px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-    transition: all 0.3s ease;
-}
 
-@media (max-width: 768px) {
-    .mobile-only-image {
-        display: block;
-        width: 40px;
-        height: 40px;
-    }
-}
-.mobile-only-link {
-    position: fixed;
-    top: 25px;
-    right: 20px;
-    z-index: 1100;
-    display: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
-.mobile-only-link:hover .mobile-only-image {
-    transform: scale(1.1);
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
-}
-@media (max-width: 768px) {
-    .mobile-only-link {
-        display: block;
-    }
-}
+        /* Custom scrollbar for WebKit browsers */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 0, 0, 0.8);
+        }
+
+        /* Make sure inputs show properly on iOS Safari */
+        input, textarea, button, select {
+            appearance: none;
+            -webkit-appearance: none;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
+    <div class="shooting-stars">
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+    </div>
+    
+    <div class="nebula"></div>
+    <div class="nebula"></div>
+    
+    <div class="backdrop" id="backdrop"></div>
+    
     <div class="sidebar-toggle" id="sidebarToggle">☰</div>
     <div class="sidebar" id="sidebar">
         <a href="executores.html">Executores</a>
         <a href="Status-Executores.html">Status</a>
         <a href="scripts.html">Scripts</a>
         <a href="contactos.html">Contactos</a>
-
-        <a href="contactos.html" class="mobile-only-link">
-            <img class="mobile-only-image" src="img/vxspoty.png" alt="Mobile Logo">
-        </a>
     </div>
-<script>
-    const sidebarToggle = document.getElementById('sidebarToggle');
-const sidebar = document.getElementById('sidebar');
-const mainContent = document.querySelector('.main-content');
-
-function isMobile() {
-    return window.innerWidth <= 768;
-}
-
-function toggleMenu() {
-    sidebar.classList.toggle('active');
-    if (isMobile()) {
-        mainContent.style.marginLeft = sidebar.classList.contains('active') ? '250px' : '0';
-    }
-}
-
-sidebarToggle.addEventListener('click', function(e) {
-    e.stopPropagation();
-    toggleMenu();
-});
-
-document.addEventListener('click', function() {
-    if (isMobile() && sidebar.classList.contains('active')) {
-        toggleMenu();
-    }
-});
-
-sidebar.addEventListener('click', function(e) {
-    e.stopPropagation();
-});
-
-function initLayout() {
-    if (isMobile()) {
-        sidebar.classList.remove('active');
-        mainContent.style.marginLeft = '0';
-    } else {
-        sidebar.classList.add('active');
-        mainContent.style.marginLeft = '250px';
-    }
-}
-
-window.addEventListener('resize', initLayout);
-initLayout();
-</script>
+    
+    <div class="mobile-logo">
+        <img src="img/vxspoty.png" alt="VxSpot Logo">
+    </div>
 
     <div class="neo" id="logo">
         <img src="img/vxspoty.png" alt="VxSpot Logo" id="logo-img">
         <div class="neon-text">Vxspot</div>
     </div>
-
+    
     <div class="main-content">
+        <div class="header-logo">
+            <img src="img/vxspoty.png" alt="VxSpot Logo">
+        </div>
+        <div class="header-text">Vxspot</div>
+        
         <div class="a1b2">
             <h2>Scripts Comunes</h2>
             <div class="c3d4">
@@ -653,21 +746,54 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnDepZaiH
             const input = document.getElementById(id);
             input.select();
             document.execCommand('copy');
+
+            // Create temp input for mobiles that might have issues with select()
+            if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+                const temp = document.createElement('textarea');
+                temp.value = input.value;
+                document.body.appendChild(temp);
+                temp.select();
+                document.execCommand('copy');
+                document.body.removeChild(temp);
+            }
+            
             alert('Texto copiado: ' + input.value.substring(0, 30) + '...');
         }
 
-        document.getElementById('logo-img').addEventListener('click', function() {
-            this.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                this.style.transform = 'scale(1)';
-            }, 300);
+        document.getElementById('sidebarToggle').addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleSidebar();
         });
-    </script>
-    <script>
-                document.addEventListener('contextmenu', function(e) {
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('backdrop');
+            
+            sidebar.classList.toggle('active');
+            backdrop.classList.toggle('active');
+        }
+
+        document.getElementById('backdrop').addEventListener('click', function() {
+            toggleSidebar();
+        });
+
+        // Logo click animation
+        const logoImg = document.getElementById('logo-img');
+        if (logoImg) {
+            logoImg.addEventListener('click', function() {
+                this.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 300);
+            });
+        }
+
+        // Prevent context menu
+        document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
         
+        // Disable saving page
         document.addEventListener('keydown', function(event) {
             if ((event.ctrlKey || event.metaKey) && event.key === 's') {
                 event.preventDefault();
@@ -675,27 +801,8 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnDepZaiH
             }
         });
     
+        // Disable developer tools shortcuts
         document.addEventListener('keydown', function(event) {
-    
-
-    
-        if (event.ctrlKey && event.shiftKey && event.key === "I") {
-            event.preventDefault();
-            alert('Ctrl+Shift+I está deshabilitado.');
-        }
-    
-        if (event.ctrlKey && event.shiftKey && event.key === "J") {
-            event.preventDefault();
-            alert('Ctrl+Shift+J está deshabilitado.');
-        }
-    
-        if (event.ctrlKey && event.key === "u") {
-            event.preventDefault();
-            alert('Ctrl+U está deshabilitado.');
-        }
-    });
-        
- </script>
-    </script>
-</body>
-</html>
+            if (event.ctrlKey && event.shiftKey && event.key === "I") {
+                event.preventDefault();
+                alert('
