@@ -851,11 +851,41 @@ document.addEventListener('contextmenu', function(event) {
 });
 
 </script>
+<script>
+    // Agregar este código al inicio de tus scripts
+    document.getElementById('invisible-admin-button').addEventListener('click', function() {
+        const adminMenu = document.querySelector('.admin-menu');
+        adminMenu.style.display = adminMenu.style.display === 'none' ? 'block' : 'none';
+    });
+
+    // Ocultar el menú admin inicialmente
+    document.querySelector('.admin-menu').style.display = 'none';
+
+    // El resto de tus scripts se mantienen igual
+    document.getElementById('menuToggle').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('active');
+    });
+    
+    document.querySelectorAll('.sidebar a').forEach(link => {
+        link.addEventListener('click', function() {
+            document.getElementById('sidebar').classList.remove('active');
+        });
+    });
+
+    document.addEventListener('click', function(e) {
+        const sidebar = document.getElementById('sidebar');
+        const menuToggle = document.getElementById('menuToggle');
+        
+        if (!sidebar.contains(e.target) && e.target !== menuToggle) {
+            sidebar.classList.remove('active');
+        }
+    });
+</script>
     <div class="admin-menu">
         <input type="password" id="admin-password" placeholder="Contraseña">
         <button onclick="loginAdmin()">editar</button>
     </div>
-
+    <div id="invisible-admin-button" style="position: absolute; top: 100px; left: 0; width: 100%; height: 50px; opacity: 0; cursor: pointer; z-index: 10;"></div>
     <h1> Estado de Executores</h1>
 
     <div class="boton-instalar33" style="text-align: center; margin-bottom: 20px;">
