@@ -797,6 +797,7 @@ display: none;
 </style> 
 </head>
 <body>
+    <div id="invisible-admin-button" style="position: absolute; top: 100px; left: 0; width: 100%; height: 50px; opacity: 0; cursor: pointer; z-index: 10;"></div>
     <button class="menu-toggle" id="menuToggle">☰</button>
     <script>
    
@@ -851,41 +852,11 @@ document.addEventListener('contextmenu', function(event) {
 });
 
 </script>
-<script>
-    // Agregar este código al inicio de tus scripts
-    document.getElementById('invisible-admin-button').addEventListener('click', function() {
-        const adminMenu = document.querySelector('.admin-menu');
-        adminMenu.style.display = adminMenu.style.display === 'none' ? 'block' : 'none';
-    });
-
-    // Ocultar el menú admin inicialmente
-    document.querySelector('.admin-menu').style.display = 'none';
-
-    // El resto de tus scripts se mantienen igual
-    document.getElementById('menuToggle').addEventListener('click', function() {
-        document.getElementById('sidebar').classList.toggle('active');
-    });
-    
-    document.querySelectorAll('.sidebar a').forEach(link => {
-        link.addEventListener('click', function() {
-            document.getElementById('sidebar').classList.remove('active');
-        });
-    });
-
-    document.addEventListener('click', function(e) {
-        const sidebar = document.getElementById('sidebar');
-        const menuToggle = document.getElementById('menuToggle');
-        
-        if (!sidebar.contains(e.target) && e.target !== menuToggle) {
-            sidebar.classList.remove('active');
-        }
-    });
-</script>
     <div class="admin-menu">
         <input type="password" id="admin-password" placeholder="Contraseña">
         <button onclick="loginAdmin()">editar</button>
     </div>
-    <div id="invisible-admin-button" style="position: absolute; top: 100px; left: 0; width: 100%; height: 50px; opacity: 0; cursor: pointer; z-index: 10;"></div>
+
     <h1> Estado de Executores</h1>
 
     <div class="boton-instalar33" style="text-align: center; margin-bottom: 20px;">
@@ -1683,140 +1654,155 @@ document.addEventListener('contextmenu', function(event) {
 
 
 </script>
-    <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
-    <script>
-        Parse.initialize("9ffUWtgMHsjdfjtdX2K9vmeKQ0AbH9FLnMAchmP2", "55ycOwZVUAmz7rJNQIa4m3B2vExq7zYGbqjX2RTH");
-        Parse.serverURL = "https://parseapi.back4app.com/";
-        const storedHash = "5aa7be94a0965f1dc7df42d77ebc64b4a478d37306a88f795ed550b549b84623";
-        let isAdmin = false;
-        async function hashPassword(password) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(password);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-            return hashHex;
+<script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+<script>
+    // Configuración inicial
+    document.querySelector('.admin-menu').style.display = 'none';
+    
+    // Botón invisible para mostrar/ocultar admin menu
+    document.getElementById('invisible-admin-button').addEventListener('click', function() {
+        const adminMenu = document.querySelector('.admin-menu');
+        adminMenu.style.display = adminMenu.style.display === 'none' ? 'block' : 'none';
+    });
+
+    // Menú sidebar
+    document.getElementById('menuToggle').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('active');
+    });
+    
+    document.querySelectorAll('.sidebar a').forEach(link => {
+        link.addEventListener('click', function() {
+            document.getElementById('sidebar').classList.remove('active');
+        });
+    });
+
+    document.addEventListener('click', function(e) {
+        const sidebar = document.getElementById('sidebar');
+        const menuToggle = document.getElementById('menuToggle');
+        
+        if (!sidebar.contains(e.target) && e.target !== menuToggle) {
+            sidebar.classList.remove('active');
         }
+    });
 
-        async function loginAdmin() {
-            const password = document.getElementById('admin-password').value;
-            const hashedPassword = await hashPassword(password);
+    // Protección contra F12 e inspección
+    document.addEventListener('keydown', function(e) {
+        if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I") || 
+            (e.ctrlKey && e.shiftKey && e.key === "J") || 
+            (e.ctrlKey && e.key === "U")) {
+            e.preventDefault();
+            alert('Acceso denegado');
+        }
+    });
 
-            if (hashedPassword === storedHash) {
-                isAdmin = true;
-                alert("Ahora puedes editar los estados");
-                enableEditing();
-            } else {
-                alert("Contraseña incorrecta");
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+    // Sistema de administración
+    Parse.initialize("9ffUWtgMHsjdfjtdX2K9vmeKQ0AbH9FLnMAchmP2", "55ycOwZVUAmz7rJNQIa4m3B2vExq7zYGbqjX2RTH");
+    Parse.serverURL = "https://parseapi.back4app.com/";
+    const storedHash = "5aa7be94a0965f1dc7df42d77ebc64b4a478d37306a88f795ed550b549b84623";
+    let isAdmin = false;
+
+    async function hashPassword(password) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+        return hashHex;
+    }
+
+    async function loginAdmin() {
+        const password = document.getElementById('admin-password').value;
+        const hashedPassword = await hashPassword(password);
+
+        if (hashedPassword === storedHash) {
+            isAdmin = true;
+            alert("Ahora puedes editar los estados");
+            enableEditing();
+        } else {
+            alert("Contraseña incorrecta");
+        }
+    }
+
+    function enableEditing() {
+        const radios = document.querySelectorAll('input[type="radio"]');
+        radios.forEach(radio => {
+            radio.disabled = !isAdmin;
+        });
+    }
+
+    async function saveState(executorName, state) {
+        if (!isAdmin) return;
+
+        const Executor = Parse.Object.extend("Executor");
+        const query = new Parse.Query(Executor);
+        query.equalTo("name", executorName);
+
+        try {
+            let executor = await query.first();
+            if (!executor) {
+                executor = new Executor();
+                executor.set("name", executorName);
             }
+            executor.set("state", state);
+            await executor.save();
+            alert("Estado guardado correctamente.");
+        } catch (error) {
+            console.error("Error al guardar el estado:", error);
         }
+    }
 
+    async function loadStatesInBatches(executorNames, batchSize = 5, delay = 1000) {
+        const Executor = Parse.Object.extend("Executor");
 
-        function enableEditing() {
-            const radios = document.querySelectorAll('input[type="radio"]');
-            radios.forEach(radio => {
-                radio.disabled = !isAdmin;
-            });
-        }
-
-        async function saveState(executorName, state) {
-            if (!isAdmin) return;
-
-            const Executor = Parse.Object.extend("Executor");
+        for (let i = 0; i < executorNames.length; i += batchSize) {
+            const batch = executorNames.slice(i, i + batchSize);
             const query = new Parse.Query(Executor);
-            query.equalTo("name", executorName);
+            query.containedIn("name", batch);
 
             try {
-                let executor = await query.first();
-                if (!executor) {
-                    executor = new Executor();
-                    executor.set("name", executorName);
-                }
-                executor.set("state", state);
-                await executor.save();
-                alert("Estado guardado correctamente.");
+                const results = await query.find();
+                results.forEach(executor => {
+                    const executorName = executor.get("name");
+                    const state = executor.get("state");
+                    const radio = document.querySelector(`input[name="${executorName}"][value="${state}"]`);
+                    if (radio) {
+                        radio.checked = true;
+                    }
+                });
             } catch (error) {
-                console.error("Error al guardar el estado:", error);
+                console.error("Error al cargar el lote de estados:", error);
             }
+            await new Promise(resolve => setTimeout(resolve, delay));
         }
-
-        async function loadStatesInBatches(executorNames, batchSize = 5, delay = 1000) {
-            const Executor = Parse.Object.extend("Executor");
-
-            for (let i = 0; i < executorNames.length; i += batchSize) {
-                const batch = executorNames.slice(i, i + batchSize);
-                const query = new Parse.Query(Executor);
-                query.containedIn("name", batch);
-
-                try {
-                    const results = await query.find();
-                    results.forEach(executor => {
-                        const executorName = executor.get("name");
-                        const state = executor.get("state");
-                        const radio = document.querySelector(`input[name="${executorName}"][value="${state}"]`);
-                        if (radio) {
-                            radio.checked = true;
-                        }
-                    });
-                } catch (error) {
-                    console.error("Error al cargar el lote de estados:", error);
-                }
-                await new Promise(resolve => setTimeout(resolve, delay));
-            }
-        }
-        function getExecutorNames() {
-            const radios = document.querySelectorAll('input[type="radio"]');
-            const executorNames = new Set();
-            radios.forEach(radio => {
-                executorNames.add(radio.name);
-            });
-            return Array.from(executorNames);
-        }
-        document.querySelectorAll('input[type="radio"]').forEach(radio => {
-            radio.addEventListener("change", (event) => {
-                if (isAdmin) {
-                    const executorName = event.target.name;
-                    const state = event.target.value;
-                    saveState(executorName, state);
-                }
-            });
-        });
-        const executorNames = getExecutorNames();
-        loadStatesInBatches(executorNames);
-        enableEditing();
-    </script>
-       <script>
-        document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-});
-
-document.addEventListener('keydown', function(event) {
-    if ((event.ctrlKey || event.metaKey) && event.key === 's') {
-        event.preventDefault();
-        alert('Guardar esta página está deshabilitado.');
     }
-});
 
-document.addEventListener('keydown', function(event) {
+    function getExecutorNames() {
+        const radios = document.querySelectorAll('input[type="radio"]');
+        const executorNames = new Set();
+        radios.forEach(radio => {
+            executorNames.add(radio.name);
+        });
+        return Array.from(executorNames);
+    }
 
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener("change", (event) => {
+            if (isAdmin) {
+                const executorName = event.target.name;
+                const state = event.target.value;
+                saveState(executorName, state);
+            }
+        });
+    });
 
-
-if (event.ctrlKey && event.shiftKey && event.key === "I") {
-    event.preventDefault();
-    alert('Ctrl+Shift+I está deshabilitado.');
-}
-
-if (event.ctrlKey && event.shiftKey && event.key === "J") {
-    event.preventDefault();
-    alert('Ctrl+Shift+J está deshabilitado.');
-}
-
-if (event.ctrlKey && event.key === "u") {
-    event.preventDefault();
-    alert('Ctrl+U está deshabilitado.');
-}
-});
-
+    // Inicialización
+    const executorNames = getExecutorNames();
+    loadStatesInBatches(executorNames);
+    enableEditing();
 </script>
 </body>
 </html>
