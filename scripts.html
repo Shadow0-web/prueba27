@@ -48,39 +48,38 @@
         }
 
         .sidebar {
-    position: fixed;
-    left: 0; 
-    top: 0;
-    width: 250px;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    transition: left 0.5s ease;
-    z-index: 9999;
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 60px;
-    border-right: 1px solid rgba(255, 0, 0, 0.3);
-    box-shadow: 0 0 30px rgb(255, 0, 0); 
-}
+            position: fixed;
+            left: 0; 
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            transition: left 0.5s ease;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 60px;
+            border-right: 1px solid rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 30px rgb(255, 0, 0); 
+        }
 
-.sidebar a {
-    color: #ff0000;
-    text-decoration: none;
-    font-size: 1.2rem;
-    margin: 15px 0;
-    padding: 12px 30px;
-    position: relative;
-    transition: all 0.3s ease;
-    border-radius: 30px;
-    background: transparent;
-    width: 150px;
-    text-align: center;
-    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
-    border: 1px solid transparent;
-    box-shadow: 0 0 10px rgb(255, 0, 0);
-}
+        .sidebar a {
+            color: #ff0000;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin: 15px 0;
+            padding: 12px 30px;
+            position: relative;
+            transition: all 0.3s ease;
+            border-radius: 30px;
+            background: transparent;
+            width: 150px;
+            text-align: center;
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+            border: 1px solid transparent;
+            box-shadow: 0 0 10px rgb(255, 0, 0);
+        }
 
         .sidebar a:hover {
             color: #fff;
@@ -113,6 +112,7 @@
         .sidebar a:hover::before {
             opacity: 0.7;
         }
+        
         .main-content {
             margin-left: 250px;
             padding: 20px;
@@ -122,6 +122,7 @@
             position: relative;
             z-index: 1;
         }
+        
         .sidebar-toggle {
             position: fixed;
             top: 25px;
@@ -175,7 +176,6 @@
                 drop-shadow(0 0 10px rgba(255, 0, 0, 0.9))
                 drop-shadow(0 0 20px rgba(255, 0, 0, 0.7))
                 drop-shadow(0 0 30px rgba(255, 0, 0, 0.5));
-
         }
 
         .neon-text {
@@ -192,11 +192,10 @@
             margin-top: 20px;
         }
 
-
         .a1b2, .vxspot-container {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+ 
             padding: 30px;
             border-radius: 15px;
             max-width: 900px;
@@ -304,7 +303,6 @@
             margin-bottom: 20px;
             text-align: center;
         }
-
 
         @keyframes neon-glow {
             from {
@@ -422,7 +420,6 @@
             left: calc(50% - 250px);
             animation-delay: 2.5s;
         }
-
       
         .nebula {
             position: absolute;
@@ -482,35 +479,42 @@
                 transform: translate(10px, -10px);
             }
         }
-.mobile-only-image {
-    position: fixed;
-    top: 25px;
-    left: 89%;
-    z-index: 1100;
-    background: rgba(255, 0, 0, 0.363);
-    border: 1px solid rgba(255, 0, 0, 0.5);
-    color: #ff0000;
-    font-size: 24px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-    transition: all 0.3s ease;
-}
 
-@media (max-width: 768px) {
-    .mobile-only-image {
-        display: block;
-        width: 40px;
-        height: 40px;
-    }
-}
+        .mobile-only-image {
+            position: fixed;
+            top: 25px;
+            left: 89%;
+            z-index: 1100;
+            background: rgba(255, 0, 0, 0.363);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            color: #ff0000;
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
 
+        @media (max-width: 768px) {
+            .mobile-only-image {
+                display: block;
+                width: 40px;
+                height: 40px;
+            }
+        }
 
+        .coca {
+            text-align: center;
+            color: #ffffff;
+            text-shadow: 0 0 5px #ff0000;
+            font-size: 1.2rem;
+            margin: 15px 0;
+        }
     </style>
 </head>
 <body>
@@ -521,62 +525,24 @@
         <a href="Status-Executores.html">Status</a>
         <a href="scripts.html">Scripts</a>
         <a href="contactos.html">Contactos</a>
-
-  
     </div>
-<script>
-    const sidebarToggle = document.getElementById('sidebarToggle');
-const sidebar = document.getElementById('sidebar');
-const mainContent = document.querySelector('.main-content');
-
-function isMobile() {
-    return window.innerWidth <= 768;
-}
-
-function toggleMenu() {
-    sidebar.classList.toggle('active');
-    if (isMobile()) {
-        mainContent.style.marginLeft = sidebar.classList.contains('active') ? '250px' : '0';
-    }
-}
-
-sidebarToggle.addEventListener('click', function(e) {
-    e.stopPropagation();
-    toggleMenu();
-});
-
-document.addEventListener('click', function() {
-    if (isMobile() && sidebar.classList.contains('active')) {
-        toggleMenu();
-    }
-});
-
-sidebar.addEventListener('click', function(e) {
-    e.stopPropagation();
-});
-
-function initLayout() {
-    if (isMobile()) {
-        sidebar.classList.remove('active');
-        mainContent.style.marginLeft = '0';
-    } else {
-        sidebar.classList.add('active');
-        mainContent.style.marginLeft = '250px';
-    }
-}
-
-window.addEventListener('resize', initLayout);
-initLayout();
-</script>
 
     <div class="neo" id="logo">
         <img src="img/vxspoty.png" alt="VxSpot Logo" id="logo-img">
         <div class="neon-text">Vxspot</div>
     </div>
-
+<style>.oso2{
+    gap: 0px;
+    vertical-align:bottom;
+    text-align: center;
+    background-color: #ff000070;
+    border-radius: 20px;
+    
+    }</style>
     <div class="main-content">
         <div class="a1b2">
             <h2>Scripts Comunes</h2>
+            <a class="oso2">Blox Fruit  Hubs</a>ㅤ
             <div class="c3d4">
                 <label class="e5f6" for="1">W azure</label>
                 <div class="g7h8">
@@ -610,9 +576,9 @@ initLayout();
             </div>
 
             <div class="c3d4">
-                <label class="e5f6" for="4">Maru hub</label>
+                <label class="e5f6" for="5">Maru hub</label>
                 <div class="g7h8">
-                    <input class="i9j0" type="text" id="4" value='getgenv().Team = "Marines"
+                    <input class="i9j0" type="text" id="5" value='getgenv().Team = "Marines"
 loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/KimP/refs/heads/main/MaruHub"))()' readonly>
                     <button class="k1l2" onclick="copiarTexto('5')">Copiar</button>
                 </div>
@@ -625,14 +591,97 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/KimP/refs/he
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnDepZaiHubBeta/refs/heads/main/AnDepZaiHubNewUpdated.lua"))()' readonly>
                     <button class="k1l2" onclick="copiarTexto('6')">Copiar</button>
                 </div>
+            </div>ㅤ
+            ㅤㅤ <a class="oso2">Classic Scripts</a>ㅤㅤ
+            ㅤㅤ <div class="c3d4">
+                <label class="e5f6" for="10">Auto Chest</label>
+                <div class="g7h8">
+                    <input class="i9j0" type="text" id="5" value='loadstring(game:HttpGet"https://frostware.onrender.com/fwchest")()' readonly>
+                    <button class="k1l2" onclick="copiarTexto('10')">Copiar</button>
+                </div>
             </div>
-<p class="coca">Scripts Blox fruit</p>
+            <div class="c3d4">
+                <label class="e5f6" for="5">Auto Bounty</label>
+                <div class="g7h8">
+                    <textarea class="i9j0" id="12" rows="10" readonly>
+            script_key = "put_your_key_here";
+            
+            _G["HoHo Hub Auto Bounty V4"] = {
+                ["Avatar"] = "rbxassetid://8598068647",
+                ["Farm Method"] = "Normal", -- Normal or Gun (really Bad rn)
+                ["Select Team"] = "Pirate", -- Pirate/Marine
+                ["Discord Webhook"] = "",
+                ["Bypass Teleport"] = false, -- not recommend cuz the bypass success rate is low
+                ["Max Level Distance"] = 612, -- 612 is took from wiki but u can change it
+                ["Don't attack friends"] = true,
+                ["Don't attack player have cup"] = false,
+                ["Distance Attack Y"] = 0, -- Shark Race = 0; Another >= 6
+                ["Chat After Kill"] = {
+                    ["Active"] = false, -- if u don't want script chat just make it false
+                    ["List Chat"] = {"i have a good gaming chair","No skill? Use Hoho hub","How to play this game","im new","your bad"},
+                },
+                ["Yourself"] = {
+                    ["Invisible From Ken"] = true,
+                    ["No Stun"] = true,
+                },
+                ["SafeZone"] = {Enabled = true, ["Health Left (%)"] = 25, ["Wait Until Heal (%)"] = 80},
+                ["Time Control"] = {
+                    ["Max Time Target Player"] = 120,
+                },
+                ["Abilities"] = {
+                    ["Auto Click"] = true,
+                    ["Melee"] = {
+                        Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+                        X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+                        C = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+                    },
+                    ["Sword"] = {
+                        Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+                        X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+                    },
+                    ["Gun"] = {
+                        Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+                        X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+                    },
+                    ["Fruit"] = {
+                        Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+                        X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+                        C = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+                        V = {Enabled = false, Hold = 0.05, WaitNextSkill = 0.6}, -- don't forget to disable V if u r using zoan fruits
+                        F = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+                    },
+                },
+            }
+            _G.SupperFixLag = true -- eww potato device
+            _G["Auto Gacha & Store Fruit"] = true -- more fruits ^^
+            
+            _G.loadCustomId = "fac6dbd013c78163f8061ce11b2c1330"
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI"))()
+                    </textarea>
+                    <button class="k1l2" onclick="copiarTexto('12')">Copiar</button>
+                </div>
+            </div>
+            
+            <script>
+            function copiarTexto(id) {
+                const elemento = document.getElementById(id);
+                elemento.select();
+                document.execCommand('copy');
+               
+                alert("Texto copiado al portapapeles");
+            }
+            </script>
+                        <div class="c3d4">
+                            <label class="e5f6" for="13">Auto Fruit</label>
+                            <div class="g7h8">
+                                <input class="i9j0" type="text" id="13" value='ServerHopTimer = 5
+                                TeleportSafe = true
+                                Webhook = "Your Webhook Here"
+                                _G.Version="Fruit Farm"loadstring(game:HttpGet("https://raw.githubusercontent.com/Efe0626/RaitoHub/main/Script"))()' readonly>
+                                <button class="k1l2" onclick="copiarTexto('13')">Copiar</button>
+                            </div>
+                        </div>
         </div>
-<style>
-.coca{
-text-align: center;
-}
-</style>
 
         <div class="vxspot-container">
             <h2>Vxspot</h2>
@@ -644,36 +693,25 @@ text-align: center;
                 </div>
             </div>
         </div>
-    </div>
-        <div class="vxspot-container">
-            <h2>Vxspot</h2>
-            <div class="c3d4">
-                <label class="e5f6" for="vx1">Vxspot</label>
-                <div class="g7h8">
-                    <input class="i9j0" type="text" id="vx1" value='En progreso' readonly>
-                    <button class="k1l2" onclick="copiarTexto('vx1')">Copiar</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
         <div class="vxspot-container">
             <h2>Dead Rails</h2>
             <div class="c3d4">
-                <label class="e5f6" for="vx1">Auto Clase Horse</label>
+                <label class="e5f6" for="8">Auto Clase Horse</label>
                 <div class="g7h8">
                     <input class="i9j0" type="text" id="8" value='loadstring(game:HttpGet("https://pastebin.com/raw/5nu3ni6D"))()' readonly>
-                    <button class="k1l2" onclick="copiarTexto('vx1')">Copiar</button>
-                </div></div>
-
-            <div class="c3d4">
-                <label class="e5f6" for="vx1">Auto Win and bond collect</label>
-                <div class="g7h8">
-                    <input class="i9j0" type="text" id="9" value='loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/DeadRails"))()' readonly>
-                    <button class="k1l2" onclick="copiarTexto('vx1')">Copiar</button>
+                    <button class="k1l2" onclick="copiarTexto('8')">Copiar</button>
                 </div>
             </div>
-</div>
+
+            <div class="c3d4">
+                <label class="e5f6" for="9">Auto Win and bond collect</label>
+                <div class="g7h8">
+                    <input class="i9j0" type="text" id="9" value='loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/DeadRails"))()' readonly>
+                    <button class="k1l2" onclick="copiarTexto('9')">Copiar</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -690,9 +728,51 @@ text-align: center;
                 this.style.transform = 'scale(1)';
             }, 300);
         });
-    </script>
-    <script>
-                document.addEventListener('contextmenu', function(e) {
+
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.querySelector('.main-content');
+
+        function isMobile() {
+            return window.innerWidth <= 768;
+        }
+
+        function toggleMenu() {
+            sidebar.classList.toggle('active');
+            if (isMobile()) {
+                mainContent.style.marginLeft = sidebar.classList.contains('active') ? '250px' : '0';
+            }
+        }
+
+        sidebarToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleMenu();
+        });
+
+        document.addEventListener('click', function() {
+            if (isMobile() && sidebar.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+
+        sidebar.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        function initLayout() {
+            if (isMobile()) {
+                sidebar.classList.remove('active');
+                mainContent.style.marginLeft = '0';
+            } else {
+                sidebar.classList.add('active');
+                mainContent.style.marginLeft = '250px';
+            }
+        }
+
+        window.addEventListener('resize', initLayout);
+        initLayout();
+
+        document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
         
@@ -704,26 +784,21 @@ text-align: center;
         });
     
         document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.shiftKey && event.key === "I") {
+                event.preventDefault();
+                alert('Ctrl+Shift+I está deshabilitado.');
+            }
     
-
+            if (event.ctrlKey && event.shiftKey && event.key === "J") {
+                event.preventDefault();
+                alert('Ctrl+Shift+J está deshabilitado.');
+            }
     
-        if (event.ctrlKey && event.shiftKey && event.key === "I") {
-            event.preventDefault();
-            alert('Ctrl+Shift+I está deshabilitado.');
-        }
-    
-        if (event.ctrlKey && event.shiftKey && event.key === "J") {
-            event.preventDefault();
-            alert('Ctrl+Shift+J está deshabilitado.');
-        }
-    
-        if (event.ctrlKey && event.key === "u") {
-            event.preventDefault();
-            alert('Ctrl+U está deshabilitado.');
-        }
-    });
-        
- </script>
+            if (event.ctrlKey && event.key === "u") {
+                event.preventDefault();
+                alert('Ctrl+U está deshabilitado.');
+            }
+        });
     </script>
 </body>
 </html>
