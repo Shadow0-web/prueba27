@@ -32,7 +32,6 @@
             overflow-x: hidden;
         }
 
-        /* Star background effect */
         body::before {
             content: "";
             position: fixed;
@@ -51,7 +50,7 @@
             z-index: -1;
         }
 
-        /* Top Navigation Bar */
+
         .navbar {
             position: sticky;
             top: 0;
@@ -383,7 +382,7 @@
             }
         }
 
-        /* Responsive Design */
+
         @media (max-width: 768px) {
             .navbar {
                 padding: 1rem;
@@ -427,7 +426,7 @@
     </style>
 </head>
 <body>
-    <!-- Top Navigation Bar -->
+
     <nav class="navbar">
         <div class="logo-container">
             <img src="img/vxspoty.png" alt="VxSpot Logo" class="logo-img">
@@ -449,11 +448,11 @@
     <div class="container">
         <h1 class="title">Executores</h1>
         
-        <!-- Android Executors Section -->
+ 
         <section>
             <h2><img src="imagenes/androidicon.png" alt="Android Icon"> Executores Android</h2>
             <div class="executors-grid">
-                <!-- Executor Card Template -->
+   
                 <div class="executor-card">
                     <i class="fas fa-cog edit-icon"></i>
                     <img src="imagenes/fluxus.png" alt="Fluxus">
@@ -526,11 +525,10 @@
                     </div>
                 </div>
                 
-                <!-- Add more Android executor cards as needed -->
+
             </div>
         </section>
-        
-        <!-- iOS Executors Section -->
+
         <section>
             <h2><img src="imagenes/iosicon.png" alt="iOS Icon"> Executores iOS</h2>
             <div class="executors-grid">
@@ -569,12 +567,11 @@
                         <button class="btn guardar-btn">Guardar</button>
                     </div>
                 </div>
-                
-                <!-- Add more iOS executor cards as needed -->
+      
             </div>
         </section>
         
-        <!-- VNG Executors Section -->
+
         <section>
             <h2><img src="imagenes/vng.png" alt="VNG Icon"> Executores VNG</h2>
             <div class="executors-grid">
@@ -596,11 +593,10 @@
                     </div>
                 </div>
                 
-                <!-- Add more VNG executor cards as needed -->
+     
             </div>
         </section>
-        
-        <!-- Windows Executors Section -->
+
         <section>
             <h2><img src="imagenes/windows.png" alt="Windows Icon"> Windows Executores</h2>
             <div class="executors-grid">
@@ -621,16 +617,15 @@
                         <button class="btn guardar-btn">Guardar</button>
                     </div>
                 </div>
-                
-                <!-- Add more Windows executor cards as needed -->
+       
             </div>
         </section>
         
-        <!-- Admin Button (Hidden) -->
+ 
         <button id="boton-admin" style="display: none;" class="btn">Admin</button>
     </div>
     
-    <!-- Admin Login Modal -->
+
     <div id="modal-contraseña" class="modal">
         <div class="modal-content">
             <h3>Acceso Administrador</h3>
@@ -639,12 +634,12 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/parse/3.4.1/parse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu toggle
+      
             const menuToggle = document.getElementById('menuToggle');
             const navLinks = document.getElementById('navLinks');
             
@@ -661,13 +656,12 @@
                 }
             });
             
-            // Admin button (hidden by default)
+
             const adminButton = document.getElementById('boton-admin');
             adminButton.addEventListener('click', function() {
                 document.getElementById('modal-contraseña').style.display = 'flex';
             });
-            
-            // Admin login verification
+
             document.getElementById('verificar-contraseña').addEventListener('click', function() {
                 const contraseñaIngresada = document.getElementById('contraseña-admin').value;
                 const CONTRASEÑA_HASH = '5aa7be94a0965f1dc7df42d77ebc64b4a478d37306a88f795ed550b549b84623'; 
@@ -683,15 +677,13 @@
                     alert('Contraseña incorrecta');
                 }
             });
-            
-            // Close modal when clicking outside
+  
             document.getElementById('modal-contraseña').addEventListener('click', function(event) {
                 if (event.target === this) {
                     this.style.display = 'none';
                 }
             });
-            
-            // Toggle edit icons visibility
+ 
             function toggleEditIcons(show) {
                 const editIcons = document.querySelectorAll('.edit-icon');
                 editIcons.forEach(icon => {
@@ -699,7 +691,7 @@
                 });
             }
             
-            // Edit icon click handler
+
             document.querySelectorAll('.edit-icon').forEach(icon => {
                 icon.addEventListener('click', function() {
                     const card = this.closest('.executor-card');
@@ -708,7 +700,7 @@
                 });
             });
             
-            // Save button click handler
+
             document.querySelectorAll('.guardar-btn').forEach(button => {
                 button.addEventListener('click', async function() {
                     const card = this.closest('.executor-card');
@@ -723,15 +715,12 @@
                     }
                     
                     try {
-                        // Update UI immediately
+          
                         card.querySelector('p:nth-of-type(1)').textContent = `Versión: ${nuevaVersion}`;
                         card.querySelector('p:nth-of-type(2)').textContent = `Estado: ${nuevoEstado}`;
                         card.querySelector('.btn:last-child').href = nuevoEnlace;
                         
                         card.querySelector('.edit-form').style.display = 'none';
-                        
-                        // Here would be the code to update the database
-                        // For now, just show a success message
                         alert('Cambios guardados');
                     } catch (error) {
                         console.error("Error al guardar:", error);
@@ -740,57 +729,7 @@
                 });
             });
             
-            // Parse initialization (commented out for security)
-            /*
-            Parse.initialize('YOUR_APP_ID', 'YOUR_JS_KEY');
-            Parse.serverURL = 'https://parseapi.back4app.com/';
-            
-            // Fetch executors data
-            async function fetchAllExecutors() {
-                try {
-                    const Executor = Parse.Object.extend("Executor");
-                    const query = new Parse.Query(Executor);
-                    query.limit(1000);
-                    
-                    const results = await query.find();
-                    return results;
-                } catch (error) {
-                    console.error("Error fetching executors:", error);
-                    throw error;
-                }
-            }
-            
-            // Update UI with executor data
-            async function loadExecutors() {
-                try {
-                    const executors = await fetchAllExecutors();
-                    
-                    executors.forEach(executor => {
-                        const nombre = executor.get("nombre");
-                        const executorElement = Array.from(document.querySelectorAll('.executor-card h3'))
-                            .find(el => el.textContent === nombre)
-                            ?.closest('.executor-card');
-                        
-                        if (executorElement) {
-                            const version = executor.get("version");
-                            const estado = executor.get("estado");
-                            const enlace = executor.get("enlace");
-                            
-                            executorElement.querySelector('p:nth-of-type(1)').textContent = `Versión: ${version}`;
-                            executorElement.querySelector('p:nth-of-type(2)').textContent = `Estado: ${estado}`;
-                            executorElement.querySelector('.btn:last-child').href = enlace;
-                        }
-                    });
-                } catch (error) {
-                    console.error("Error loading executors:", error);
-                }
-            }
-            
-            // Load executors data
-            loadExecutors();
-            */
-            
-            // For demo purposes, simulate loading data
+  
             setTimeout(() => {
                 document.querySelectorAll('.executor-card').forEach(card => {
                     const versionText = card.querySelector('p:nth-of-type(1)');
@@ -806,7 +745,7 @@
                 });
             }, 1000);
             
-            // Security measures
+       
             document.addEventListener('keydown', function(e) {
                 if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
                     e.preventDefault();
