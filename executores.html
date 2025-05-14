@@ -7,76 +7,112 @@
     <link rel="icon" href="imagenes/vxspot.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        :root {
+            --primary: #ff0000;
+            --primary-dark: #800000;
+            --primary-light: rgba(255, 0, 0, 0.5);
+            --background: #000000;
+            --card-bg: rgba(0, 0, 0, 0.8);
+            --text: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
             margin: 0;
-            padding: 20px 20px 20px 270px; 
-            background-color: #000000;
-            color: #000000;
-            height: 570vh;
-            max-height: 570vh;
-            background: radial-gradient(ellipse at bottom, #000000 0%, #000000 100%);
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            min-height: 100vh;
             position: relative;
-            transition: padding-left 0.3s ease;
+            overflow-x: hidden;
         }
 
-        .sidebar-toggle {
-            display: none;
+        /* Star background effect */
+        body::before {
+            content: "";
             position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            background-color: #ff0000;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 20px;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(1px 1px at 25% 10%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1px 1px at 50% 25%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1px 1px at 75% 30%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1.5px 1.5px at 15% 40%, rgba(255, 255, 255, 0.9) 100%, transparent),
+                radial-gradient(1.5px 1.5px at 60% 70%, rgba(255, 255, 255, 0.9) 100%, transparent);
+            background-repeat: repeat;
+            background-size: 400px 400px;
+            animation: twinkling 40s linear infinite;
+            opacity: 0.5;
+            z-index: -1;
         }
 
-        .sidebar {
-    position: fixed;
-    left: 0; 
-    top: 0;
-    width: 250px;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    transition: left 0.5s ease;
-    z-index: 9999;
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 60px;
-    border-right: 1px solid rgba(255, 0, 0, 0.3);
-    box-shadow: 0 0 30px rgb(255, 0, 0); 
-}
+        /* Top Navigation Bar */
+        .navbar {
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-bottom: 1px solid var(--primary-light);
+            box-shadow: 0 0 20px var(--primary-light);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
 
-.sidebar a {
-    color: #ff0000;
-    text-decoration: none;
-    font-size: 1.2rem;
-    margin: 15px 0;
-    padding: 12px 30px;
-    position: relative;
-    transition: all 0.3s ease;
-    border-radius: 30px;
-    background: transparent;
-    width: 150px;
-    text-align: center;
-    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
-    border: 1px solid transparent;
-    box-shadow: 0 0 10px rgb(255, 0, 0);
-}
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
 
-        .sidebar a:hover {
-            color: #fff;
+        .logo-img {
+            height: 40px;
+            filter: drop-shadow(0 0 5px var(--primary-light));
+            animation: neon-glow 1.5s ease-in-out infinite alternate;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text);
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px var(--primary),
+                0 0 30px var(--primary);
+            animation: text-flicker 3s linear infinite;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
             text-shadow: 
                 0 0 5px #fff,
-                0 0 10px #ff0000,
-                0 0 20px #ff0000;
+                0 0 10px var(--primary),
+                0 0 20px var(--primary);
             box-shadow: 
                 0 0 10px rgba(255, 0, 0, 0.7),
                 0 0 20px rgba(255, 0, 0, 0.5);
@@ -85,301 +121,166 @@
             transform: scale(1.05);
         }
 
-        .overlay {
+        .menu-toggle {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 998;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 20px !important;
-            }
-            
-            .sidebar {
-                left: -250px;
-            }
-            
-            .sidebar.active {
-                left: 0;
-            }
-            
-            .sidebar-toggle {
-                display: block;
-            }
-            
-            .sidebar.active ~ .overlay {
-                display: block;
-            }
-        }
-
-        #boton-retroceso {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #000000;
-            color: white;
+            background: none;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            color: var(--primary);
+            font-size: 1.5rem;
             cursor: pointer;
-            font-size: 16px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease;
-            opacity: 0;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background-color: var(--primary-dark);
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         section {
-            background-color: #a80000;
+            margin-bottom: 3rem;
+            padding: 1.5rem;
             border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-            transition: background-color 0.3s ease;
-            opacity: 0.8;
-            background-color: #000000;
-            box-shadow: 0 0 10px rgb(255, 0, 0);
+            background-color: var(--card-bg);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
         }
 
-        #boton-retroceso:hover {
-            background-color: #000000;
+        section h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text);
+            border-bottom: 2px solid var(--primary-dark);
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
         }
 
-        section:hover {
-            background-color: #030000;
-            box-shadow: 0 0 10px rgb(255, 0, 0);
+        section h2 img {
+            height: 30px;
+            width: auto;
         }
 
-        h2 {
-            color: #ffffff;
-            border-bottom: 2px solid #240101;
-            padding-bottom: 10px;
-        }
-
-        .botones-container {
+        .executors-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
         }
 
-        @media (max-width: 768px) {
-            .botones-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .boton-instalar {
-            background-color: #ff0202c9;
+        .executor-card {
+            background-color: rgba(0, 0, 0, 0.6);
             border-radius: 10px;
-            padding: 15px;
+            padding: 1.5rem;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-decoration: none;
-            color: rgb(255, 8, 8);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 0 12px rgb(255, 0, 0);
+            box-shadow: 0 0 12px rgba(255, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
-        .boton-instalar::before {
+        .executor-card::before {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
             width: 300%;
             height: 300%;
-            background: radial-gradient(circle, rgba(255, 0, 0, 0.212), rgba(255, 0, 0, 0.301) 70%);
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.1), rgba(255, 0, 0, 0.2) 70%);
             transform: translate(-50%, -50%) scale(0);
             transition: transform 0.5s ease, opacity 0.5s ease;
             opacity: 0;
             pointer-events: none;
         }
 
-        .boton-instalar:hover::before {
+        .executor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.4);
+        }
+
+        .executor-card:hover::before {
             transform: translate(-50%, -50%) scale(1);
             opacity: 1;
         }
 
-        .boton-instalar:active::before {
-            background: radial-gradient(circle, rgba(248, 2, 2, 0.2), rgba(255, 255, 255, 0) 70%);
-        }
-
-        .boton-instalar img {
+        .executor-card img {
             width: 80px;
             height: 80px;
-            margin-bottom: 10px;
+            margin: 0 auto 1rem;
             border-radius: 10px;
+            object-fit: cover;
         }
 
-        .boton-instalar h3 {
-            margin: 10px 0;
-            font-size: 18px;
-            color: #ffffff;
+        .executor-card h3 {
+            margin: 0.5rem 0;
+            font-size: 1.2rem;
+            color: var(--text);
         }
 
-        .boton-instalar p {
-            margin: 5px 0;
-            font-size: 14px;
-            color: #ffffff;
+        .executor-card p {
+            margin: 0.3rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
         }
 
-        .boton-instalar .descargar {
+        .card-actions {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding-top: 1rem;
+        }
+
+        .btn {
             display: inline-block;
-            background-color: #7a0606f6;
+            background-color: var(--primary-dark);
             color: white;
-            padding: 8px 12px;
+            padding: 0.5rem 1rem;
             border-radius: 5px;
             text-decoration: none;
-            font-size: 14px;
-            margin-top: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        .boton-instalar .descargar:hover {
-            background-color: #ff5202;
-        }
-
-        .title2 {
-            width: 300px;
-            height: 60px;
-            color: #ffffff;
-            background-color: #800000;
-            margin: 10px auto;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Arial', sans-serif;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            border: 2px solid #333333;
-            box-shadow: 0 4px 16px rgba(255, 0, 0, 0.1);
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
             cursor: pointer;
         }
 
-        .title2:hover {
-            background-color: #1a1a1a;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-            border-color: #454545;
+        .btn:hover {
+            background-color: var(--primary);
+            transform: scale(1.05);
         }
 
-        .android, .IOS {
-            vertical-align: middle;
-            color: #ff0000;
+        .btn-secondary {
+            background-color: rgba(255, 0, 0, 0.3);
         }
 
-        .android {
-            height: 40px;
-            width: 40px;
-            align-self: normal;
-            text-align: center;
-            vertical-align: bottom;
-        }
-
-        .IOS {
-            height: 40px;
-            width: 40px;
-            align-self: normal;
-            text-align: center;
-            vertical-align: bottom;
-        }
-
-        .IOS2 {
-            height: 40px;
-            width: 75px;
-            align-self: normal;
-            text-align: center;
-            vertical-align: bottom;
-        }
-
-        .cubomc {
-            width: 23px;
-            height: 25px;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #000000;
-        }
-
-        .editar-icono {
-            display: none;
+        .edit-icon {
             position: absolute;
             top: 10px;
             right: 10px;
             cursor: pointer;
-            color: #9e9e9e;
-            font-size: 20px;
+            color: var(--text-secondary);
+            font-size: 1rem;
             transition: color 0.3s ease;
+            display: none;
         }
 
-        .editar-icono:hover {
-            color: #ffffff;
+        .edit-icon:hover {
+            color: var(--primary);
         }
 
-        .neo {
-            position: fixed;
-            z-index: 4;
-            text-align: center;
-            transition: all 0.5s ease;
-            left: 120px;
-            top: 70%;
-            transform: translate(-50%, -50%);
-        }
-
-        .neo img {
-            width: 250px;
-            filter:
-                drop-shadow(0 0 5px rgba(255, 0, 0, 0.7))
-                drop-shadow(0 0 10px rgba(255, 0, 0, 0.5))
-                drop-shadow(0 0 15px rgba(255, 0, 0, 0.3));
-            animation: neon-glow 1.5s ease-in-out infinite alternate;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .neo img:hover {
-            transform: scale(1.05);
-            filter:
-                drop-shadow(0 0 10px rgba(255, 0, 0, 0.9))
-                drop-shadow(0 0 20px rgba(255, 0, 0, 0.7))
-                drop-shadow(0 0 30px rgba(255, 0, 0, 0.5));
-        }
-
-        .neon-text {
-            color: #fff;
-            text-shadow:
-                0 0 5px #fff,
-                0 0 10px #fff,
-                0 0 20px #ff0000,
-                0 0 30px #ff0000,
-                0 0 40px #ff0000;
-            animation: text-flicker 3s linear infinite;
-            font-size: 1.9rem;
-            margin-top: 20px;
-        }
-
-        .descargar2 {
-            display: inline-block;
-            background-color: #ff0000;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: 10px;
-            transition: background-color 0.3s ease;
-        }
-
+        /* Admin Modal */
         .modal {
             display: none;
             position: fixed;
@@ -387,7 +288,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.7);
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -395,190 +296,58 @@
 
         .modal-content {
             background-color: #1d1d1d;
-            padding: 20px;
+            padding: 2rem;
             border-radius: 10px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 1rem;
         }
 
         .modal-content input {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
             border-radius: 5px;
-            border: 1px solid #ccc;
+            border: 1px solid #333;
+            background-color: #222;
+            color: var(--text);
         }
 
         .modal-content button {
-            background-color: #000000;
+            background-color: var(--primary-dark);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 0.75rem 1.5rem;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
         .modal-content button:hover {
-            background-color: #3d4780;
+            background-color: var(--primary);
         }
 
-        .contenedor-contraseña {
-            margin-top: 10px;
+        .edit-form {
             display: none;
+            margin-top: 1rem;
         }
 
-        .password-input {
+        .edit-form input {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
             border-radius: 5px;
-            border: 1px solid #ccc;
+            border: 1px solid #333;
+            background-color: #222;
+            color: var(--text);
         }
 
-        .verificar-contraseña {
-            background-color: #000000;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .verificar-contraseña:hover {
-            background-color: #3d4780;
-        }
-
-        .menu-edicion {
-            display: none;
-            margin-top: 10px;
-        }
-
-        .menu-edicion input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        .guardar-btn {
-            background-color: #000000;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .guardar-btn:hover {
-            background-color: #3d4780;
-        }
-
-        .icono-pico {
-            width: 30px;
-            height: 30px;
-            vertical-align: super;
-            margin-right: 1px;
-            vertical-align:sub;
-            transition: transform 0.3s ease;
-        }
-
-        .boton-instalar33 {
-            position: relative; 
-            display: inline-block;
-            background-color: #000000;
-            color: white;
-            border: none;
-            padding: 15px 20px;
-            border-radius: 7px;
-            text-decoration: none; 
-            text-align: center;
-            cursor: pointer;
-            transition: background-color 0.5s;
-        }
-
-        .container {
-            height: 570vh; 
-            overflow-y: auto; 
-        }
-
-        body::before {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 570vh; 
-            background-image: 
-                radial-gradient(1px 1px at 25% 10%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(1px 1px at 50% 25%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(1px 1px at 75% 30%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(1.5px 1.5px at 15% 40%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(1.5px 1.5px at 60% 70%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(1px 1px at 30% 65%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(1px 1px at 90% 85%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(1.5px 1.5px at 80% 15%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(1.5px 1.5px at 10% 90%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(1px 1px at 35% 80%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(1px 1px at 65% 40%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(1.5px 1.5px at 40% 50%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(2px 2px at 55% 90%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(2px 2px at 85% 55%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(2px 2px at 20% 20%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(2px 2px at 45% 5%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(2px 2px at 95% 35%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(2px 2px at 5% 50%, rgba(255, 255, 255, 0.9) 100%, transparent),
-                radial-gradient(2px 2px at 70% 95%, rgba(255, 255, 255, 0.9) 100%, transparent);
-            background-repeat: repeat;
-            background-size: 400px 400px;
-            animation: twinkling 40s linear infinite;
-            opacity: 0.8;
-        }
-
-        .shooting-stars {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            transform: rotate(-45deg);
-        }
-
-        .shooting-star {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 4px;
-            height: 4px;
-            background: linear-gradient(-45deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
-            border-radius: 999px;
-            filter: drop-shadow(0 0 6px rgba(105, 155, 255, 1));
-            animation: tail 3s ease-in-out infinite, shooting 3s ease-in-out infinite;
-        }
-
-        .shooting-star:nth-child(1) {
-            top: calc(50% - 200px);
-            left: calc(50% - 300px);
-            animation-delay: 1s;
-        }
-
-        .shooting-star:nth-child(2) {
-            top: calc(50% - 100px);
-            left: calc(50% - 190px);
-            animation-delay: 1.6s;
-        }
-
-        .shooting-star:nth-child(3) {
-            top: calc(50% - 50px);
-            left: calc(50% + 100px);
-            animation-delay: 2.1s;
-        }
-
-        .shooting-star:nth-child(4) {
-            top: calc(50% + 70px);
-            left: calc(50% - 250px);
-            animation-delay: 2.5s;
-        }
-
+        /* Animations */
         @keyframes twinkling {
             0% {
                 transform: translateY(0);
@@ -588,88 +357,16 @@
             }
         }
 
-        @keyframes pulse {
-            0% {
-                opacity: 0.2;
-            }
-            50% {
-                opacity: 0.5;
-            }
-            100% {
-                opacity: 0.2;
-            }
-        }
-
-        @keyframes tail {
-            0% {
-                width: 0;
-            }
-            30% {
-                width: 100px;
-            }
-            100% {
-                width: 0;
-            }
-        }
-
-        @keyframes shooting {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(300px);
-            }
-        }
-
-        .nebula {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(30px);
-            opacity: 0.15;
-            background: radial-gradient(circle, rgba(63, 94, 251, 0.6) 0%, rgba(252, 70, 107, 0) 70%);
-        }
-
-        .nebula:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            top: 20%;
-            left: 15%;
-            animation: float 30s infinite alternate ease-in-out;
-        }
-
-        .nebula:nth-child(2) {
-            width: 250px;
-            height: 250px;
-            top: 60%;
-            left: 75%;
-            background: radial-gradient(circle, rgba(72, 219, 251, 0.6) 0%, rgba(29, 209, 161, 0) 70%);
-            animation: float 25s infinite alternate-reverse ease-in-out;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translate(0, 0);
-            }
-            50% {
-                transform: translate(-10px, 10px);
-            }
-            100% {
-                transform: translate(10px, -10px);
-            }
-        }
-
         @keyframes neon-glow {
             from {
                 filter:
                     drop-shadow(0 0 5px rgba(255, 0, 0, 0.7))
-                    drop-shadow(0 0 10px rgba(255, 0, 0, 0.5))
-                    drop-shadow(0 0 15px rgba(255, 0, 0, 0.3));
+                    drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
             }
             to {
                 filter:
                     drop-shadow(0 0 10px rgba(255, 0, 0, 0.9))
-                    drop-shadow(0 0 20px rgba(255, 0, 0, 0.7))
-                    drop-shadow(0 0 30px rgba(255, 0, 0, 0.5));
+                    drop-shadow(0 0 20px rgba(255, 0, 0, 0.7));
             }
         }
 
@@ -678,21 +375,55 @@
                 text-shadow:
                     0 0 5px #fff,
                     0 0 10px #fff,
-                    0 0 20px #ff0000,
-                    0 0 30px #ff0000,
-                    0 0 40px #ff0000;
+                    0 0 20px var(--primary),
+                    0 0 30px var(--primary);
             }
             20%, 24%, 55% {
                 text-shadow: none;
             }
         }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-    .neo {
-        display: none; 
+            .navbar {
+                padding: 1rem;
+            }
 
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                transition: left 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .executors-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+            }
         }
-
-    }
     </style>
 </head>
 <body>
